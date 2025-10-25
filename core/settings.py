@@ -132,5 +132,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom User Model
+AUTH_USER_MODEL = 'users.CustomUser'
+
 # TailwindCSS configuration
 TAILWIND_APP_NAME = 'theme'
