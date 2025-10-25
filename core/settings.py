@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'categories',
-    'profiles',
+    'profiles.apps.ProfilesConfig',
     'transactions',
     'users',
 ]
