@@ -157,15 +157,15 @@
 **Descrição**: Criar model de perfil de usuário com informações adicionais
 
 **Subtarefas**:
-- [] 1.3.1: Abrir arquivo `profiles/models.py`
-- [] 1.3.2: Importar models e User (get_user_model)
-- [] 1.3.3: Criar classe Profile com campo OneToOneField para User
-- [] 1.3.4: Adicionar campo full_name (CharField, max_length=200, blank=True)
-- [] 1.3.5: Adicionar campo phone (CharField, max_length=20, blank=True)
-- [] 1.3.6: Adicionar campos created_at e updated_at
-- [] 1.3.7: Adicionar método __str__ retornando full_name ou email do usuário
-- [] 1.3.8: Adicionar Meta com verbose_name e verbose_name_plural
-- [] Tarefa 1.3 concluída
+- [X] 1.3.1: Abrir arquivo `profiles/models.py`
+- [X] 1.3.2: Importar models e User (get_user_model)
+- [X] 1.3.3: Criar classe Profile com campo OneToOneField para User
+- [X] 1.3.4: Adicionar campo full_name (CharField, max_length=200, blank=True)
+- [X] 1.3.5: Adicionar campo phone (CharField, max_length=20, blank=True)
+- [X] 1.3.6: Adicionar campos created_at e updated_at
+- [X] 1.3.7: Adicionar método __str__ retornando full_name ou email do usuário
+- [X] 1.3.8: Adicionar Meta com verbose_name e verbose_name_plural
+- [X] Tarefa 1.3 concluída
 
 #### Tarefa 1.4: Signal para Criação Automática de Profile
 **Descrição**: Implementar signal para criar perfil automaticamente ao criar usuário
