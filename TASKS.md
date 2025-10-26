@@ -398,15 +398,16 @@
 **Descrição**: Criar formulário para cadastro e edição de contas
 
 **Subtarefas**:
-- [ ] 2.3.1: Criar arquivo `accounts/forms.py`
-- [ ] 2.3.2: Importar forms e Account model
-- [ ] 2.3.3: Criar classe AccountForm herdando de forms.ModelForm
-- [ ] 2.3.4: Configurar Meta com model = Account
-- [ ] 2.3.5: Definir fields: name, bank_name, account_type, balance
-- [ ] 2.3.6: Configurar widgets com classes TailwindCSS para cada campo
-- [ ] 2.3.7: Adicionar labels em português para cada campo
-- [ ] 2.3.8: Adicionar placeholders nos widgets
-- [ ] 2.3.9: Configurar choices de account_type em português
+- [X] 2.3.1: Criar arquivo `accounts/forms.py`
+- [X] 2.3.2: Importar forms e Account model
+- [X] 2.3.3: Criar classe AccountForm herdando de forms.ModelForm
+- [X] 2.3.4: Configurar Meta com model = Account
+- [X] 2.3.5: Definir fields: name, bank_name, account_type, balance
+- [X] 2.3.6: Configurar widgets com classes TailwindCSS para cada campo
+- [X] 2.3.7: Adicionar labels em português para cada campo
+- [X] 2.3.8: Adicionar placeholders nos widgets
+- [X] 2.3.9: Configurar choices de account_type em português
+- [X] Tarefa 2.3 concluída
 
 #### Tarefa 2.4: View de Listagem de Contas
 **Descrição**: Criar view para listar contas do usuário
