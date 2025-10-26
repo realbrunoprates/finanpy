@@ -366,18 +366,19 @@
 **Descrição**: Criar model para representar contas bancárias do usuário
 
 **Subtarefas**:
-- [ ] 2.1.1: Abrir arquivo `accounts/models.py`
-- [ ] 2.1.2: Importar models e get_user_model
-- [ ] 2.1.3: Criar classe Account com ForeignKey para User
-- [ ] 2.1.4: Adicionar campo name (CharField, max_length=100)
-- [ ] 2.1.5: Adicionar campo bank_name (CharField, max_length=100)
-- [ ] 2.1.6: Criar choices para account_type (CHECKING, SAVINGS, WALLET)
-- [ ] 2.1.7: Adicionar campo account_type com choices
-- [ ] 2.1.8: Adicionar campo balance (DecimalField, max_digits=12, decimal_places=2, default=0)
-- [ ] 2.1.9: Adicionar campo is_active (BooleanField, default=True)
-- [ ] 2.1.10: Adicionar campos created_at e updated_at
-- [ ] 2.1.11: Adicionar método __str__ retornando name
-- [ ] 2.1.12: Adicionar Meta com ordering, verbose_name e indexes
+- [X] 2.1.1: Abrir arquivo `accounts/models.py`
+- [X] 2.1.2: Importar models e get_user_model
+- [X] 2.1.3: Criar classe Account com ForeignKey para User
+- [X] 2.1.4: Adicionar campo name (CharField, max_length=100)
+- [X] 2.1.5: Adicionar campo bank_name (CharField, max_length=100)
+- [X] 2.1.6: Criar choices para account_type (CHECKING, SAVINGS, WALLET)
+- [X] 2.1.7: Adicionar campo account_type com choices
+- [X] 2.1.8: Adicionar campo balance (DecimalField, max_digits=12, decimal_places=2, default=0)
+- [X] 2.1.9: Adicionar campo is_active (BooleanField, default=True)
+- [X] 2.1.10: Adicionar campos created_at e updated_at
+- [X] 2.1.11: Adicionar método __str__ retornando name
+- [X] 2.1.12: Adicionar Meta com ordering, verbose_name e indexes
+- [X] Tarefa 2.1 concluída
 
 #### Tarefa 2.2: Admin de Account
 **Descrição**: Configurar Django Admin para gerenciar contas
