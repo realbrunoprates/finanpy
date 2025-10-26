@@ -384,14 +384,15 @@
 **Descrição**: Configurar Django Admin para gerenciar contas
 
 **Subtarefas**:
-- [ ] 2.2.1: Abrir arquivo `accounts/admin.py`
-- [ ] 2.2.2: Importar admin e Account model
-- [ ] 2.2.3: Criar classe AccountAdmin
-- [ ] 2.2.4: Configurar list_display: user email, name, bank_name, account_type, balance, is_active
-- [ ] 2.2.5: Configurar list_filter: account_type, is_active
-- [ ] 2.2.6: Configurar search_fields: name, bank_name, user__email
-- [ ] 2.2.7: Configurar readonly_fields: created_at, updated_at
-- [ ] 2.2.8: Registrar Account com AccountAdmin
+- [X] 2.2.1: Abrir arquivo `accounts/admin.py`
+- [X] 2.2.2: Importar admin e Account model
+- [X] 2.2.3: Criar classe AccountAdmin
+- [X] 2.2.4: Configurar list_display: user email, name, bank_name, account_type, balance, is_active
+- [X] 2.2.5: Configurar list_filter: account_type, is_active
+- [X] 2.2.6: Configurar search_fields: name, bank_name, user__email
+- [X] 2.2.7: Configurar readonly_fields: created_at, updated_at
+- [X] 2.2.8: Registrar Account com AccountAdmin
+- [X] Tarefa 2.2 concluída
 
 #### Tarefa 2.3: Form de Account
 **Descrição**: Criar formulário para cadastro e edição de contas
