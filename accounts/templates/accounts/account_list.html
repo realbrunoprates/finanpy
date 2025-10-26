@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Contas - Finanpy{% endblock %}
+
+{% block content %}
+<!-- Header Section with Title and New Account Button -->
+<div class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8'>
+    <h1 class='text-3xl md:text-4xl font-bold text-text-primary'>Minhas Contas</h1>
+    <a href='{% url "accounts:create" %}' class='px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center'>
+        + Nova Conta
+    </a>
+</div>
+
+<!-- Total Balance Card (Featured) -->
+{% if accounts %}
+<div class='mb-8'>
+    <div class='bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl p-6 md:p-8 shadow-xl'>
+        <h2 class='text-lg md:text-xl font-semibold text-white/90 mb-2'>Saldo Total Consolidado</h2>
+        <p class='text-3xl md:text-4xl font-bold text-white'>
+            {% if total_balance >= 0 %}
+                R$ {{ total_balance|floatformat:2 }}
+            {% else %}
+                -R$ {{ total_balance|floatformat:2|slice:"1:" }}
+            {% endif %}
+        </p>
+        <p class='text-white/80 text-sm mt-2'>Soma de todas as suas contas</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Accounts Grid -->
+{% if accounts %}
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        {% for account in accounts %}
+        <div class='bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-primary-500 transition-all duration-200'>
+            <!-- Account Name -->
+            <h3 class='text-xl font-bold text-text-primary mb-3 truncate' title='{{ account.name }}'>
+                {{ account.name }}
+            </h3>
+
+            <!-- Bank Name and Account Type -->
+            <div class='space-y-2 mb-4'>
+                <div class='flex items-center gap-2'>
+                    <svg class='w-4 h-4 text-text-muted flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'/>
+                    </svg>
+                    <p class='text-text-secondary text-sm truncate' title='{{ account.bank_name }}'>
+                        {{ account.bank_name }}
+                    </p>
+                </div>
+
+                <div class='flex items-center gap-2'>
+                    <svg class='w-4 h-4 text-text-muted flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'/>
+                    </svg>
+                    <p class='text-text-secondary text-sm'>
+                        {% if account.account_type == 'checking' %}
+                            Conta Corrente
+                        {% elif account.account_type == 'savings' %}
+                            Poupança
+                        {% elif account.account_type == 'wallet' %}
+                            Carteira
+                        {% else %}
+                            {{ account.get_account_type_display }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Balance -->
+            <div class='mb-4 pb-4 border-b border-bg-tertiary'>
+                <p class='text-text-muted text-xs mb-1'>Saldo</p>
+                <p class='text-2xl font-bold {% if account.balance >= 0 %}text-success{% else %}text-error{% endif %}'>
+                    {% if account.balance >= 0 %}
+                        R$ {{ account.balance|floatformat:2 }}
+                    {% else %}
+                        -R$ {{ account.balance|floatformat:2|slice:"1:" }}
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class='flex gap-3'>
+                <a href='{% url "accounts:edit" account.id %}' class='flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-all duration-200 text-center text-sm'>
+                    Editar
+                </a>
+                <a href='{% url "accounts:delete" account.id %}' class='flex-1 px-4 py-2 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 text-center text-sm'>
+                    Excluir
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+<!-- Empty State -->
+{% else %}
+    <div class='bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary'>
+        <!-- Empty State Icon -->
+        <div class='mb-6 flex justify-center'>
+            <div class='w-20 h-20 bg-bg-tertiary rounded-full flex items-center justify-center'>
+                <svg class='w-10 h-10 text-text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'/>
+                </svg>
+            </div>
+        </div>
+
+        <h2 class='text-2xl font-bold text-text-primary mb-3'>Nenhuma conta cadastrada</h2>
+        <p class='text-text-muted text-lg mb-6 max-w-md mx-auto'>
+            Você ainda não possui contas cadastradas. Crie sua primeira conta para começar a gerenciar suas finanças.
+        </p>
+        <a href='{% url "accounts:create" %}' class='inline-block px-8 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
+            + Criar Primeira Conta
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Optional: Add confirmation for delete action
+    document.querySelectorAll('a[href*="delete"]').forEach(button => {
+        button.addEventListener('click', (e) => {
+            if (!confirm('Tem certeza que deseja excluir esta conta? Esta ação não pode ser desfeita.')) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}

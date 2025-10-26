@@ -429,19 +429,20 @@
 **Descrição**: Criar template HTML para listar contas
 
 **Subtarefas**:
-- [ ] 2.5.1: Criar arquivo `templates/accounts/account_list.html`
-- [ ] 2.5.2: Extender base.html
-- [ ] 2.5.3: Adicionar título "Minhas Contas"
-- [ ] 2.5.4: Criar header com título e botão "Nova Conta"
-- [ ] 2.5.5: Criar container com grid responsivo
-- [ ] 2.5.6: Iterar sobre accounts com for loop
-- [ ] 2.5.7: Para cada conta, criar card estilizado
-- [ ] 2.5.8: Exibir nome da conta em destaque
-- [ ] 2.5.9: Exibir nome do banco e tipo de conta
-- [ ] 2.5.10: Exibir saldo formatado com R$
-- [ ] 2.5.11: Adicionar botões de Editar e Excluir
-- [ ] 2.5.12: Adicionar mensagem quando não houver contas
-- [ ] 2.5.13: Adicionar card com saldo total consolidado
+- [X] 2.5.1: Criar arquivo `templates/accounts/account_list.html`
+- [X] 2.5.2: Extender base.html
+- [X] 2.5.3: Adicionar título "Minhas Contas"
+- [X] 2.5.4: Criar header com título e botão "Nova Conta"
+- [X] 2.5.5: Criar container com grid responsivo
+- [X] 2.5.6: Iterar sobre accounts com for loop
+- [X] 2.5.7: Para cada conta, criar card estilizado
+- [X] 2.5.8: Exibir nome da conta em destaque
+- [X] 2.5.9: Exibir nome do banco e tipo de conta
+- [X] 2.5.10: Exibir saldo formatado com R$
+- [X] 2.5.11: Adicionar botões de Editar e Excluir
+- [X] 2.5.12: Adicionar mensagem quando não houver contas
+- [X] 2.5.13: Adicionar card com saldo total consolidado
+- [X] Tarefa 2.5 concluída
 
 #### Tarefa 2.6: View de Criação de Conta
 **Descrição**: Criar view para cadastrar nova conta
