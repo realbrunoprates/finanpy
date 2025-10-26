@@ -464,13 +464,14 @@
 **Descrição**: Criar view para editar conta existente
 
 **Subtarefas**:
-- [ ] 2.7.1: No arquivo `accounts/views.py`, importar UpdateView
-- [ ] 2.7.2: Criar AccountUpdateView herdando de LoginRequiredMixin e UpdateView
-- [ ] 2.7.3: Configurar model, form_class e template_name
-- [ ] 2.7.4: Configurar success_url
-- [ ] 2.7.5: Override get_queryset para filtrar por usuário
-- [ ] 2.7.6: Adicionar mensagem de sucesso
-- [ ] 2.7.7: Adicionar context extra com título
+- [X] 2.7.1: No arquivo `accounts/views.py`, importar UpdateView
+- [X] 2.7.2: Criar AccountUpdateView herdando de LoginRequiredMixin e UpdateView
+- [X] 2.7.3: Configurar model, form_class e template_name
+- [X] 2.7.4: Configurar success_url
+- [X] 2.7.5: Override get_queryset para filtrar por usuário
+- [X] 2.7.6: Adicionar mensagem de sucesso
+- [X] 2.7.7: Adicionar context extra com título
+- [X] Tarefa 2.7 concluída
 
 #### Tarefa 2.8: View de Exclusão de Conta
 **Descrição**: Criar view para excluir conta

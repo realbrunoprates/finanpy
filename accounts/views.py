@@ -1,7 +1,7 @@
 # Django imports
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.db.models import Sum
 
@@ -76,4 +76,35 @@ class AccountCreateView(LoginRequiredMixin, CreateView):
         """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Nova Conta'
+        return context
+
+
+class AccountUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    View for updating an existing account that belongs to the logged-in user.
+    """
+    model = Account
+    form_class = AccountForm
+    template_name = 'accounts/account_form.html'
+    success_url = reverse_lazy('accounts:list')
+
+    def get_queryset(self):
+        """
+        Restrict queryset to accounts owned by the logged-in user.
+        """
+        return Account.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        """
+        Persist changes and display a success message after updating the account.
+        """
+        messages.success(self.request, 'Conta atualizada com sucesso!')
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add page title to context.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Conta'
         return context
