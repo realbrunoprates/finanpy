@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Finanpy{% endblock %}
+
+{% block content %}
+<div class='min-h-screen py-12 px-4'>
+    <div class='max-w-6xl mx-auto'>
+        <!-- Header -->
+        <div class='mb-8'>
+            <h1 class='text-4xl font-bold bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent mb-2'>
+                Dashboard
+            </h1>
+            <p class='text-text-secondary'>
+                Bem-vindo de volta, <span class='text-text-primary font-medium'>{{ user.username }}</span>!
+            </p>
+        </div>
+
+        <!-- Construction Notice Card -->
+        <div class='bg-bg-secondary rounded-xl p-8 shadow-lg border border-bg-tertiary mb-6'>
+            <div class='flex items-start gap-4'>
+                <!-- Icon -->
+                <div class='flex-shrink-0'>
+                    <svg class='w-12 h-12 text-primary-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4'/>
+                    </svg>
+                </div>
+
+                <!-- Content -->
+                <div class='flex-1'>
+                    <h2 class='text-2xl font-bold text-text-primary mb-2'>
+                        Dashboard em Construção
+                    </h2>
+                    <p class='text-text-secondary mb-4'>
+                        Estamos trabalhando na implementação do seu painel de controle financeiro.
+                        Em breve você terá acesso a gráficos, relatórios e visão geral das suas finanças.
+                    </p>
+                    <div class='bg-bg-primary rounded-lg p-4 border border-bg-tertiary'>
+                        <p class='text-text-muted text-sm mb-2'>
+                            <strong class='text-text-primary'>Próximas funcionalidades:</strong>
+                        </p>
+                        <ul class='text-text-secondary text-sm space-y-1 ml-4'>
+                            <li class='flex items-center gap-2'>
+                                <span class='text-success'>✓</span>
+                                Sistema de autenticação (concluído)
+                            </li>
+                            <li class='flex items-center gap-2'>
+                                <span class='text-primary-500'>◦</span>
+                                Gestão de contas bancárias
+                            </li>
+                            <li class='flex items-center gap-2'>
+                                <span class='text-primary-500'>◦</span>
+                                Categorias de transações
+                            </li>
+                            <li class='flex items-center gap-2'>
+                                <span class='text-primary-500'>◦</span>
+                                Registro de transações
+                            </li>
+                            <li class='flex items-center gap-2'>
+                                <span class='text-primary-500'>◦</span>
+                                Dashboard com gráficos e estatísticas
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class='bg-bg-secondary rounded-xl p-8 shadow-lg border border-bg-tertiary'>
+            <h3 class='text-xl font-bold text-text-primary mb-4'>
+                Ações Rápidas
+            </h3>
+            <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <!-- Profile Link -->
+                <a
+                    href='#'
+                    class='flex items-center gap-4 p-4 bg-bg-primary rounded-lg border border-bg-tertiary hover:border-primary-500 transition-all duration-200 group'
+                >
+                    <div class='w-12 h-12 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center flex-shrink-0'>
+                        <svg class='w-6 h-6 text-white' fill='currentColor' viewBox='0 0 20 20'>
+                            <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'/>
+                        </svg>
+                    </div>
+                    <div class='flex-1'>
+                        <h4 class='text-text-primary font-medium group-hover:text-primary-500 transition-colors duration-200'>
+                            Meu Perfil
+                        </h4>
+                        <p class='text-text-muted text-sm'>
+                            Editar informações pessoais
+                        </p>
+                    </div>
+                    <svg class='w-5 h-5 text-text-muted group-hover:text-primary-500 transition-colors duration-200' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'/>
+                    </svg>
+                </a>
+
+                <!-- Logout Link -->
+                <a
+                    href='{% url "users:logout" %}'
+                    class='flex items-center gap-4 p-4 bg-bg-primary rounded-lg border border-bg-tertiary hover:border-error transition-all duration-200 group'
+                >
+                    <div class='w-12 h-12 bg-error/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-error/20 transition-colors duration-200'>
+                        <svg class='w-6 h-6 text-error' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'/>
+                        </svg>
+                    </div>
+                    <div class='flex-1'>
+                        <h4 class='text-text-primary font-medium group-hover:text-error transition-colors duration-200'>
+                            Sair
+                        </h4>
+                        <p class='text-text-muted text-sm'>
+                            Encerrar sessão
+                        </p>
+                    </div>
+                    <svg class='w-5 h-5 text-text-muted group-hover:text-error transition-colors duration-200' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- User Info Card (temporary for debugging) -->
+        <div class='mt-6 bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary'>
+            <h3 class='text-lg font-bold text-text-primary mb-3'>
+                Informações da Conta
+            </h3>
+            <div class='space-y-2 text-sm'>
+                <div class='flex justify-between'>
+                    <span class='text-text-muted'>Username:</span>
+                    <span class='text-text-primary font-medium'>{{ user.username }}</span>
+                </div>
+                <div class='flex justify-between'>
+                    <span class='text-text-muted'>E-mail:</span>
+                    <span class='text-text-primary font-medium'>{{ user.email }}</span>
+                </div>
+                <div class='flex justify-between'>
+                    <span class='text-text-muted'>Membro desde:</span>
+                    <span class='text-text-primary font-medium'>{{ user.date_joined|date:'d/m/Y' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -19,10 +19,13 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 from users.views import HomeView
+from core.views import DashboardView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
+    # Dashboard URL
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     # Authentication URLs
     path('auth/', include('users.urls')),
     # Temporary test URL for base.html
