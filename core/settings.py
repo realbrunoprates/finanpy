@@ -135,5 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# Authentication URLs
+LOGOUT_REDIRECT_URL = '/'
+
 # TailwindCSS configuration
 TAILWIND_APP_NAME = 'theme'

@@ -1,5 +1,6 @@
 # Django
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -66,3 +67,17 @@ class LoginView(FormView):
             # Invalid credentials
             form.add_error(None, 'E-mail ou senha inválidos.')
             return self.form_invalid(form)
+
+
+class LogoutView(DjangoLogoutView):
+    """
+    View para logout de usuários autenticados.
+    Adiciona mensagem de sucesso ao fazer logout.
+    """
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Sobrescreve dispatch para adicionar mensagem de sucesso antes do logout.
+        """
+        if request.user.is_authenticated:
+            messages.success(request, 'Você saiu com sucesso.')
+        return super().dispatch(request, *args, **kwargs)

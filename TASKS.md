@@ -298,11 +298,11 @@
 **Descrição**: Criar view para logout de usuários
 
 **Subtarefas**:
-- [] 1.12.1: No arquivo `users/views.py`, importar LogoutView do Django
-- [] 1.12.2: Criar LogoutView personalizada se necessário
-- [] 1.12.3: Configurar LOGOUT_REDIRECT_URL = '/' no settings.py
-- [] 1.12.4: Adicionar mensagem de sucesso ao fazer logout
-- [] Tarefa 1.12 concluída
+- [X] 1.12.1: No arquivo `users/views.py`, importar LogoutView do Django
+- [X] 1.12.2: Criar LogoutView personalizada se necessário
+- [X] 1.12.3: Configurar LOGOUT_REDIRECT_URL = '/' no settings.py
+- [X] 1.12.4: Adicionar mensagem de sucesso ao fazer logout
+- [X] Tarefa 1.12 concluída
 
 #### Tarefa 1.13: URLs de Autenticação
 **Descrição**: Configurar URLs para views de autenticação
