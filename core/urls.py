@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from users.views import HomeView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomeView.as_view(), name='home'),
     # Authentication URLs
     path('auth/', include('users.urls')),
     # Temporary test URL for base.html

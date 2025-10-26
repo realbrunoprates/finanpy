@@ -3,8 +3,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, TemplateView
 
 # Local imports
 from .forms import SignupForm, LoginForm
@@ -81,3 +82,18 @@ class LogoutView(DjangoLogoutView):
         if request.user.is_authenticated:
             messages.success(request, 'Você saiu com sucesso.')
         return super().dispatch(request, *args, **kwargs)
+
+
+class HomeView(TemplateView):
+    """
+    Página inicial pública com redirecionamento para usuários autenticados.
+    """
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        """
+        Redireciona usuários autenticados para o dashboard.
+        """
+        if request.user.is_authenticated:
+            return redirect('/dashboard/')
+        return super().get(request, *args, **kwargs)

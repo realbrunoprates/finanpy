@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Finanpy - Controle suas finanças{% endblock %}
+
+{% block content %}
+<section class='pt-12 pb-16'>
+    <div class='grid gap-12 lg:grid-cols-2 lg:items-center'>
+        <div>
+            <div class='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500/10 to-accent-500/10 border border-primary-500/40 text-primary-200 text-sm font-medium mb-6'>
+                <span class='inline-flex h-2 w-2 rounded-full bg-primary-400 animate-pulse'></span>
+                Controle financeiro inteligente
+            </div>
+            <h1 class='text-4xl md:text-5xl font-bold text-text-primary leading-tight mb-6'>
+                Organize suas finanças pessoais com visualizações claras e automatizadas.
+            </h1>
+            <p class='text-lg text-text-secondary mb-8 max-w-xl'>
+                Cadastre contas, categorize transações e acompanhe seus gastos em um dashboard completo feito para o dia a dia brasileiro.
+            </p>
+            <div class='flex flex-col sm:flex-row sm:items-center gap-4'>
+                <a href='{% url 'users:signup' %}' class='inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold shadow-lg shadow-primary-900/30 transition-all duration-200 hover:from-primary-600 hover:to-accent-600'>
+                    Criar conta gratuita
+                </a>
+                <a href='{% url 'users:login' %}' class='inline-flex items-center justify-center px-6 py-3 rounded-xl border border-bg-tertiary bg-bg-secondary text-text-primary font-semibold transition-colors duration-200 hover:bg-bg-tertiary'>
+                    Entrar na plataforma
+                </a>
+            </div>
+        </div>
+        <div class='relative'>
+            <div class='absolute inset-0 -top-10 -left-6 bg-gradient-to-br from-primary-500/20 via-accent-500/10 to-transparent blur-3xl rounded-full'></div>
+            <div class='relative rounded-2xl border border-bg-tertiary bg-bg-secondary/80 backdrop-blur-xl p-8 shadow-2xl'>
+                <div class='flex items-center justify-between mb-6'>
+                    <div>
+                        <p class='text-sm text-text-muted'>Saldo total</p>
+                        <p class='text-3xl font-semibold text-text-primary mt-1'>R$ 12.450,90</p>
+                    </div>
+                    <span class='px-3 py-1 rounded-full text-sm font-medium bg-success/10 text-success border border-success/30'>
+                        +12.4%
+                    </span>
+                </div>
+                <div class='space-y-4'>
+                    <div class='flex items-center justify-between'>
+                        <div>
+                            <p class='text-sm text-text-muted'>Entradas</p>
+                            <p class='text-lg font-semibold text-text-primary mt-1'>R$ 4.800,00</p>
+                        </div>
+                        <span class='inline-flex items-center gap-2 text-success text-sm font-medium'>
+                            <svg class='w-4 h-4' fill='none' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' d='M4 12l6 6L20 6'></path>
+                            </svg>
+                            +8.1%
+                        </span>
+                    </div>
+                    <div class='flex items-center justify-between'>
+                        <div>
+                            <p class='text-sm text-text-muted'>Saídas</p>
+                            <p class='text-lg font-semibold text-text-primary mt-1'>R$ 3.280,00</p>
+                        </div>
+                        <span class='inline-flex items-center gap-2 text-error text-sm font-medium'>
+                            <svg class='w-4 h-4' fill='none' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' d='M20 12l-6-6-6 6'></path>
+                            </svg>
+                            -2.3%
+                        </span>
+                    </div>
+                    <div class='grid grid-cols-2 gap-3 pt-4 border-t border-bg-tertiary'>
+                        <div class='rounded-xl bg-bg-tertiary/80 px-4 py-3'>
+                            <p class='text-sm text-text-muted'>Contas ativas</p>
+                            <p class='text-xl font-semibold text-text-primary mt-1'>5</p>
+                        </div>
+                        <div class='rounded-xl bg-bg-tertiary/80 px-4 py-3'>
+                            <p class='text-sm text-text-muted'>Categorias</p>
+                            <p class='text-xl font-semibold text-text-primary mt-1'>12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='py-12 border-t border-bg-tertiary'>
+    <div class='grid gap-8 md:grid-cols-3'>
+        <div class='rounded-2xl border border-bg-tertiary bg-bg-secondary/70 p-6'>
+            <div class='w-12 h-12 rounded-xl bg-primary-500/20 text-primary-200 flex items-center justify-center mb-4'>
+                <svg class='w-6 h-6' fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M12 6v12m6-6H6'></path>
+                </svg>
+            </div>
+            <h3 class='text-xl font-semibold text-text-primary mb-3'>Cadastre contas com facilidade</h3>
+            <p class='text-sm text-text-secondary'>
+                Organize contas bancárias, carteira e investimentos em um só lugar com saldo atualizado automaticamente.
+            </p>
+        </div>
+        <div class='rounded-2xl border border-bg-tertiary bg-bg-secondary/70 p-6'>
+            <div class='w-12 h-12 rounded-xl bg-accent-500/20 text-accent-200 flex items-center justify-center mb-4'>
+                <svg class='w-6 h-6' fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M3 3v18h18M7 15l5-5 4 4 4-4'></path>
+                </svg>
+            </div>
+            <h3 class='text-xl font-semibold text-text-primary mb-3'>Classifique e monitore gastos</h3>
+            <p class='text-sm text-text-secondary'>
+                Categorize receitas e despesas para entender rapidamente onde seu dinheiro está sendo investido.
+            </p>
+        </div>
+        <div class='rounded-2xl border border-bg-tertiary bg-bg-secondary/70 p-6'>
+            <div class='w-12 h-12 rounded-xl bg-primary-500/20 text-primary-200 flex items-center justify-center mb-4'>
+                <svg class='w-6 h-6' fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M4 7h16M4 12h10m-7 5h7'></path>
+                </svg>
+            </div>
+            <h3 class='text-xl font-semibold text-text-primary mb-3'>Dashboard com insights imediatos</h3>
+            <p class='text-sm text-text-secondary'>
+                Visualize indicadores chaves e tendências em gráficos claros, otimizados para decisões rápidas.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
