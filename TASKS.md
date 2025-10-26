@@ -413,16 +413,17 @@
 **Descrição**: Criar view para listar contas do usuário
 
 **Subtarefas**:
-- [ ] 2.4.1: Abrir arquivo `accounts/views.py`
-- [ ] 2.4.2: Importar LoginRequiredMixin e ListView
-- [ ] 2.4.3: Importar Account model
-- [ ] 2.4.4: Criar AccountListView herdando de LoginRequiredMixin e ListView
-- [ ] 2.4.5: Configurar model = Account
-- [ ] 2.4.6: Configurar template_name = 'accounts/account_list.html'
-- [ ] 2.4.7: Configurar context_object_name = 'accounts'
-- [ ] 2.4.8: Override get_queryset para filtrar por usuário: self.request.user
-- [ ] 2.4.9: Adicionar ordenação por nome
-- [ ] 2.4.10: Adicionar cálculo de saldo total no get_context_data
+- [X] 2.4.1: Abrir arquivo `accounts/views.py`
+- [X] 2.4.2: Importar LoginRequiredMixin e ListView
+- [X] 2.4.3: Importar Account model
+- [X] 2.4.4: Criar AccountListView herdando de LoginRequiredMixin e ListView
+- [X] 2.4.5: Configurar model = Account
+- [X] 2.4.6: Configurar template_name = 'accounts/account_list.html'
+- [X] 2.4.7: Configurar context_object_name = 'accounts'
+- [X] 2.4.8: Override get_queryset para filtrar por usuário: self.request.user
+- [X] 2.4.9: Adicionar ordenação por nome
+- [X] 2.4.10: Adicionar cálculo de saldo total no get_context_data
+- [X] Tarefa 2.4 concluída
 
 #### Tarefa 2.5: Template de Listagem de Contas
 **Descrição**: Criar template HTML para listar contas
