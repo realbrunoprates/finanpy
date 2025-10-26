@@ -42,7 +42,38 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                // Primary gradient colors
+                'primary': {
+                    500: '#667eea',
+                    600: '#5568d3',
+                    700: '#4453bd',
+                },
+                'accent': {
+                    500: '#764ba2',
+                    600: '#63418a',
+                    700: '#503672',
+                },
+                // Backgrounds (Dark Theme)
+                'bg': {
+                    'primary': '#0f172a',    // slate-900
+                    'secondary': '#1e293b',  // slate-800
+                    'tertiary': '#334155',   // slate-700
+                },
+                // Text colors
+                'text': {
+                    'primary': '#f1f5f9',    // slate-100
+                    'secondary': '#cbd5e1',  // slate-300
+                    'muted': '#64748b',      // slate-500
+                },
+                // Status colors
+                'success': '#10b981',  // green - income
+                'error': '#ef4444',    // red - expenses/errors
+                'warning': '#f59e0b',  // yellow - warnings
+                'info': '#3b82f6',     // blue - information
+            },
+        },
     },
     plugins: [
         /**

@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Temporary test URL for base.html
+    path('test-base/', TemplateView.as_view(template_name='test_base.html'), name='test_base'),
 ]
