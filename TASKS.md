@@ -198,13 +198,13 @@
 **Descrição**: Criar e aplicar migrations para users e profiles
 
 **Subtarefas**:
-- [] 1.6.1: Executar: `python manage.py makemigrations users`
-- [] 1.6.2: Verificar arquivo de migration gerado
-- [] 1.6.3: Executar: `python manage.py makemigrations profiles`
-- [] 1.6.4: Verificar arquivo de migration gerado
-- [] 1.6.5: Executar: `python manage.py migrate`
-- [] 1.6.6: Verificar que tabelas foram criadas no db.sqlite3
-- [] Tarefa 1.6 concluída
+- [X] 1.6.1: Executar: `python manage.py makemigrations users`
+- [X] 1.6.2: Verificar arquivo de migration gerado
+- [X] 1.6.3: Executar: `python manage.py makemigrations profiles`
+- [X] 1.6.4: Verificar arquivo de migration gerado
+- [X] 1.6.5: Executar: `python manage.py migrate`
+- [X] 1.6.6: Verificar que tabelas foram criadas no db.sqlite3
+- [X] Tarefa 1.6 concluída
 
 #### Tarefa 1.7: Template Base
 **Descrição**: Criar template base com estrutura HTML e TailwindCSS
