@@ -1,10 +1,13 @@
 # Django imports
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy
 from django.db.models import Sum
 
 # Local imports
 from .models import Account
+from .forms import AccountForm
 
 
 class AccountListView(LoginRequiredMixin, ListView):
@@ -41,4 +44,36 @@ class AccountListView(LoginRequiredMixin, ListView):
 
         context['total_balance'] = total_balance
 
+        return context
+
+
+class AccountCreateView(LoginRequiredMixin, CreateView):
+    """
+    View for creating a new account.
+    Automatically associates the account with the logged-in user.
+    """
+    model = Account
+    form_class = AccountForm
+    template_name = 'accounts/account_form.html'
+    success_url = reverse_lazy('accounts:list')
+
+    def form_valid(self, form):
+        """
+        Associate the logged-in user with the account before saving.
+        Display success message after account creation.
+        """
+        # Associate account with logged-in user
+        form.instance.user = self.request.user
+
+        # Add success message
+        messages.success(self.request, 'Conta criada com sucesso!')
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add page title to context.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Nova Conta'
         return context

@@ -448,16 +448,17 @@
 **Descrição**: Criar view para cadastrar nova conta
 
 **Subtarefas**:
-- [ ] 2.6.1: No arquivo `accounts/views.py`, importar CreateView
-- [ ] 2.6.2: Importar AccountForm
-- [ ] 2.6.3: Criar AccountCreateView herdando de LoginRequiredMixin e CreateView
-- [ ] 2.6.4: Configurar model = Account
-- [ ] 2.6.5: Configurar form_class = AccountForm
-- [ ] 2.6.6: Configurar template_name = 'accounts/account_form.html'
-- [ ] 2.6.7: Configurar success_url para lista de contas
-- [ ] 2.6.8: Override form_valid para associar user: form.instance.user = self.request.user
-- [ ] 2.6.9: Adicionar mensagem de sucesso
-- [ ] 2.6.10: Adicionar context extra com título da página
+- [X] 2.6.1: No arquivo `accounts/views.py`, importar CreateView
+- [X] 2.6.2: Importar AccountForm
+- [X] 2.6.3: Criar AccountCreateView herdando de LoginRequiredMixin e CreateView
+- [X] 2.6.4: Configurar model = Account
+- [X] 2.6.5: Configurar form_class = AccountForm
+- [X] 2.6.6: Configurar template_name = 'accounts/account_form.html'
+- [X] 2.6.7: Configurar success_url para lista de contas
+- [X] 2.6.8: Override form_valid para associar user: form.instance.user = self.request.user
+- [X] 2.6.9: Adicionar mensagem de sucesso
+- [X] 2.6.10: Adicionar context extra com título da página
+- [X] Tarefa 2.6 concluída
 
 #### Tarefa 2.7: View de Edição de Conta
 **Descrição**: Criar view para editar conta existente
