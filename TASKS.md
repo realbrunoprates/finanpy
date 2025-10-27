@@ -711,10 +711,11 @@
 **Descrição**: Criar e aplicar migrations
 
 **Subtarefas**:
-- [ ] 3.11.1: Executar makemigrations
-- [ ] 3.11.2: Verificar migration
-- [ ] 3.11.3: Executar migrate
-- [ ] 3.11.4: Verificar no banco
+- [X] 3.11.1: Executar makemigrations
+- [X] 3.11.2: Verificar migration
+- [X] 3.11.3: Executar migrate
+- [X] 3.11.4: Verificar no banco
+- [X] Tarefa 3.11 concluída
 
 #### Tarefa 3.12: Categorias Padrão
 **Descrição**: Criar signal para adicionar categorias padrão ao novo usuário
