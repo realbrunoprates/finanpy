@@ -491,17 +491,18 @@
 **Descrição**: Criar template HTML para criar/editar conta
 
 **Subtarefas**:
-- [ ] 2.9.1: Criar arquivo `templates/accounts/account_form.html`
-- [ ] 2.9.2: Extender base.html
-- [ ] 2.9.3: Adicionar título dinâmico (Nova Conta ou Editar Conta)
-- [ ] 2.9.4: Criar container centralizado
-- [ ] 2.9.5: Criar card com formulário
-- [ ] 2.9.6: Adicionar form com method POST e csrf_token
-- [ ] 2.9.7: Renderizar campos do form com {{ form.as_p }} ou manualmente
-- [ ] 2.9.8: Estilizar cada campo individualmente com TailwindCSS
-- [ ] 2.9.9: Adicionar botão de Salvar
-- [ ] 2.9.10: Adicionar botão de Cancelar
-- [ ] 2.9.11: Adicionar exibição de erros do formulário
+- [X] 2.9.1: Criar arquivo `templates/accounts/account_form.html`
+- [X] 2.9.2: Extender base.html
+- [X] 2.9.3: Adicionar título dinâmico (Nova Conta ou Editar Conta)
+- [X] 2.9.4: Criar container centralizado
+- [X] 2.9.5: Criar card com formulário
+- [X] 2.9.6: Adicionar form com method POST e csrf_token
+- [X] 2.9.7: Renderizar campos do form com {{ form.as_p }} ou manualmente
+- [X] 2.9.8: Estilizar cada campo individualmente com TailwindCSS
+- [X] 2.9.9: Adicionar botão de Salvar
+- [X] 2.9.10: Adicionar botão de Cancelar
+- [X] 2.9.11: Adicionar exibição de erros do formulário
+- [X] Tarefa 2.9 concluída
 
 #### Tarefa 2.10: Template de Confirmação de Exclusão
 **Descrição**: Criar template para confirmar exclusão de conta

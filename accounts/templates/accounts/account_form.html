@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title|default:'Conta' }} - Finanpy{% endblock %}
+
+{% block content %}
+<div class='max-w-3xl mx-auto'>
+    <div class='mb-8 text-center'>
+        <h1 class='text-3xl md:text-4xl font-bold text-text-primary mb-2'>
+            {{ title|default:'Conta' }}
+        </h1>
+        <p class='text-text-secondary text-base md:text-lg'>
+            Informe os detalhes da sua conta para acompanhar saldos e movimentações.
+        </p>
+    </div>
+
+    <div class='bg-bg-secondary rounded-2xl shadow-xl border border-bg-tertiary/60 p-6 md:p-10'>
+        <form method='post' novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class='mb-6 bg-error/10 border border-error/30 text-error rounded-xl p-4'>
+                    <ul class='space-y-1 text-sm'>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class='space-y-6'>
+                {% for field in form %}
+                    <div>
+                        <label for='{{ field.id_for_label }}' class='block text-text-primary font-medium mb-2'>
+                            {{ field.label }}
+                            {% if field.field.required %}
+                                <span class='text-error'>*</span>
+                            {% endif %}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class='mt-2 text-xs text-text-muted'>
+                                {{ field.help_text }}
+                            </p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <ul class='mt-2 space-y-1 text-sm text-error'>
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class='mt-8 flex flex-col sm:flex-row sm:justify-end gap-3'>
+                <a href='{% url "accounts:list" %}' class='w-full sm:w-auto px-6 py-3 border border-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary/60 transition-all duration-200 text-center'>
+                    Cancelar
+                </a>
+                <button type='submit' class='w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
