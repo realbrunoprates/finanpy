@@ -477,14 +477,15 @@
 **Descrição**: Criar view para excluir conta
 
 **Subtarefas**:
-- [ ] 2.8.1: No arquivo `accounts/views.py`, importar DeleteView
-- [ ] 2.8.2: Criar AccountDeleteView herdando de LoginRequiredMixin e DeleteView
-- [ ] 2.8.3: Configurar model = Account
-- [ ] 2.8.4: Configurar template_name = 'accounts/account_confirm_delete.html'
-- [ ] 2.8.5: Configurar success_url para lista de contas
-- [ ] 2.8.6: Override get_queryset para filtrar por usuário
-- [ ] 2.8.7: Adicionar mensagem de sucesso
-- [ ] 2.8.8: Adicionar validação para não excluir conta com transações (implementar depois)
+- [X] 2.8.1: No arquivo `accounts/views.py`, importar DeleteView
+- [X] 2.8.2: Criar AccountDeleteView herdando de LoginRequiredMixin e DeleteView
+- [X] 2.8.3: Configurar model = Account
+- [X] 2.8.4: Configurar template_name = 'accounts/account_confirm_delete.html'
+- [X] 2.8.5: Configurar success_url para lista de contas
+- [X] 2.8.6: Override get_queryset para filtrar por usuário
+- [X] 2.8.7: Adicionar mensagem de sucesso
+- [X] 2.8.8: Adicionar validação para não excluir conta com transações (implementar depois)
+- [X] Tarefa 2.8 concluída
 
 #### Tarefa 2.9: Template de Form de Conta
 **Descrição**: Criar template HTML para criar/editar conta

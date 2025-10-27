@@ -12,12 +12,26 @@ Finanpy is a personal finance management system built with Django 5+ and Python 
 
 The codebase is organized into 5 main Django apps with single responsibilities:
 
-- **users/** - User authentication and management (extends Django's User model)
+- **users/** - User authentication and management (custom User model)
 - **profiles/** - User profiles with additional information (1:1 with User)
 - **accounts/** - Bank accounts management (checking, savings, wallet)
 - **categories/** - Transaction categories (income/expense types)
 - **transactions/** - Financial transactions (linked to accounts and categories)
 - **core/** - Django project settings and global configuration
+- **theme/** - TailwindCSS integration app (managed by django-tailwind)
+
+### App Responsibilities
+
+Each app has a single, well-defined responsibility:
+
+| App | Models | Purpose | Key Files |
+|-----|--------|---------|-----------|
+| users | CustomUser | Authentication, login/logout/register | views.py, forms.py |
+| profiles | Profile | User profile information | models.py, views.py |
+| accounts | Account | Bank account management | models.py, views.py, forms.py |
+| categories | Category | Transaction categorization | models.py, views.py, forms.py |
+| transactions | Transaction | Financial transactions | models.py, views.py, forms.py |
+| core | - | Settings, main URLs | settings.py, urls.py |
 
 ### Key Architectural Principles
 
@@ -35,15 +49,49 @@ The codebase is organized into 5 main Django apps with single responsibilities:
 
 ## Development Commands
 
-### Environment Setup
+### Initial Setup
 
 ```bash
-# Activate virtual environment
+# 1. Activate virtual environment
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
 
-# Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
+
+# 3. Create .env file from example (required)
+cp .env.example .env
+# Edit .env and set SECRET_KEY and DEBUG=True
+
+# 4. Install TailwindCSS dependencies
+python manage.py tailwind install
+
+# 5. Run migrations
+python manage.py migrate
+
+# 6. Create superuser
+python manage.py createsuperuser
+```
+
+### Running the Application
+
+**You need TWO terminal windows running simultaneously:**
+
+```bash
+# Terminal 1: Django server
+python manage.py runserver
+
+# Terminal 2: TailwindCSS watch mode (auto-compiles CSS on changes)
+python manage.py tailwind start
+```
+
+**Production build:**
+```bash
+# Build minified CSS
+python manage.py tailwind build
+
+# Collect static files
+python manage.py collectstatic
 ```
 
 ### Database Operations
@@ -55,18 +103,8 @@ python manage.py makemigrations
 # Apply migrations
 python manage.py migrate
 
-# Create superuser for admin access
-python manage.py createsuperuser
-```
-
-### Running the Server
-
-```bash
-# Development server (default port 8000)
-python manage.py runserver
-
-# Custom port
-python manage.py runserver 8080
+# Create specific app migration
+python manage.py makemigrations app_name
 ```
 
 ### Django Shell
@@ -79,14 +117,8 @@ python manage.py shell
 ### Code Quality
 
 ```bash
-# Check for issues
+# Check for issues (always run before committing)
 python manage.py check
-
-# Run linter (if flake8 installed)
-flake8 .
-
-# Format code (if black installed)
-black .
 ```
 
 ## Coding Standards
@@ -214,6 +246,18 @@ Use utility classes consistently:
 <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary">
 ```
 
+## Environment Configuration
+
+The project uses `python-decouple` for environment variable management.
+
+**Required environment variables** (`.env` file):
+```bash
+SECRET_KEY=your-secret-key-here
+DEBUG=True  # Set to False in production
+```
+
+**IMPORTANT**: Never commit the `.env` file. Use `.env.example` as template.
+
 ## Database
 
 **Current**: SQLite3 (`db.sqlite3`)
@@ -226,23 +270,56 @@ SQLite limitations to be aware of:
 
 ## Authentication
 
-Using Django's built-in authentication system:
-- `django.contrib.auth.models.User` for base user model
+Using Django's authentication system with custom user model:
+- **Custom User Model**: `users.CustomUser` (configured in `settings.AUTH_USER_MODEL`)
+- **IMPORTANT**: Always use `get_user_model()` to reference the User model, never import directly
 - Session-based authentication
 - `@login_required` decorator for protected views
 - CSRF protection enabled by default
 
+```python
+# Correct way to get User model
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+# NEVER do this:
+# from django.contrib.auth.models import User  # WRONG!
+```
+
+## Project Dependencies
+
+```
+Django==5.2.7
+django-tailwind==3.8.0
+python-decouple==3.8
+```
+
+**NOTE**: The project uses `django-tailwind` package which integrates TailwindCSS with Django. This requires Node.js to be installed.
+
 ## Critical Development Notes
 
-1. **Balance Consistency**: When creating/updating/deleting transactions, ALWAYS update the related account balance. Consider using signals or model methods.
+1. **Balance Consistency**: When creating/updating/deleting transactions, ALWAYS update the related account balance. The recommended approach is using Django signals (`post_save`, `post_delete`) to automatically update account balances when transactions are modified.
 
-2. **Data Isolation**: Every query for user-owned data must filter by the logged-in user.
+2. **Data Isolation**: Every query for user-owned data MUST filter by the logged-in user. Never trust URL parameters for user identification.
+   ```python
+   # ALWAYS do this:
+   accounts = Account.objects.filter(user=request.user)
 
-3. **Template Location**: Templates go in `app_name/templates/app_name/` following Django conventions.
+   # NEVER do this:
+   accounts = Account.objects.all()  # Exposes all users' data!
+   ```
 
-4. **Static Files**: Will be served from `static/` directory. TailwindCSS build process needed for production.
+3. **Template Location**: Templates go in `app_name/templates/app_name/` following Django conventions. Global templates go in `templates/` at project root.
+
+4. **Static Files**:
+   - Global static files: `static/` directory
+   - TailwindCSS compiled output: `theme/static/css/dist/`
+   - Must run `python manage.py tailwind build` before `collectstatic` in production
 
 5. **Git Commits**: Use Portuguese, infinitive verbs (e.g., "Adicionar modelo Account", "Corrigir cálculo de saldo")
+
+6. **Custom User Model**: Always use `get_user_model()` - the project uses `users.CustomUser`, not Django's default User model
 
 ## Documentation
 

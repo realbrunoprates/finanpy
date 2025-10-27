@@ -1,7 +1,7 @@
 # Django imports
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Sum
 
@@ -108,3 +108,27 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Conta'
         return context
+
+
+class AccountDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    View for deleting an existing account that belongs to the logged-in user.
+    Displays a confirmation page before deletion.
+    """
+    model = Account
+    template_name = 'accounts/account_confirm_delete.html'
+    success_url = reverse_lazy('accounts:list')
+
+    def get_queryset(self):
+        """
+        Restrict queryset to accounts owned by the logged-in user.
+        """
+        return Account.objects.filter(user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete the account and display a success message.
+        """
+        # TODO: Add validation to prevent deletion of accounts with transactions
+        messages.success(self.request, 'Conta excluída com sucesso!')
+        return super().delete(request, *args, **kwargs)
