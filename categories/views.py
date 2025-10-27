@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 # Local imports
 from .models import Category
@@ -80,6 +80,50 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
             # Mensagem de sucesso
             messages.success(self.request, 'Categoria criada com sucesso!')
+
+            return response
+
+        except IntegrityError:
+            # Erro de nome duplicado para o mesmo usuário
+            form.add_error('name', 'Você já possui uma categoria com este nome.')
+            return self.form_invalid(form)
+
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    View para editar uma categoria existente.
+    Permite apenas edição de categorias do próprio usuário.
+    """
+    model = Category
+    form_class = CategoryForm
+    template_name = 'categories/category_form.html'
+    success_url = reverse_lazy('categories:category_list')
+
+    def get_queryset(self):
+        """
+        Retorna apenas as categorias do usuário logado.
+        Garante que o usuário só possa editar suas próprias categorias.
+        """
+        return Category.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona título da página ao contexto.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Categoria'
+        return context
+
+    def form_valid(self, form):
+        """
+        Salva a categoria editada e exibe mensagem de sucesso.
+        """
+        try:
+            # Salva a categoria
+            response = super().form_valid(form)
+
+            # Mensagem de sucesso
+            messages.success(self.request, 'Categoria atualizada com sucesso!')
 
             return response
 

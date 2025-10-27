@@ -666,11 +666,12 @@
 **Descrição**: Criar view para editar categoria
 
 **Subtarefas**:
-- [ ] 3.7.1: No `categories/views.py`, importar UpdateView
-- [ ] 3.7.2: Criar CategoryUpdateView
-- [ ] 3.7.3: Configurar atributos necessários
-- [ ] 3.7.4: Override get_queryset para filtrar por usuário
-- [ ] 3.7.5: Adicionar mensagem de sucesso
+- [X] 3.7.1: No `categories/views.py`, importar UpdateView
+- [X] 3.7.2: Criar CategoryUpdateView
+- [X] 3.7.3: Configurar atributos necessários
+- [X] 3.7.4: Override get_queryset para filtrar por usuário
+- [X] 3.7.5: Adicionar mensagem de sucesso
+- [X] Tarefa 3.7 concluída
 
 #### Tarefa 3.8: View de Exclusão de Categoria
 **Descrição**: Criar view para excluir categoria
