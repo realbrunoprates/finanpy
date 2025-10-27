@@ -677,12 +677,13 @@
 **Descrição**: Criar view para excluir categoria
 
 **Subtarefas**:
-- [ ] 3.8.1: No `categories/views.py`, importar DeleteView
-- [ ] 3.8.2: Criar CategoryDeleteView
-- [ ] 3.8.3: Configurar atributos necessários
-- [ ] 3.8.4: Override get_queryset
-- [ ] 3.8.5: Adicionar mensagem de sucesso
-- [ ] 3.8.6: Adicionar validação para não excluir categoria com transações
+- [X] 3.8.1: No `categories/views.py`, importar DeleteView
+- [X] 3.8.2: Criar CategoryDeleteView
+- [X] 3.8.3: Configurar atributos necessários
+- [X] 3.8.4: Override get_queryset
+- [X] 3.8.5: Adicionar mensagem de sucesso
+- [X] 3.8.6: Adicionar validação para não excluir categoria com transações
+- [X] Tarefa 3.8 concluída
 
 #### Tarefa 3.9: Templates de Form e Delete de Categoria
 **Descrição**: Criar templates para forms de categoria

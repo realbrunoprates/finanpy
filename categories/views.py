@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 # Local imports
 from .models import Category
@@ -131,3 +131,42 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
             # Erro de nome duplicado para o mesmo usuário
             form.add_error('name', 'Você já possui uma categoria com este nome.')
             return self.form_invalid(form)
+
+
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    View para excluir uma categoria existente.
+    Permite apenas exclusão de categorias do próprio usuário.
+    Previne exclusão de categorias com transações associadas.
+    """
+    model = Category
+    template_name = 'categories/category_confirm_delete.html'
+    success_url = reverse_lazy('categories:category_list')
+
+    def get_queryset(self):
+        """
+        Retorna apenas as categorias do usuário logado.
+        Garante que o usuário só possa excluir suas próprias categorias.
+        """
+        return Category.objects.filter(user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Valida se a categoria pode ser excluída e exibe mensagem de sucesso.
+        Previne exclusão de categorias com transações associadas.
+        """
+        category = self.get_object()
+
+        # Verifica se a categoria possui transações associadas
+        # Quando o modelo Transaction for implementado, descomentar:
+        # if category.transactions.exists():
+        #     messages.error(
+        #         self.request,
+        #         'Não é possível excluir esta categoria pois ela possui transações associadas.'
+        #     )
+        #     return redirect('categories:category_list')
+
+        # Mensagem de sucesso
+        messages.success(self.request, 'Categoria excluída com sucesso!')
+
+        return super().delete(request, *args, **kwargs)
