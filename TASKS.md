@@ -508,16 +508,17 @@
 **Descrição**: Criar template para confirmar exclusão de conta
 
 **Subtarefas**:
-- [ ] 2.10.1: Criar arquivo `templates/accounts/account_confirm_delete.html`
-- [ ] 2.10.2: Extender base.html
-- [ ] 2.10.3: Adicionar título "Confirmar Exclusão"
-- [ ] 2.10.4: Criar card com mensagem de confirmação
-- [ ] 2.10.5: Exibir nome da conta a ser excluída
-- [ ] 2.10.6: Adicionar aviso sobre exclusão permanente
-- [ ] 2.10.7: Criar form com method POST e csrf_token
-- [ ] 2.10.8: Adicionar botão de Confirmar Exclusão (vermelho)
-- [ ] 2.10.9: Adicionar botão de Cancelar
-- [ ] 2.10.10: Estilizar com cores de alerta
+- [X] 2.10.1: Criar arquivo `templates/accounts/account_confirm_delete.html`
+- [X] 2.10.2: Extender base.html
+- [X] 2.10.3: Adicionar título "Confirmar Exclusão"
+- [X] 2.10.4: Criar card com mensagem de confirmação
+- [X] 2.10.5: Exibir nome da conta a ser excluída
+- [X] 2.10.6: Adicionar aviso sobre exclusão permanente
+- [X] 2.10.7: Criar form com method POST e csrf_token
+- [X] 2.10.8: Adicionar botão de Confirmar Exclusão (vermelho)
+- [X] 2.10.9: Adicionar botão de Cancelar
+- [X] 2.10.10: Estilizar com cores de alerta
+- [X] Tarefa 2.10 concluída
 
 #### Tarefa 2.11: URLs de Accounts
 **Descrição**: Configurar URLs para views de contas
