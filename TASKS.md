@@ -605,16 +605,17 @@
 **Descrição**: Criar formulário para categorias
 
 **Subtarefas**:
-- [ ] 3.3.1: Criar arquivo `categories/forms.py`
-- [ ] 3.3.2: Importar forms e Category model
-- [ ] 3.3.3: Criar CategoryForm herdando de forms.ModelForm
-- [ ] 3.3.4: Configurar Meta com model e fields
-- [ ] 3.3.5: Definir fields: name, category_type, color
-- [ ] 3.3.6: Configurar widgets com classes TailwindCSS
-- [ ] 3.3.7: Usar input type color para campo color
-- [ ] 3.3.8: Adicionar labels em português
-- [ ] 3.3.9: Adicionar placeholders
-- [ ] 3.3.10: Traduzir choices para português
+- [X] 3.3.1: Criar arquivo `categories/forms.py`
+- [X] 3.3.2: Importar forms e Category model
+- [X] 3.3.3: Criar CategoryForm herdando de forms.ModelForm
+- [X] 3.3.4: Configurar Meta com model e fields
+- [X] 3.3.5: Definir fields: name, category_type, color
+- [X] 3.3.6: Configurar widgets com classes TailwindCSS
+- [X] 3.3.7: Usar input type color para campo color
+- [X] 3.3.8: Adicionar labels em português
+- [X] 3.3.9: Adicionar placeholders
+- [X] 3.3.10: Traduzir choices para português
+- [X] Tarefa 3.3 concluída
 
 #### Tarefa 3.4: View de Listagem de Categorias
 **Descrição**: Criar view para listar categorias
