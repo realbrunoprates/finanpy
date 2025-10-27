@@ -574,17 +574,18 @@
 **Descrição**: Criar model para categorias de transações
 
 **Subtarefas**:
-- [ ] 3.1.1: Abrir arquivo `categories/models.py`
-- [ ] 3.1.2: Importar models e get_user_model
-- [ ] 3.1.3: Criar classe Category com ForeignKey para User
-- [ ] 3.1.4: Adicionar campo name (CharField, max_length=50)
-- [ ] 3.1.5: Criar choices para category_type (INCOME, EXPENSE)
-- [ ] 3.1.6: Adicionar campo category_type com choices
-- [ ] 3.1.7: Adicionar campo color (CharField, max_length=7, default='#667eea')
-- [ ] 3.1.8: Adicionar campos created_at e updated_at
-- [ ] 3.1.9: Adicionar método __str__ retornando name
-- [ ] 3.1.10: Adicionar Meta com ordering e verbose_name
-- [ ] 3.1.11: Adicionar unique_together para (user, name)
+- [X] 3.1.1: Abrir arquivo `categories/models.py`
+- [X] 3.1.2: Importar models e get_user_model
+- [X] 3.1.3: Criar classe Category com ForeignKey para User
+- [X] 3.1.4: Adicionar campo name (CharField, max_length=50)
+- [X] 3.1.5: Criar choices para category_type (INCOME, EXPENSE)
+- [X] 3.1.6: Adicionar campo category_type com choices
+- [X] 3.1.7: Adicionar campo color (CharField, max_length=7, default='#667eea')
+- [X] 3.1.8: Adicionar campos created_at e updated_at
+- [X] 3.1.9: Adicionar método __str__ retornando name
+- [X] 3.1.10: Adicionar Meta com ordering e verbose_name
+- [X] 3.1.11: Adicionar unique_together para (user, name)
+- [X] Tarefa 3.1 concluída
 
 #### Tarefa 3.2: Admin de Category
 **Descrição**: Configurar Django Admin para categorias
