@@ -524,14 +524,15 @@
 **Descrição**: Configurar URLs para views de contas
 
 **Subtarefas**:
-- [ ] 2.11.1: Criar arquivo `accounts/urls.py`
-- [ ] 2.11.2: Importar path e views
-- [ ] 2.11.3: Criar urlpatterns list
-- [ ] 2.11.4: Adicionar path para list: path('', AccountListView.as_view(), name='account_list')
-- [ ] 2.11.5: Adicionar path para create: path('new/', AccountCreateView.as_view(), name='account_create')
-- [ ] 2.11.6: Adicionar path para update: path('<int:pk>/edit/', AccountUpdateView.as_view(), name='account_update')
-- [ ] 2.11.7: Adicionar path para delete: path('<int:pk>/delete/', AccountDeleteView.as_view(), name='account_delete')
-- [ ] 2.11.8: No arquivo `core/urls.py`, incluir accounts.urls: path('accounts/', include('accounts.urls'))
+- [X] 2.11.1: Criar arquivo `accounts/urls.py`
+- [X] 2.11.2: Importar path e views
+- [X] 2.11.3: Criar urlpatterns list
+- [X] 2.11.4: Adicionar path para list: path('', AccountListView.as_view(), name='account_list')
+- [X] 2.11.5: Adicionar path para create: path('new/', AccountCreateView.as_view(), name='account_create')
+- [X] 2.11.6: Adicionar path para update: path('<int:pk>/edit/', AccountUpdateView.as_view(), name='account_update')
+- [X] 2.11.7: Adicionar path para delete: path('<int:pk>/delete/', AccountDeleteView.as_view(), name='account_delete')
+- [X] 2.11.8: No arquivo `core/urls.py`, incluir accounts.urls: path('accounts/', include('accounts.urls'))
+- [X] Tarefa 2.11 concluída
 
 #### Tarefa 2.12: Migration de Account
 **Descrição**: Criar e aplicar migration para model Account

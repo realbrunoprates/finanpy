@@ -28,6 +28,8 @@ urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     # Authentication URLs
     path('auth/', include('users.urls')),
+    # Accounts URLs
+    path('accounts/', include('accounts.urls')),
     # Temporary test URL for base.html
     path('test-base/', TemplateView.as_view(template_name='test_base.html'), name='test_base'),
 ]
