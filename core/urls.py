@@ -30,6 +30,8 @@ urlpatterns = [
     path('auth/', include('users.urls')),
     # Accounts URLs
     path('accounts/', include('accounts.urls')),
+    # Categories URLs
+    path('categories/', include('categories.urls')),
     # Temporary test URL for base.html
     path('test-base/', TemplateView.as_view(template_name='test_base.html'), name='test_base'),
 ]
