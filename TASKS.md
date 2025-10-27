@@ -621,14 +621,15 @@
 **Descrição**: Criar view para listar categorias
 
 **Subtarefas**:
-- [ ] 3.4.1: Abrir arquivo `categories/views.py`
-- [ ] 3.4.2: Importar LoginRequiredMixin e ListView
-- [ ] 3.4.3: Importar Category model
-- [ ] 3.4.4: Criar CategoryListView
-- [ ] 3.4.5: Configurar model, template_name e context_object_name
-- [ ] 3.4.6: Override get_queryset para filtrar por usuário
-- [ ] 3.4.7: Adicionar ordenação por categoria_type e name
-- [ ] 3.4.8: Adicionar separação de categorias de entrada e saída no context
+- [X] 3.4.1: Abrir arquivo `categories/views.py`
+- [X] 3.4.2: Importar LoginRequiredMixin e ListView
+- [X] 3.4.3: Importar Category model
+- [X] 3.4.4: Criar CategoryListView
+- [X] 3.4.5: Configurar model, template_name e context_object_name
+- [X] 3.4.6: Override get_queryset para filtrar por usuário
+- [X] 3.4.7: Adicionar ordenação por categoria_type e name
+- [X] 3.4.8: Adicionar separação de categorias de entrada e saída no context
+- [X] Tarefa 3.4 concluída
 
 #### Tarefa 3.5: Template de Listagem de Categorias
 **Descrição**: Criar template para listar categorias
