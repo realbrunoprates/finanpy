@@ -538,10 +538,11 @@
 **Descrição**: Criar e aplicar migration para model Account
 
 **Subtarefas**:
-- [ ] 2.12.1: Executar: `python manage.py makemigrations accounts`
-- [ ] 2.12.2: Verificar arquivo de migration gerado
-- [ ] 2.12.3: Executar: `python manage.py migrate`
-- [ ] 2.12.4: Verificar tabela no banco de dados
+- [X] 2.12.1: Executar: `python manage.py makemigrations accounts`
+- [X] 2.12.2: Verificar arquivo de migration gerado
+- [X] 2.12.3: Executar: `python manage.py migrate`
+- [X] 2.12.4: Verificar tabela no banco de dados
+- [X] Tarefa 2.12 concluída
 
 #### Tarefa 2.13: Testes Manuais de Accounts
 **Descrição**: Testar CRUD completo de contas
