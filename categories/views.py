@@ -1,9 +1,13 @@
 # Django imports
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.db import IntegrityError
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 
 # Local imports
 from .models import Category
+from .forms import CategoryForm
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -42,3 +46,44 @@ class CategoryListView(LoginRequiredMixin, ListView):
         ).order_by('name')
 
         return context
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    """
+    View para criar uma nova categoria.
+    Associa automaticamente a categoria ao usuário logado.
+    """
+    model = Category
+    form_class = CategoryForm
+    template_name = 'categories/category_form.html'
+    success_url = reverse_lazy('categories:category_list')
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona título da página ao contexto.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Nova Categoria'
+        return context
+
+    def form_valid(self, form):
+        """
+        Associa o usuário logado à categoria antes de salvar.
+        Trata erro de nome duplicado (unique_together user+name).
+        """
+        try:
+            # Associa o usuário logado
+            form.instance.user = self.request.user
+
+            # Salva a categoria
+            response = super().form_valid(form)
+
+            # Mensagem de sucesso
+            messages.success(self.request, 'Categoria criada com sucesso!')
+
+            return response
+
+        except IntegrityError:
+            # Erro de nome duplicado para o mesmo usuário
+            form.add_error('name', 'Você já possui uma categoria com este nome.')
+            return self.form_invalid(form)
