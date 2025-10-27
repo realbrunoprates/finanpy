@@ -721,12 +721,13 @@
 **Descrição**: Criar signal para adicionar categorias padrão ao novo usuário
 
 **Subtarefas**:
-- [ ] 3.12.1: Criar arquivo `categories/signals.py`
-- [ ] 3.12.2: Criar função para criar categorias padrão
-- [ ] 3.12.3: Definir lista de categorias padrão (Salário, Alimentação, Transporte, etc)
-- [ ] 3.12.4: Conectar ao signal post_save de User
-- [ ] 3.12.5: Importar signals no apps.py
-- [ ] 3.12.6: Testar criação automática
+- [X] 3.12.1: Criar arquivo `categories/signals.py`
+- [X] 3.12.2: Criar função para criar categorias padrão
+- [X] 3.12.3: Definir lista de categorias padrão (Salário, Alimentação, Transporte, etc)
+- [X] 3.12.4: Conectar ao signal post_save de User
+- [X] 3.12.5: Importar signals no apps.py
+- [X] 3.12.6: Testar criação automática
+- [X] Tarefa 3.12 concluída
 
 #### Tarefa 3.13: Testes Manuais de Categories
 **Descrição**: Testar CRUD de categorias
