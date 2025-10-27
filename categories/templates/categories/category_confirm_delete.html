@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão - Finanpy{% endblock %}
+
+{% block content %}
+<div class='max-w-2xl mx-auto'>
+    <!-- Page Header -->
+    <div class='mb-8 text-center'>
+        <h1 class='text-3xl md:text-4xl font-bold text-text-primary mb-2'>
+            Confirmar Exclusão de Categoria
+        </h1>
+        <p class='text-text-secondary text-base'>
+            Verifique os dados antes de confirmar a exclusão permanente.
+        </p>
+    </div>
+
+    <!-- Confirmation Card with Danger Styling -->
+    <div class='bg-bg-secondary rounded-xl shadow-xl border border-error/50 p-6 md:p-8'>
+        <!-- Warning Alert -->
+        <div class='bg-error/10 border border-error/30 rounded-lg p-4 mb-6'>
+            <div class='flex items-start gap-3'>
+                <!-- Warning Icon -->
+                <div class='flex-shrink-0'>
+                    <svg class='w-6 h-6 text-error' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z' clip-rule='evenodd'/>
+                    </svg>
+                </div>
+                <!-- Warning Text -->
+                <div class='flex-1'>
+                    <p class='text-error font-semibold mb-1'>Atenção: Esta ação não pode ser desfeita!</p>
+                    <p class='text-error text-sm'>
+                        A exclusão da categoria é permanente. Todas as transações que usam esta categoria ficarão sem classificação.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Information -->
+        <div class='mb-6'>
+            <p class='text-text-secondary text-base mb-2'>
+                Tem certeza que deseja excluir a categoria:
+            </p>
+            <div class='bg-bg-tertiary/50 rounded-lg p-4 border border-bg-tertiary'>
+                <div class='flex items-center gap-3 mb-3'>
+                    <!-- Color Badge -->
+                    <div class='w-10 h-10 rounded-full border-2 border-bg-primary shadow-md' style='background-color: {{ object.color }};'></div>
+                    <!-- Category Name -->
+                    <p class='text-text-primary text-2xl font-bold'>
+                        {{ object.name }}
+                    </p>
+                </div>
+                <div class='space-y-1 text-text-secondary text-sm'>
+                    <!-- Category Type -->
+                    <div class='flex items-center gap-2'>
+                        {% if object.category_type == 'income' %}
+                            <svg class='w-4 h-4 text-success' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 11l5-5m0 0l5 5m-5-5v12'/>
+                            </svg>
+                            <span class='text-success font-semibold'>Entrada</span>
+                        {% elif object.category_type == 'expense' %}
+                            <svg class='w-4 h-4 text-error' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 13l-5 5m0 0l-5-5m5 5V6'/>
+                            </svg>
+                            <span class='text-error font-semibold'>Saída</span>
+                        {% else %}
+                            <span>{{ object.get_category_type_display }}</span>
+                        {% endif %}
+                    </div>
+                    <!-- Color Code -->
+                    <div class='flex items-center gap-2'>
+                        <svg class='w-4 h-4 text-text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01'/>
+                        </svg>
+                        <span class='font-mono text-xs'>Cor: {{ object.color }}</span>
+                    </div>
+                    <!-- Created Date -->
+                    <div class='flex items-center gap-2'>
+                        <svg class='w-4 h-4 text-text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/>
+                        </svg>
+                        <span>Criada em: {{ object.created_at|date:'d/m/Y' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Form -->
+        <form method='post'>
+            {% csrf_token %}
+            <div class='flex flex-col sm:flex-row gap-3'>
+                <!-- Cancel Button -->
+                <a href='{% url "categories:list" %}' class='flex-1 px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center'>
+                    Cancelar
+                </a>
+                <!-- Confirm Delete Button -->
+                <button type='submit' class='flex-1 px-6 py-3 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
+                    Confirmar Exclusão
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Additional Info Card -->
+    <div class='mt-6 bg-bg-secondary rounded-lg p-4 border border-bg-tertiary'>
+        <p class='text-text-muted text-sm'>
+            <span class='font-semibold text-text-secondary'>Dica:</span>
+            Ao excluir esta categoria, as transações associadas não serão removidas, mas ficarão sem categoria definida.
+            Considere editar a categoria ao invés de excluí-la, se quiser apenas mudar o nome ou cor.
+        </p>
+    </div>
+</div>
+{% endblock %}
