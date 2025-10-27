@@ -548,20 +548,23 @@
 **Descrição**: Testar CRUD completo de contas
 
 **Subtarefas**:
-- [ ] 2.13.1: Fazer login no sistema
-- [ ] 2.13.2: Acessar página de contas
-- [ ] 2.13.3: Verificar mensagem de lista vazia
-- [ ] 2.13.4: Criar nova conta corrente
-- [ ] 2.13.5: Verificar redirecionamento e mensagem de sucesso
-- [ ] 2.13.6: Criar conta poupança
-- [ ] 2.13.7: Criar conta tipo carteira
-- [ ] 2.13.8: Verificar que todas as contas aparecem na listagem
-- [ ] 2.13.9: Editar nome de uma conta
-- [ ] 2.13.10: Editar saldo de uma conta
-- [ ] 2.13.11: Tentar excluir uma conta
-- [ ] 2.13.12: Verificar que conta foi excluída
-- [ ] 2.13.13: Verificar que outro usuário não vê as contas
-- [ ] 2.13.14: Verificar cálculo de saldo total
+- [X] 2.13.1: Fazer login no sistema
+- [X] 2.13.2: Acessar página de contas
+- [X] 2.13.3: Verificar mensagem de lista vazia
+- [X] 2.13.4: Criar nova conta corrente
+- [X] 2.13.5: Verificar redirecionamento e mensagem de sucesso
+- [X] 2.13.6: Criar conta poupança
+- [X] 2.13.7: Criar conta tipo carteira
+- [X] 2.13.8: Verificar que todas as contas aparecem na listagem
+- [X] 2.13.9: Editar nome de uma conta
+- [X] 2.13.10: Editar saldo de uma conta
+- [X] 2.13.11: Tentar excluir uma conta
+- [X] 2.13.12: Verificar que conta foi excluída
+- [X] 2.13.13: Verificar que outro usuário não vê as contas
+- [X] 2.13.14: Verificar cálculo de saldo total
+- [X] Tarefa 2.13 concluída
+
+**[X] SPRINT 2 CONCLUÍDA**
 
 ---
 
