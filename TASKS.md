@@ -635,17 +635,18 @@
 **Descrição**: Criar template para listar categorias
 
 **Subtarefas**:
-- [ ] 3.5.1: Criar arquivo `templates/categories/category_list.html`
-- [ ] 3.5.2: Extender base.html
-- [ ] 3.5.3: Adicionar título "Minhas Categorias"
-- [ ] 3.5.4: Criar header com botão "Nova Categoria"
-- [ ] 3.5.5: Criar duas seções: Entradas e Saídas
-- [ ] 3.5.6: Iterar sobre categorias de entrada
-- [ ] 3.5.7: Para cada categoria, criar badge com nome e cor
-- [ ] 3.5.8: Adicionar botões de Editar e Excluir
-- [ ] 3.5.9: Repetir para categorias de saída
-- [ ] 3.5.10: Adicionar mensagem quando não houver categorias
-- [ ] 3.5.11: Usar cores diferentes para entrada (verde) e saída (vermelho)
+- [X] 3.5.1: Criar arquivo `templates/categories/category_list.html`
+- [X] 3.5.2: Extender base.html
+- [X] 3.5.3: Adicionar título "Minhas Categorias"
+- [X] 3.5.4: Criar header com botão "Nova Categoria"
+- [X] 3.5.5: Criar duas seções: Entradas e Saídas
+- [X] 3.5.6: Iterar sobre categorias de entrada
+- [X] 3.5.7: Para cada categoria, criar badge com nome e cor
+- [X] 3.5.8: Adicionar botões de Editar e Excluir
+- [X] 3.5.9: Repetir para categorias de saída
+- [X] 3.5.10: Adicionar mensagem quando não houver categorias
+- [X] 3.5.11: Usar cores diferentes para entrada (verde) e saída (vermelho)
+- [X] Tarefa 3.5 concluída
 
 #### Tarefa 3.6: View de Criação de Categoria
 **Descrição**: Criar view para cadastrar categoria
