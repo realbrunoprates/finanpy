@@ -591,14 +591,15 @@
 **Descrição**: Configurar Django Admin para categorias
 
 **Subtarefas**:
-- [ ] 3.2.1: Abrir arquivo `categories/admin.py`
-- [ ] 3.2.2: Importar admin e Category model
-- [ ] 3.2.3: Criar classe CategoryAdmin
-- [ ] 3.2.4: Configurar list_display: user email, name, category_type, color
-- [ ] 3.2.5: Configurar list_filter: category_type
-- [ ] 3.2.6: Configurar search_fields: name, user__email
-- [ ] 3.2.7: Configurar readonly_fields: created_at, updated_at
-- [ ] 3.2.8: Registrar Category com CategoryAdmin
+- [X] 3.2.1: Abrir arquivo `categories/admin.py`
+- [X] 3.2.2: Importar admin e Category model
+- [X] 3.2.3: Criar classe CategoryAdmin
+- [X] 3.2.4: Configurar list_display: user email, name, category_type, color
+- [X] 3.2.5: Configurar list_filter: category_type
+- [X] 3.2.6: Configurar search_fields: name, user__email
+- [X] 3.2.7: Configurar readonly_fields: created_at, updated_at
+- [X] 3.2.8: Registrar Category com CategoryAdmin
+- [X] Tarefa 3.2 concluída
 
 #### Tarefa 3.3: Form de Category
 **Descrição**: Criar formulário para categorias
