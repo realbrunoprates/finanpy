@@ -948,19 +948,20 @@
 **Descrição**: Criar view principal do dashboard com estatísticas
 
 **Subtarefas**:
-- [ ] 5.1.1: Criar arquivo `users/views.py` (ou usar existente)
-- [ ] 5.1.2: Importar TemplateView e modelos necessários
-- [ ] 5.1.3: Criar DashboardView herdando de LoginRequiredMixin e TemplateView
-- [ ] 5.1.4: Configurar template_name = 'dashboard.html'
-- [ ] 5.1.5: Override get_context_data
-- [ ] 5.1.6: Calcular saldo total de todas as contas do usuário
-- [ ] 5.1.7: Calcular total de entradas do mês atual
-- [ ] 5.1.8: Calcular total de saídas do mês atual
-- [ ] 5.1.9: Calcular balanço do mês (entradas - saídas)
-- [ ] 5.1.10: Buscar últimas 10 transações do usuário
-- [ ] 5.1.11: Calcular totais por categoria do mês
-- [ ] 5.1.12: Contar número de contas ativas
-- [ ] 5.1.13: Adicionar todos os dados ao context
+- [X] 5.1.1: Criar arquivo `users/views.py` (ou usar existente)
+- [X] 5.1.2: Importar TemplateView e modelos necessários
+- [X] 5.1.3: Criar DashboardView herdando de LoginRequiredMixin e TemplateView
+- [X] 5.1.4: Configurar template_name = 'dashboard.html'
+- [X] 5.1.5: Override get_context_data
+- [X] 5.1.6: Calcular saldo total de todas as contas do usuário
+- [X] 5.1.7: Calcular total de entradas do mês atual
+- [X] 5.1.8: Calcular total de saídas do mês atual
+- [X] 5.1.9: Calcular balanço do mês (entradas - saídas)
+- [X] 5.1.10: Buscar últimas 10 transações do usuário
+- [X] 5.1.11: Calcular totais por categoria do mês
+- [X] 5.1.12: Contar número de contas ativas
+- [X] 5.1.13: Adicionar todos os dados ao context
+- [X] Tarefa 5.1 concluída
 
 #### Tarefa 5.2: Template do Dashboard
 **Descrição**: Criar template HTML do dashboard principal
