@@ -792,14 +792,15 @@
 **Descrição**: Configurar Django Admin para transações
 
 **Subtarefas**:
-- [ ] 4.3.1: Abrir arquivo `transactions/admin.py`
-- [ ] 4.3.2: Criar TransactionAdmin
-- [ ] 4.3.3: Configurar list_display: transaction_date, description, account, category, transaction_type, amount
-- [ ] 4.3.4: Configurar list_filter: transaction_type, transaction_date, category
-- [ ] 4.3.5: Configurar search_fields: description, account__name
-- [ ] 4.3.6: Configurar date_hierarchy: transaction_date
-- [ ] 4.3.7: Configurar readonly_fields: created_at, updated_at
-- [ ] 4.3.8: Registrar Transaction
+- [X] 4.3.1: Abrir arquivo `transactions/admin.py`
+- [X] 4.3.2: Criar TransactionAdmin
+- [X] 4.3.3: Configurar list_display: transaction_date, description, account, category, transaction_type, amount
+- [X] 4.3.4: Configurar list_filter: transaction_type, transaction_date, category
+- [X] 4.3.5: Configurar search_fields: description, account__name
+- [X] 4.3.6: Configurar date_hierarchy: transaction_date
+- [X] 4.3.7: Configurar readonly_fields: created_at, updated_at
+- [X] 4.3.8: Registrar Transaction
+- [X] Tarefa 4.3 concluída
 
 #### Tarefa 4.4: Form de Transaction
 **Descrição**: Criar formulário para transações

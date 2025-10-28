@@ -13,26 +13,22 @@ class TransactionAdmin(admin.ModelAdmin):
 
     list_display = [
         'transaction_date',
+        'description',
         'account',
         'category',
         'transaction_type',
-        'amount',
-        'description_short',
-        'created_at'
+        'amount'
     ]
 
     list_filter = [
         'transaction_type',
         'transaction_date',
-        'created_at',
-        'account',
         'category'
     ]
 
     search_fields = [
         'description',
-        'account__name',
-        'category__name'
+        'account__name'
     ]
 
     date_hierarchy = 'transaction_date'
@@ -54,14 +50,6 @@ class TransactionAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-
-    def description_short(self, obj):
-        """Retorna descrição truncada para list_display."""
-        if obj.description:
-            return obj.description[:50] + '...' if len(obj.description) > 50 else obj.description
-        return '-'
-
-    description_short.short_description = 'Descrição'
 
     def get_queryset(self, request):
         """
