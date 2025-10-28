@@ -774,18 +774,19 @@
 **Descrição**: Criar signals para atualizar saldo da conta automaticamente
 
 **Subtarefas**:
-- [ ] 4.2.1: Criar arquivo `transactions/signals.py`
-- [ ] 4.2.2: Importar post_save, post_delete, pre_save
-- [ ] 4.2.3: Criar função update_balance_on_create
-- [ ] 4.2.4: Conectar ao post_save de Transaction
-- [ ] 4.2.5: Implementar lógica: se INCOME adiciona, se EXPENSE subtrai
-- [ ] 4.2.6: Criar função update_balance_on_delete
-- [ ] 4.2.7: Implementar lógica reversa ao excluir
-- [ ] 4.2.8: Criar função update_balance_on_update usando pre_save
-- [ ] 4.2.9: Salvar valores antigos antes de atualizar
-- [ ] 4.2.10: Recalcular saldo considerando mudanças
-- [ ] 4.2.11: Importar signals no apps.py
-- [ ] 4.2.12: Adicionar tratamento de erros
+- [X] 4.2.1: Criar arquivo `transactions/signals.py`
+- [X] 4.2.2: Importar post_save, post_delete, pre_save
+- [X] 4.2.3: Criar função update_balance_on_create
+- [X] 4.2.4: Conectar ao post_save de Transaction
+- [X] 4.2.5: Implementar lógica: se INCOME adiciona, se EXPENSE subtrai
+- [X] 4.2.6: Criar função update_balance_on_delete
+- [X] 4.2.7: Implementar lógica reversa ao excluir
+- [X] 4.2.8: Criar função update_balance_on_update usando pre_save
+- [X] 4.2.9: Salvar valores antigos antes de atualizar
+- [X] 4.2.10: Recalcular saldo considerando mudanças
+- [X] 4.2.11: Importar signals no apps.py
+- [X] 4.2.12: Adicionar tratamento de erros
+- [X] Tarefa 4.2 concluída
 
 #### Tarefa 4.3: Admin de Transaction
 **Descrição**: Configurar Django Admin para transações
