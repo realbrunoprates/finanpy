@@ -733,16 +733,19 @@
 **Descrição**: Testar CRUD de categorias
 
 **Subtarefas**:
-- [ ] 3.13.1: Fazer login
-- [ ] 3.13.2: Acessar página de categorias
-- [ ] 3.13.3: Verificar categorias padrão criadas
-- [ ] 3.13.4: Criar categoria de entrada personalizada
-- [ ] 3.13.5: Criar categoria de saída personalizada
-- [ ] 3.13.6: Testar seletor de cor
-- [ ] 3.13.7: Editar categoria
-- [ ] 3.13.8: Tentar criar categoria com nome duplicado
-- [ ] 3.13.9: Excluir categoria
-- [ ] 3.13.10: Verificar separação visual entre entradas e saídas
+- [X] 3.13.1: Fazer login
+- [X] 3.13.2: Acessar página de categorias
+- [X] 3.13.3: Verificar categorias padrão criadas
+- [X] 3.13.4: Criar categoria de entrada personalizada
+- [X] 3.13.5: Criar categoria de saída personalizada
+- [X] 3.13.6: Testar seletor de cor
+- [X] 3.13.7: Editar categoria
+- [X] 3.13.8: Tentar criar categoria com nome duplicado
+- [X] 3.13.9: Excluir categoria
+- [X] 3.13.10: Verificar separação visual entre entradas e saídas
+- [X] Tarefa 3.13 concluída
+
+**[X] SPRINT 3 CONCLUÍDA**
 
 ---
 
