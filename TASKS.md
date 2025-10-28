@@ -838,21 +838,22 @@
 **Descrição**: Criar template para listar transações
 
 **Subtarefas**:
-- [ ] 4.6.1: Criar `templates/transactions/transaction_list.html`
-- [ ] 4.6.2: Extender base.html
-- [ ] 4.6.3: Criar header com título e botão "Nova Transação"
-- [ ] 4.6.4: Criar seção de filtros com formulário GET
-- [ ] 4.6.5: Adicionar inputs para data início e fim
-- [ ] 4.6.6: Adicionar select para conta
-- [ ] 4.6.7: Adicionar select para categoria
-- [ ] 4.6.8: Adicionar botão "Filtrar" e "Limpar Filtros"
-- [ ] 4.6.9: Criar seção de cards com estatísticas (Total Entradas, Total Saídas, Balanço)
-- [ ] 4.6.10: Criar tabela responsiva para transações
-- [ ] 4.6.11: Colunas: Data, Descrição, Conta, Categoria, Tipo, Valor, Ações
-- [ ] 4.6.12: Usar cores diferentes para INCOME (verde) e EXPENSE (vermelho)
-- [ ] 4.6.13: Adicionar botões Editar e Excluir
-- [ ] 4.6.14: Adicionar paginação
-- [ ] 4.6.15: Adicionar mensagem quando lista vazia
+- [X] 4.6.1: Criar `templates/transactions/transaction_list.html`
+- [X] 4.6.2: Extender base.html
+- [X] 4.6.3: Criar header com título e botão "Nova Transação"
+- [X] 4.6.4: Criar seção de filtros com formulário GET
+- [X] 4.6.5: Adicionar inputs para data início e fim
+- [X] 4.6.6: Adicionar select para conta
+- [X] 4.6.7: Adicionar select para categoria
+- [X] 4.6.8: Adicionar botão "Filtrar" e "Limpar Filtros"
+- [X] 4.6.9: Criar seção de cards com estatísticas (Total Entradas, Total Saídas, Balanço)
+- [X] 4.6.10: Criar tabela responsiva para transações
+- [X] 4.6.11: Colunas: Data, Descrição, Conta, Categoria, Tipo, Valor, Ações
+- [X] 4.6.12: Usar cores diferentes para INCOME (verde) e EXPENSE (vermelho)
+- [X] 4.6.13: Adicionar botões Editar e Excluir
+- [X] 4.6.14: Adicionar paginação
+- [X] 4.6.15: Adicionar mensagem quando lista vazia
+- [X] Tarefa 4.6 concluída
 
 #### Tarefa 4.7: View de Criação de Transação
 **Descrição**: Criar view para registrar nova transação

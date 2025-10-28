@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title %}Transações - Finanpy{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
+    <h1 class="text-3xl md:text-4xl font-bold text-text-primary">Transações</h1>
+    <a href="{% url 'transactions:transaction_create' %}" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center">
+        + Nova Transação
+    </a>
+</div>
+
+<!-- Filters Section -->
+<div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary mb-8">
+    <h2 class="text-xl font-semibold text-text-primary mb-4">Filtros</h2>
+    <form method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+            <label for="data_inicio" class="block text-text-secondary text-sm font-medium mb-2">
+                Data Início
+            </label>
+            <input
+                type="date"
+                id="data_inicio"
+                name="data_inicio"
+                value="{{ request.GET.data_inicio }}"
+                class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+            >
+        </div>
+
+        <div>
+            <label for="data_fim" class="block text-text-secondary text-sm font-medium mb-2">
+                Data Fim
+            </label>
+            <input
+                type="date"
+                id="data_fim"
+                name="data_fim"
+                value="{{ request.GET.data_fim }}"
+                class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+            >
+        </div>
+
+        <div>
+            <label for="account" class="block text-text-secondary text-sm font-medium mb-2">
+                Conta
+            </label>
+            <select
+                id="account"
+                name="account"
+                class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+            >
+                <option value="">Todas as contas</option>
+                {% for account in accounts %}
+                    <option value="{{ account.id }}" {% if request.GET.account == account.id|stringformat:'s' %}selected{% endif %}>
+                        {{ account.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="category" class="block text-text-secondary text-sm font-medium mb-2">
+                Categoria
+            </label>
+            <select
+                id="category"
+                name="category"
+                class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+            >
+                <option value="">Todas as categorias</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:'s' %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+            <button type="submit" class="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl">
+                Filtrar
+            </button>
+            <a href="{% url 'transactions:transaction_list' %}" class="flex-1 sm:flex-none px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center">
+                Limpar Filtros
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Statistics Cards Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Total Income Card -->
+    <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-success transition-all duration-200">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-text-secondary text-sm font-medium">Total Entradas</span>
+            <span class="text-success text-xl">↑</span>
+        </div>
+        <p class="text-2xl md:text-3xl font-bold text-success">R$ {{ total_income|floatformat:2 }}</p>
+    </div>
+
+    <!-- Total Expense Card -->
+    <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-error transition-all duration-200">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-text-secondary text-sm font-medium">Total Saídas</span>
+            <span class="text-error text-xl">↓</span>
+        </div>
+        <p class="text-2xl md:text-3xl font-bold text-error">R$ {{ total_expense|floatformat:2 }}</p>
+    </div>
+
+    <!-- Balance Card -->
+    <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-{% if balance >= 0 %}info{% else %}error{% endif %} transition-all duration-200">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-text-secondary text-sm font-medium">Balanço</span>
+            <span class="{% if balance >= 0 %}text-info{% else %}text-error{% endif %} text-xl">{% if balance >= 0 %}={% else %}↓{% endif %}</span>
+        </div>
+        <p class="text-2xl md:text-3xl font-bold {% if balance >= 0 %}text-info{% else %}text-error{% endif %}">R$ {{ balance|floatformat:2 }}</p>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+{% if page_obj %}
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary overflow-hidden mb-8">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-bg-tertiary">
+                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Data</th>
+                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Descrição</th>
+                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Conta</th>
+                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Categoria</th>
+                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Tipo</th>
+                    <th class="px-6 py-4 text-right text-text-secondary text-sm font-semibold">Valor</th>
+                    <th class="px-6 py-4 text-center text-text-secondary text-sm font-semibold">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in page_obj %}
+                <tr class="border-t border-bg-tertiary hover:bg-bg-tertiary transition-all duration-150">
+                    <td class="px-6 py-4 text-text-primary">{{ transaction.transaction_date|date:'d/m/Y' }}</td>
+                    <td class="px-6 py-4 text-text-primary">{{ transaction.description }}</td>
+                    <td class="px-6 py-4 text-text-secondary">{{ transaction.account.name }}</td>
+                    <td class="px-6 py-4 text-text-secondary">{{ transaction.category.name }}</td>
+                    <td class="px-6 py-4">
+                        {% if transaction.transaction_type == 'INCOME' %}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                                Entrada
+                            </span>
+                        {% else %}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20">
+                                Saída
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-right font-semibold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}">
+                        R$ {{ transaction.amount|floatformat:2 }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center justify-center space-x-2">
+                            <a href="{% url 'transactions:transaction_update' transaction.id %}" class="px-3 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                                Editar
+                            </a>
+                            <a href="{% url 'transactions:transaction_delete' transaction.id %}" class="px-3 py-2 bg-error/10 text-error rounded-lg text-sm font-medium hover:bg-error hover:text-white transition-all duration-200 border border-error/20">
+                                Excluir
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="px-6 py-8 text-center text-text-muted">
+                        Nenhuma transação encontrada.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="lg:hidden space-y-4 mb-8">
+        {% for transaction in page_obj %}
+        <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-text-primary mb-1">{{ transaction.description }}</h3>
+                    <p class="text-text-muted text-sm">{{ transaction.transaction_date|date:'d/m/Y' }}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xl font-bold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}">
+                        R$ {{ transaction.amount|floatformat:2 }}
+                    </p>
+                    {% if transaction.transaction_type == 'INCOME' %}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20 mt-1">
+                            Entrada
+                        </span>
+                    {% else %}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20 mt-1">
+                            Saída
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="space-y-2 mb-4 pb-4 border-b border-bg-tertiary">
+                <div class="flex items-center justify-between">
+                    <span class="text-text-muted text-sm">Conta:</span>
+                    <span class="text-text-primary text-sm font-medium">{{ transaction.account.name }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-text-muted text-sm">Categoria:</span>
+                    <span class="text-text-primary text-sm font-medium">{{ transaction.category.name }}</span>
+                </div>
+            </div>
+
+            <div class="flex space-x-2">
+                <a href="{% url 'transactions:transaction_update' transaction.id %}" class="flex-1 px-4 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary text-center">
+                    Editar
+                </a>
+                <a href="{% url 'transactions:transaction_delete' transaction.id %}" class="flex-1 px-4 py-2 bg-error/10 text-error rounded-lg text-sm font-medium hover:bg-error hover:text-white transition-all duration-200 border border-error/20 text-center">
+                    Excluir
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary">
+            <p class="text-text-muted text-lg mb-4">Nenhuma transação encontrada.</p>
+            <a href="{% url 'transactions:transaction_create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200">
+                Criar Primeira Transação
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="flex items-center justify-center space-x-2">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Primeira
+            </a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Anterior
+            </a>
+        {% endif %}
+
+        <span class="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium">
+            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Próxima
+            </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Última
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% else %}
+    <!-- Empty State -->
+    <div class="bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary">
+        <p class="text-text-muted text-lg mb-4">Nenhuma transação cadastrada.</p>
+        <a href="{% url 'transactions:transaction_create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200">
+            Criar Primeira Transação
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
