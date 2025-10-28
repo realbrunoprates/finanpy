@@ -176,8 +176,8 @@
                             <td class='px-4 py-3 text-text-secondary text-sm'>
                                 {{ transaction.account.name|truncatechars:15 }}
                             </td>
-                            <td class='px-4 py-3 text-right text-sm font-semibold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}'>
-                                {% if transaction.transaction_type == 'INCOME' %}+{% endif %}{{ transaction.amount|currency }}
+                            <td class='px-4 py-3 text-right text-sm font-semibold {% if transaction.transaction_type == 'income' %}text-success{% else %}text-error{% endif %}'>
+                                {% if transaction.transaction_type == 'income' %}+{% endif %}{{ transaction.amount|currency }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -194,8 +194,8 @@
                             <p class='text-text-primary font-medium text-sm'>{{ transaction.description|truncatechars:30 }}</p>
                             <p class='text-text-muted text-xs'>{{ transaction.transaction_date|date:'d/m/Y' }} • {{ transaction.account.name }}</p>
                         </div>
-                        <p class='text-sm font-bold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}'>
-                            {% if transaction.transaction_type == 'INCOME' %}+{% endif %}{{ transaction.amount|currency }}
+                        <p class='text-sm font-bold {% if transaction.transaction_type == 'income' %}text-success{% else %}text-error{% endif %}'>
+                            {% if transaction.transaction_type == 'income' %}+{% endif %}{{ transaction.amount|currency }}
                         </p>
                     </div>
                 </div>

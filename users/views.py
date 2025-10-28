@@ -48,16 +48,8 @@ class LoginView(FormView):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
 
-        # Authenticate user by email
-        # Django authenticate expects username, but we need to find user by email first
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-
-        try:
-            user_obj = User.objects.get(email=email)
-            user = authenticate(self.request, username=user_obj.username, password=password)
-        except User.DoesNotExist:
-            user = None
+        # Authenticate using the custom user model (email is the USERNAME_FIELD)
+        user = authenticate(request=self.request, email=email, password=password)
 
         if user is not None:
             # Successful authentication

@@ -77,7 +77,7 @@
 
             <!-- Action Buttons -->
             <div class='flex gap-3'>
-                <a href='{% url "accounts:edit" account.id %}' class='flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-all duration-200 text-center text-sm' title='Editar conta {{ account.name }}'>
+                <a href='{% url "accounts:update" account.id %}' class='flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-all duration-200 text-center text-sm' title='Editar conta {{ account.name }}'>
                     Editar
                 </a>
                 <a href='{% url "accounts:delete" account.id %}' class='flex-1 px-4 py-2 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 text-center text-sm' data-confirm='Tem certeza que deseja excluir a conta {{ account.name }}?' title='Excluir conta {{ account.name }}'>

@@ -146,7 +146,7 @@
                     <td class="px-6 py-4 text-text-secondary">{{ transaction.account.name }}</td>
                     <td class="px-6 py-4 text-text-secondary">{{ transaction.category.name }}</td>
                     <td class="px-6 py-4">
-                        {% if transaction.transaction_type == 'INCOME' %}
+                        {% if transaction.transaction_type == 'income' %}
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20" title="Transação de entrada">
                                 Entrada
                             </span>
@@ -156,7 +156,7 @@
                             </span>
                         {% endif %}
                     </td>
-                    <td class="px-6 py-4 text-right font-semibold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}">
+                    <td class="px-6 py-4 text-right font-semibold {% if transaction.transaction_type == 'income' %}text-success{% else %}text-error{% endif %}">
                         {{ transaction.amount|currency }}
                     </td>
                     <td class="px-6 py-4">
@@ -206,10 +206,10 @@
                     <p class="text-text-muted text-sm">{{ transaction.transaction_date|date:'d/m/Y' }}</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-xl font-bold {% if transaction.transaction_type == 'INCOME' %}text-success{% else %}text-error{% endif %}">
+                    <p class="text-xl font-bold {% if transaction.transaction_type == 'income' %}text-success{% else %}text-error{% endif %}">
                         {{ transaction.amount|currency }}
                     </p>
-                    {% if transaction.transaction_type == 'INCOME' %}
+                    {% if transaction.transaction_type == 'income' %}
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20 mt-1" title="Transação de entrada">
                             Entrada
                         </span>

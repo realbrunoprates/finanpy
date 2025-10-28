@@ -1100,18 +1100,21 @@
 **Descrição**: Testar fluxo completo da aplicação
 
 **Subtarefas**:
-- [ ] 5.10.1: Testar cadastro de novo usuário
-- [ ] 5.10.2: Verificar criação automática de perfil e categorias
-- [ ] 5.10.3: Navegar pelo dashboard
-- [ ] 5.10.4: Criar contas, categorias e transações
-- [ ] 5.10.5: Verificar cálculos no dashboard
-- [ ] 5.10.6: Testar filtros de transações
-- [ ] 5.10.7: Editar perfil
-- [ ] 5.10.8: Testar navegação entre páginas
-- [ ] 5.10.9: Testar responsividade mobile
-- [ ] 5.10.10: Verificar mensagens de feedback
-- [ ] 5.10.11: Testar logout e login novamente
-- [ ] 5.10.12: Verificar isolamento de dados entre usuários
+- [X] 5.10.1: Testar cadastro de novo usuário
+- [X] 5.10.2: Verificar criação automática de perfil e categorias
+- [X] 5.10.3: Navegar pelo dashboard
+- [X] 5.10.4: Criar contas, categorias e transações
+- [X] 5.10.5: Verificar cálculos no dashboard
+- [X] 5.10.6: Testar filtros de transações
+- [X] 5.10.7: Editar perfil
+- [X] 5.10.8: Testar navegação entre páginas
+- [X] 5.10.9: Testar responsividade mobile
+- [X] 5.10.10: Verificar mensagens de feedback
+- [X] 5.10.11: Testar logout e login novamente
+- [X] 5.10.12: Verificar isolamento de dados entre usuários
+- [X] Tarefa 5.10 concluída
+
+**[X] SPRINT 5 CONCLUÍDA**
 
 ---
 
