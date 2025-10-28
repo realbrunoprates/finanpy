@@ -1146,11 +1146,12 @@
 **Descrição**: Implementar funcionalidades de busca
 
 **Subtarefas**:
-- [ ] 6.3.1: Adicionar campo de busca em transações (descrição)
-- [ ] 6.3.2: Adicionar filtro por status ativo em contas
-- [ ] 6.3.3: Implementar busca em categorias
-- [ ] 6.3.4: Adicionar filtros rápidos (Este Mês, Último Mês, etc)
-- [ ] 6.3.5: Salvar filtros em query string
+- [X] 6.3.1: Adicionar campo de busca em transações (descrição)
+- [X] 6.3.2: Adicionar filtro por status ativo em contas
+- [X] 6.3.3: Implementar busca em categorias
+- [X] 6.3.4: Adicionar filtros rápidos (Este Mês, Último Mês, etc)
+- [X] 6.3.5: Salvar filtros em query string
+- [X] Tarefa 6.3 concluída
 
 #### Tarefa 6.4: Gráficos e Visualizações (Opcional)
 **Descrição**: Adicionar gráficos simples usando Chart.js

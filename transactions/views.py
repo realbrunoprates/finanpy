@@ -1,5 +1,5 @@
 # Standard library
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Django imports
 from django.contrib import messages
@@ -21,6 +21,7 @@ class TransactionListView(LoginRequiredMixin, ListView):
 
     Features:
     - Filter by user ownership through account relationship
+    - Filter by search query in description (search or q parameter)
     - Filter by date range (data_inicio, data_fim)
     - Filter by account (conta)
     - Filter by category (categoria)
@@ -59,27 +60,84 @@ class TransactionListView(LoginRequiredMixin, ListView):
             account__user=self.request.user
         )
 
-        # Filter by date range
-        data_inicio = self.request.GET.get('data_inicio')
-        data_fim = self.request.GET.get('data_fim')
+        # Filter by search query (description)
+        search = self.request.GET.get('search') or self.request.GET.get('q')
+        if search:
+            # Case-insensitive search in description field
+            queryset = queryset.filter(
+                Q(description__icontains=search)
+            )
 
-        if data_inicio:
-            try:
-                # Parse date in format YYYY-MM-DD
-                data_inicio_parsed = datetime.strptime(data_inicio, '%Y-%m-%d').date()
+        # Quick date filters have priority over manual date range
+        quick_filter = self.request.GET.get('period') or self.request.GET.get('quick_filter')
+
+        if quick_filter:
+            # Store active quick filter for context
+            self.active_quick_filter = quick_filter
+
+            # Calculate date range based on quick filter
+            today = datetime.now().date()
+            data_inicio_parsed = None
+            data_fim_parsed = None
+
+            if quick_filter == 'this_month':
+                # First day of current month to today
+                data_inicio_parsed = today.replace(day=1)
+                data_fim_parsed = today
+
+            elif quick_filter == 'last_month':
+                # First day of last month to last day of last month
+                first_day_this_month = today.replace(day=1)
+                last_day_last_month = first_day_this_month - timedelta(days=1)
+                data_inicio_parsed = last_day_last_month.replace(day=1)
+                data_fim_parsed = last_day_last_month
+
+            elif quick_filter == 'this_year':
+                # First day of current year to today
+                data_inicio_parsed = today.replace(month=1, day=1)
+                data_fim_parsed = today
+
+            elif quick_filter == 'last_30_days':
+                # 30 days ago to today
+                data_inicio_parsed = today - timedelta(days=30)
+                data_fim_parsed = today
+
+            elif quick_filter == 'last_90_days':
+                # 90 days ago to today
+                data_inicio_parsed = today - timedelta(days=90)
+                data_fim_parsed = today
+
+            # Apply calculated date filters
+            if data_inicio_parsed:
                 queryset = queryset.filter(transaction_date__gte=data_inicio_parsed)
-            except ValueError:
-                # Invalid date format, ignore filter
-                pass
-
-        if data_fim:
-            try:
-                # Parse date in format YYYY-MM-DD
-                data_fim_parsed = datetime.strptime(data_fim, '%Y-%m-%d').date()
+            if data_fim_parsed:
                 queryset = queryset.filter(transaction_date__lte=data_fim_parsed)
-            except ValueError:
-                # Invalid date format, ignore filter
-                pass
+
+        else:
+            # No quick filter active
+            self.active_quick_filter = None
+
+            # Filter by manual date range (only if no quick filter)
+            data_inicio = self.request.GET.get('data_inicio')
+            data_fim = self.request.GET.get('data_fim')
+
+            if data_inicio:
+                try:
+                    # Parse date in format YYYY-MM-DD
+                    data_inicio_parsed = datetime.strptime(data_inicio, '%Y-%m-%d').date()
+                    queryset = queryset.filter(transaction_date__gte=data_inicio_parsed)
+                except ValueError:
+                    # Invalid date format, ignore filter
+                    pass
+
+            if data_fim:
+                try:
+                    # Parse date in format YYYY-MM-DD
+                    data_fim_parsed = datetime.strptime(data_fim, '%Y-%m-%d').date()
+                    queryset = queryset.filter(transaction_date__lte=data_fim_parsed)
+                except ValueError:
+                    # Invalid date format, ignore filter
+                    pass
 
         # Filter by account
         conta = self.request.GET.get('conta')
@@ -150,10 +208,14 @@ class TransactionListView(LoginRequiredMixin, ListView):
         ).order_by('name')
 
         # Preserve current filter values for form population
+        context['filter_search'] = self.request.GET.get('search') or self.request.GET.get('q', '')
         context['filter_data_inicio'] = self.request.GET.get('data_inicio', '')
         context['filter_data_fim'] = self.request.GET.get('data_fim', '')
         context['filter_conta'] = self.request.GET.get('conta', '')
         context['filter_categoria'] = self.request.GET.get('categoria', '')
+
+        # Add active quick filter to context
+        context['active_quick_filter'] = getattr(self, 'active_quick_filter', None)
 
         # Breadcrumbs for navigation
         context['breadcrumbs'] = [

@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect
@@ -23,28 +24,50 @@ class CategoryListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         """
         Retorna apenas as categorias do usuário logado.
+        Aplica busca por nome se parâmetro 'search' ou 'q' for fornecido.
         Ordena por tipo de categoria e nome.
         """
-        return Category.objects.filter(
-            user=self.request.user
-        ).order_by('category_type', 'name')
+        queryset = Category.objects.filter(user=self.request.user)
+
+        # Busca por nome (aceita 'search' ou 'q' como parâmetro)
+        search_query = self.request.GET.get('search') or self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query)
+            )
+
+        return queryset.order_by('category_type', 'name')
 
     def get_context_data(self, **kwargs):
         """
         Adiciona categorias separadas por tipo ao contexto.
+        Inclui o termo de busca para manter o valor no template.
         """
         context = super().get_context_data(**kwargs)
 
-        # Separa categorias de entrada (receita) e saída (despesa)
-        context['income_categories'] = Category.objects.filter(
+        # Captura o termo de busca
+        search_query = self.request.GET.get('search') or self.request.GET.get('q')
+
+        # Aplica busca nas categorias separadas por tipo
+        income_queryset = Category.objects.filter(
             user=self.request.user,
             category_type=Category.INCOME
-        ).order_by('name')
-
-        context['expense_categories'] = Category.objects.filter(
+        )
+        expense_queryset = Category.objects.filter(
             user=self.request.user,
             category_type=Category.EXPENSE
-        ).order_by('name')
+        )
+
+        # Se houver busca, aplica o filtro
+        if search_query:
+            income_queryset = income_queryset.filter(Q(name__icontains=search_query))
+            expense_queryset = expense_queryset.filter(Q(name__icontains=search_query))
+
+        context['income_categories'] = income_queryset.order_by('name')
+        context['expense_categories'] = expense_queryset.order_by('name')
+
+        # Adiciona o termo de busca ao contexto para manter o valor no input
+        context['search_query'] = search_query or ''
 
         # Breadcrumbs para navegação
         context['breadcrumbs'] = [

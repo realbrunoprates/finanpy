@@ -15,9 +15,36 @@
     </a>
 </div>
 
+<!-- Quick Date Filters Section -->
+<div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary mb-6">
+    <h2 class="text-xl font-semibold text-text-primary mb-4">Filtros Rápidos</h2>
+    <div class="flex flex-wrap gap-3">
+        <a href="?period=this_month" class="px-6 py-3 {% if active_quick_filter == 'this_month' %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}bg-bg-primary text-text-primary border border-bg-tertiary hover:border-primary-500{% endif %} rounded-lg font-medium transition-all duration-200" title="Filtrar transações deste mês">
+            Este Mês
+        </a>
+        <a href="?period=last_month" class="px-6 py-3 {% if active_quick_filter == 'last_month' %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}bg-bg-primary text-text-primary border border-bg-tertiary hover:border-primary-500{% endif %} rounded-lg font-medium transition-all duration-200" title="Filtrar transações do último mês">
+            Último Mês
+        </a>
+        <a href="?period=this_year" class="px-6 py-3 {% if active_quick_filter == 'this_year' %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}bg-bg-primary text-text-primary border border-bg-tertiary hover:border-primary-500{% endif %} rounded-lg font-medium transition-all duration-200" title="Filtrar transações deste ano">
+            Este Ano
+        </a>
+        <a href="?period=last_30_days" class="px-6 py-3 {% if active_quick_filter == 'last_30_days' %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}bg-bg-primary text-text-primary border border-bg-tertiary hover:border-primary-500{% endif %} rounded-lg font-medium transition-all duration-200" title="Filtrar transações dos últimos 30 dias">
+            Últimos 30 Dias
+        </a>
+        <a href="?period=last_90_days" class="px-6 py-3 {% if active_quick_filter == 'last_90_days' %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}bg-bg-primary text-text-primary border border-bg-tertiary hover:border-primary-500{% endif %} rounded-lg font-medium transition-all duration-200" title="Filtrar transações dos últimos 90 dias">
+            Últimos 90 Dias
+        </a>
+        {% if active_quick_filter %}
+        <a href="{% url 'transactions:list' %}" class="px-6 py-3 bg-error/10 text-error border border-error/20 hover:bg-error hover:text-white rounded-lg font-medium transition-all duration-200" title="Remover filtro rápido de data">
+            Limpar
+        </a>
+        {% endif %}
+    </div>
+</div>
+
 <!-- Filters Section -->
 <div class="bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary mb-8">
-    <h2 class="text-xl font-semibold text-text-primary mb-4">Filtros</h2>
+    <h2 class="text-xl font-semibold text-text-primary mb-4">Filtros Avançados</h2>
     <form method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
             <label for="data_inicio" class="block text-text-secondary text-sm font-medium mb-2">
@@ -79,6 +106,20 @@
                     </option>
                 {% endfor %}
             </select>
+        </div>
+
+        <div class="md:col-span-2 lg:col-span-4">
+            <label for="search" class="block text-text-secondary text-sm font-medium mb-2">
+                Buscar
+            </label>
+            <input
+                type="text"
+                id="search"
+                name="search"
+                value="{{ filter_search }}"
+                placeholder="Buscar por descrição..."
+                class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+            >
         </div>
 
         <div class="md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">

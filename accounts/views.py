@@ -26,15 +26,26 @@ class AccountListView(LoginRequiredMixin, ListView):
         """
         Return only accounts belonging to the logged-in user.
         Orders results by name.
+        Supports filtering by status (active/inactive) via GET parameter.
         """
-        return Account.objects.filter(
-            user=self.request.user
-        ).order_by('name')
+        queryset = Account.objects.filter(user=self.request.user)
+
+        # Filter by status if provided
+        status_filter = self.request.GET.get('status', '').strip().lower()
+
+        if status_filter == 'active':
+            queryset = queryset.filter(is_active=True)
+        elif status_filter == 'inactive':
+            queryset = queryset.filter(is_active=False)
+        # If empty or invalid, show all accounts (no filter applied)
+
+        return queryset.order_by('name')
 
     def get_context_data(self, **kwargs):
         """
         Add total balance and breadcrumbs to context.
         Calculates the sum of all account balances for the user.
+        Includes current filter status for template rendering.
         """
         context = super().get_context_data(**kwargs)
 
@@ -52,6 +63,9 @@ class AccountListView(LoginRequiredMixin, ListView):
             '_current_per_page',
             self.paginate_by
         )
+
+        # Add current status filter to context
+        context['current_status'] = self.request.GET.get('status', '').strip().lower()
 
         # Add breadcrumbs
         context['breadcrumbs'] = [
