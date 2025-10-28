@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 # Local imports
 from .models import Transaction
@@ -211,6 +211,93 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         messages.error(
             self.request,
             'Erro ao criar transação. Por favor, verifique os campos e tente novamente.'
+        )
+
+        return super().form_invalid(form)
+
+
+class TransactionUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    Update view for editing existing transactions.
+
+    Features:
+    - Filters transactions by user ownership (via account__user relationship)
+    - Filters accounts and categories by logged-in user
+    - Validates category type matches transaction type
+    - Automatically updates account balance via signals
+    - Success message after update
+    - Proper error handling
+    """
+    model = Transaction
+    form_class = TransactionForm
+    template_name = 'transactions/transaction_form.html'
+    success_url = reverse_lazy('transactions:list')
+
+    def get_queryset(self):
+        """
+        Filter transactions by user ownership.
+
+        CRITICAL: This ensures users can only edit their own transactions
+        by filtering through the account relationship.
+
+        Returns:
+            QuerySet: Transactions that belong to the logged-in user
+        """
+        return Transaction.objects.select_related(
+            'account',
+            'category'
+        ).filter(
+            account__user=self.request.user
+        )
+
+    def get_form_kwargs(self):
+        """
+        Pass the logged-in user to the form for filtering accounts and categories.
+
+        Returns:
+            dict: Form kwargs with user added
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        """
+        Handle successful form validation.
+
+        Adds success message and saves the transaction.
+        Account balance is updated automatically via signals.
+
+        Args:
+            form: Valid TransactionForm instance
+
+        Returns:
+            HttpResponseRedirect: Redirect to success_url
+        """
+        response = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            'Transação atualizada com sucesso!'
+        )
+
+        return response
+
+    def form_invalid(self, form):
+        """
+        Handle invalid form submission.
+
+        Adds error message to inform user about validation issues.
+
+        Args:
+            form: Invalid TransactionForm instance
+
+        Returns:
+            HttpResponse: Re-render form with errors
+        """
+        messages.error(
+            self.request,
+            'Erro ao atualizar transação. Por favor, verifique os campos e tente novamente.'
         )
 
         return super().form_invalid(form)

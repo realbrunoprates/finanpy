@@ -870,11 +870,12 @@
 **Descrição**: Criar view para editar transação
 
 **Subtarefas**:
-- [ ] 4.8.1: Criar TransactionUpdateView
-- [ ] 4.8.2: Configurar atributos necessários
-- [ ] 4.8.3: Override get_queryset para filtrar por usuário
-- [ ] 4.8.4: Override get_form_kwargs
-- [ ] 4.8.5: Adicionar mensagem de sucesso
+- [X] 4.8.1: Criar TransactionUpdateView
+- [X] 4.8.2: Configurar atributos necessários
+- [X] 4.8.3: Override get_queryset para filtrar por usuário
+- [X] 4.8.4: Override get_form_kwargs
+- [X] 4.8.5: Adicionar mensagem de sucesso
+- [X] Tarefa 4.8 concluída
 
 #### Tarefa 4.9: View de Exclusão de Transação
 **Descrição**: Criar view para excluir transação
