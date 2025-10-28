@@ -822,16 +822,17 @@
 **Descrição**: Criar view para listar transações com filtros
 
 **Subtarefas**:
-- [ ] 4.5.1: Abrir `transactions/views.py`
-- [ ] 4.5.2: Importar ListView e Transaction
-- [ ] 4.5.3: Criar TransactionListView
-- [ ] 4.5.4: Override get_queryset para filtrar por usuário (via account__user)
-- [ ] 4.5.5: Implementar filtros por data_inicio, data_fim (GET params)
-- [ ] 4.5.6: Implementar filtro por conta (GET param)
-- [ ] 4.5.7: Implementar filtro por categoria (GET param)
-- [ ] 4.5.8: Adicionar paginação (paginate_by = 20)
-- [ ] 4.5.9: Adicionar estatísticas no context: total_income, total_expense, balance
-- [ ] 4.5.10: Passar contas e categorias do usuário para o context (para filtros)
+- [X] 4.5.1: Abrir `transactions/views.py`
+- [X] 4.5.2: Importar ListView e Transaction
+- [X] 4.5.3: Criar TransactionListView
+- [X] 4.5.4: Override get_queryset para filtrar por usuário (via account__user)
+- [X] 4.5.5: Implementar filtros por data_inicio, data_fim (GET params)
+- [X] 4.5.6: Implementar filtro por conta (GET param)
+- [X] 4.5.7: Implementar filtro por categoria (GET param)
+- [X] 4.5.8: Adicionar paginação (paginate_by = 20)
+- [X] 4.5.9: Adicionar estatísticas no context: total_income, total_expense, balance
+- [X] 4.5.10: Passar contas e categorias do usuário para o context (para filtros)
+- [X] Tarefa 4.5 concluída
 
 #### Tarefa 4.6: Template de Listagem de Transações
 **Descrição**: Criar template para listar transações
