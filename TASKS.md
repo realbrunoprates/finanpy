@@ -755,19 +755,20 @@
 **Descrição**: Criar model para transações financeiras
 
 **Subtarefas**:
-- [ ] 4.1.1: Abrir arquivo `transactions/models.py`
-- [ ] 4.1.2: Importar models, Account e Category
-- [ ] 4.1.3: Criar classe Transaction
-- [ ] 4.1.4: Adicionar ForeignKey para Account (on_delete=PROTECT)
-- [ ] 4.1.5: Adicionar ForeignKey para Category (on_delete=PROTECT)
-- [ ] 4.1.6: Criar choices para transaction_type (INCOME, EXPENSE)
-- [ ] 4.1.7: Adicionar campo transaction_type
-- [ ] 4.1.8: Adicionar campo amount (DecimalField, max_digits=12, decimal_places=2)
-- [ ] 4.1.9: Adicionar campo transaction_date (DateField)
-- [ ] 4.1.10: Adicionar campo description (TextField, blank=True)
-- [ ] 4.1.11: Adicionar created_at e updated_at
-- [ ] 4.1.12: Adicionar método __str__
-- [ ] 4.1.13: Adicionar Meta com ordering por -transaction_date
+- [X] 4.1.1: Abrir arquivo `transactions/models.py`
+- [X] 4.1.2: Importar models, Account e Category
+- [X] 4.1.3: Criar classe Transaction
+- [X] 4.1.4: Adicionar ForeignKey para Account (on_delete=PROTECT)
+- [X] 4.1.5: Adicionar ForeignKey para Category (on_delete=PROTECT)
+- [X] 4.1.6: Criar choices para transaction_type (INCOME, EXPENSE)
+- [X] 4.1.7: Adicionar campo transaction_type
+- [X] 4.1.8: Adicionar campo amount (DecimalField, max_digits=12, decimal_places=2)
+- [X] 4.1.9: Adicionar campo transaction_date (DateField)
+- [X] 4.1.10: Adicionar campo description (TextField, blank=True)
+- [X] 4.1.11: Adicionar created_at e updated_at
+- [X] 4.1.12: Adicionar método __str__
+- [X] 4.1.13: Adicionar Meta com ordering por -transaction_date
+- [X] Tarefa 4.1 concluída
 
 #### Tarefa 4.2: Signal para Atualização de Saldo
 **Descrição**: Criar signals para atualizar saldo da conta automaticamente

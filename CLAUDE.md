@@ -271,8 +271,9 @@ SQLite limitations to be aware of:
 ## Authentication
 
 Using Django's authentication system with custom user model:
-- **Custom User Model**: `users.CustomUser` (configured in `settings.AUTH_USER_MODEL`)
+- **Custom User Model**: `users.CustomUser` (configured in `settings.AUTH_USER_MODEL = 'users.CustomUser'`)
 - **IMPORTANT**: Always use `get_user_model()` to reference the User model, never import directly
+- Email is used as the username field (`USERNAME_FIELD = 'email'`)
 - Session-based authentication
 - `@login_required` decorator for protected views
 - CSRF protection enabled by default
@@ -299,7 +300,7 @@ python-decouple==3.8
 
 ## Critical Development Notes
 
-1. **Balance Consistency**: When creating/updating/deleting transactions, ALWAYS update the related account balance. The recommended approach is using Django signals (`post_save`, `post_delete`) to automatically update account balances when transactions are modified.
+1. **Balance Consistency**: When creating/updating/deleting transactions, ALWAYS update the related account balance. The project uses Django signals (`post_save`, `post_delete`) in `transactions/signals.py` to automatically update account balances when transactions are modified. Never update balances manually in views.
 
 2. **Data Isolation**: Every query for user-owned data MUST filter by the logged-in user. Never trust URL parameters for user identification.
    ```python
@@ -312,14 +313,29 @@ python-decouple==3.8
 
 3. **Template Location**: Templates go in `app_name/templates/app_name/` following Django conventions. Global templates go in `templates/` at project root.
 
-4. **Static Files**:
+4. **Static Files & TailwindCSS**:
    - Global static files: `static/` directory
    - TailwindCSS compiled output: `theme/static/css/dist/`
-   - Must run `python manage.py tailwind build` before `collectstatic` in production
+   - **IMPORTANT**: During development, you MUST run `python manage.py tailwind start` in a separate terminal alongside `python manage.py runserver`. The Tailwind watcher auto-compiles CSS on file changes.
+   - Production: Run `python manage.py tailwind build` before `collectstatic`
 
 5. **Git Commits**: Use Portuguese, infinitive verbs (e.g., "Adicionar modelo Account", "Corrigir cálculo de saldo")
 
-6. **Custom User Model**: Always use `get_user_model()` - the project uses `users.CustomUser`, not Django's default User model
+6. **Custom User Model**: Always use `get_user_model()` - the project uses `users.CustomUser`, not Django's default User model. The AUTH_USER_MODEL setting is configured in `core/settings.py`.
+
+## Specialized Agent Prompts
+
+The `agents/` directory contains specialized AI agent prompts for different development tasks:
+
+- **`agents/backend-developer.md`** - Backend development (Django models, views, business logic)
+- **`agents/frontend-developer.md`** - Frontend development (Django templates, TailwindCSS, UI components)
+- **`agents/qa-tester.md`** - Testing and validation (E2E tests, design validation, bug detection)
+- **`agents/tech-lead.md`** - Code review, architecture decisions, refactoring
+
+These agents have deep knowledge of the project documentation and follow all coding standards. They can be used with Claude Code or other AI assistants by using the Task tool with the appropriate subagent_type:
+- `django-backend-dev` for backend tasks
+- `finanpy-frontend-dev` for frontend tasks
+- `finanpy-qa-tester` for testing and validation
 
 ## Documentation
 
