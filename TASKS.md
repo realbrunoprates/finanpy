@@ -912,10 +912,11 @@
 **Descrição**: Criar e aplicar migrations
 
 **Subtarefas**:
-- [ ] 4.12.1: Executar makemigrations
-- [ ] 4.12.2: Revisar migration
-- [ ] 4.12.3: Executar migrate
-- [ ] 4.12.4: Verificar tabela
+- [X] 4.12.1: Executar makemigrations
+- [X] 4.12.2: Revisar migration
+- [X] 4.12.3: Executar migrate
+- [X] 4.12.4: Verificar tabela
+- [X] Tarefa 4.12 concluída
 
 #### Tarefa 4.13: Testes Manuais de Transactions
 **Descrição**: Testar funcionalidades de transações
