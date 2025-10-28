@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title|default:'Transação' }} - Finanpy{% endblock %}
+
+{% block content %}
+<div class='max-w-3xl mx-auto'>
+    <div class='mb-8 text-center'>
+        <h1 class='text-3xl md:text-4xl font-bold text-text-primary mb-2'>
+            {{ title|default:'Transação' }}
+        </h1>
+        <p class='text-text-secondary text-base md:text-lg'>
+            Registre suas receitas e despesas vinculando-as a contas e categorias.
+        </p>
+    </div>
+
+    <div class='bg-bg-secondary rounded-2xl shadow-xl border border-bg-tertiary/60 p-6 md:p-10'>
+        <form method='post' novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class='mb-6 bg-error/10 border border-error/30 text-error rounded-xl p-4'>
+                    <ul class='space-y-1 text-sm'>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class='space-y-6'>
+                {% for field in form %}
+                    <div>
+                        <label for='{{ field.id_for_label }}' class='block text-text-primary font-medium mb-2'>
+                            {{ field.label }}
+                            {% if field.field.required %}
+                                <span class='text-error'>*</span>
+                            {% endif %}
+                        </label>
+
+                        {% if field.name == 'amount' %}
+                            <!-- Amount Input with Currency Indicator -->
+                            <div class='relative'>
+                                <span class='absolute left-4 top-1/2 -translate-y-1/2 text-text-muted font-medium'>R$</span>
+                                <input
+                                    type='number'
+                                    name='{{ field.name }}'
+                                    id='{{ field.id_for_label }}'
+                                    value='{{ field.value|default:"" }}'
+                                    step='0.01'
+                                    min='0.01'
+                                    placeholder='0,00'
+                                    class='w-full pl-12 pr-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200'
+                                    {% if field.field.required %}required{% endif %}
+                                >
+                            </div>
+                        {% elif field.name == 'transaction_type' %}
+                            <!-- Transaction Type with Visual Indicators -->
+                            <select
+                                name='{{ field.name }}'
+                                id='{{ field.id_for_label }}'
+                                class='w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200'
+                                {% if field.field.required %}required{% endif %}
+                            >
+                                <option value=''>Selecione o tipo...</option>
+                                <option value='income' {% if field.value == 'income' %}selected{% endif %}>🟢 Entrada (Receita)</option>
+                                <option value='expense' {% if field.value == 'expense' %}selected{% endif %}>🔴 Saída (Despesa)</option>
+                            </select>
+                        {% elif field.name == 'category' %}
+                            <!-- Category Select (filtered by JavaScript) -->
+                            <select
+                                name='{{ field.name }}'
+                                id='{{ field.id_for_label }}'
+                                class='w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200'
+                                {% if field.field.required %}required{% endif %}
+                            >
+                                <option value=''>Selecione uma categoria...</option>
+                                {% for choice in field.field.queryset %}
+                                    <option
+                                        value='{{ choice.id }}'
+                                        data-category-type='{{ choice.category_type }}'
+                                        {% if field.value == choice.id %}selected{% endif %}
+                                    >
+                                        {{ choice.name }} ({% if choice.category_type == 'income' %}Receita{% else %}Despesa{% endif %})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <p class='mt-2 text-xs text-text-muted' id='category-hint'>
+                                Selecione o tipo de transação primeiro para filtrar as categorias apropriadas.
+                            </p>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+
+                        {% if field.help_text %}
+                            <p class='mt-2 text-xs text-text-muted'>
+                                {{ field.help_text }}
+                            </p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <ul class='mt-2 space-y-1 text-sm text-error'>
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class='mt-8 flex flex-col sm:flex-row sm:justify-end gap-3'>
+                <a href='{% url "transactions:transaction_list" %}' class='w-full sm:w-auto px-6 py-3 border border-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary/60 transition-all duration-200 text-center'>
+                    Cancelar
+                </a>
+                <button type='submit' class='w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Dynamic category filtering based on transaction type
+    document.addEventListener('DOMContentLoaded', function() {
+        const transactionTypeSelect = document.getElementById('{{ form.transaction_type.id_for_label }}');
+        const categorySelect = document.getElementById('{{ form.category.id_for_label }}');
+        const categoryHint = document.getElementById('category-hint');
+
+        // Store all category options for filtering
+        const allCategoryOptions = Array.from(categorySelect.querySelectorAll('option[data-category-type]'));
+        const emptyOption = categorySelect.querySelector('option[value=""]');
+
+        /**
+         * Filters category options based on selected transaction type
+         */
+        function filterCategories() {
+            const selectedType = transactionTypeSelect.value;
+
+            // Clear current options except the empty one
+            categorySelect.innerHTML = '';
+            categorySelect.appendChild(emptyOption.cloneNode(true));
+
+            if (!selectedType) {
+                // No type selected - show hint
+                categoryHint.textContent = 'Selecione o tipo de transação primeiro para filtrar as categorias apropriadas.';
+                categoryHint.classList.remove('text-success');
+                categoryHint.classList.add('text-text-muted');
+                categorySelect.disabled = true;
+                return;
+            }
+
+            // Enable category select
+            categorySelect.disabled = false;
+
+            // Filter and add matching categories
+            const matchingCategories = allCategoryOptions.filter(option => {
+                return option.dataset.categoryType === selectedType;
+            });
+
+            if (matchingCategories.length === 0) {
+                // No categories available for this type
+                const noOptionMessage = document.createElement('option');
+                noOptionMessage.textContent = 'Nenhuma categoria disponível';
+                noOptionMessage.disabled = true;
+                categorySelect.appendChild(noOptionMessage);
+
+                categoryHint.textContent = 'Você ainda não possui categorias deste tipo. Crie uma nova categoria primeiro.';
+                categoryHint.classList.remove('text-success');
+                categoryHint.classList.add('text-warning');
+            } else {
+                // Add matching categories
+                matchingCategories.forEach(option => {
+                    categorySelect.appendChild(option.cloneNode(true));
+                });
+
+                // Update hint with success message
+                const typeLabel = selectedType === 'income' ? 'Receita' : 'Despesa';
+                categoryHint.textContent = `Mostrando ${matchingCategories.length} categoria(s) do tipo ${typeLabel}.`;
+                categoryHint.classList.remove('text-text-muted', 'text-warning');
+                categoryHint.classList.add('text-success');
+            }
+        }
+
+        /**
+         * Validates that category type matches transaction type on form submission
+         */
+        function validateCategoryType(event) {
+            const selectedType = transactionTypeSelect.value;
+            const selectedCategoryOption = categorySelect.options[categorySelect.selectedIndex];
+
+            if (selectedCategoryOption && selectedCategoryOption.dataset.categoryType) {
+                const categoryType = selectedCategoryOption.dataset.categoryType;
+
+                if (selectedType !== categoryType) {
+                    event.preventDefault();
+                    alert('Erro: O tipo da categoria não corresponde ao tipo da transação. Por favor, selecione uma categoria compatível.');
+                    categorySelect.focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Add event listener for transaction type changes
+        if (transactionTypeSelect && categorySelect) {
+            transactionTypeSelect.addEventListener('change', filterCategories);
+
+            // Initial filter on page load
+            filterCategories();
+
+            // Add form validation on submit
+            const form = transactionTypeSelect.closest('form');
+            if (form) {
+                form.addEventListener('submit', validateCategoryType);
+            }
+        }
+
+        // Amount input formatting
+        const amountInput = document.querySelector('input[name="amount"]');
+        if (amountInput) {
+            // Add visual feedback on focus
+            amountInput.addEventListener('focus', function() {
+                this.parentElement.classList.add('ring-2', 'ring-primary-500');
+            });
+
+            amountInput.addEventListener('blur', function() {
+                this.parentElement.classList.remove('ring-2', 'ring-primary-500');
+
+                // Format value on blur
+                if (this.value) {
+                    const value = parseFloat(this.value);
+                    if (!isNaN(value) && value > 0) {
+                        this.value = value.toFixed(2);
+                    }
+                }
+            });
+        }
+
+        // Transaction type visual feedback
+        if (transactionTypeSelect) {
+            transactionTypeSelect.addEventListener('change', function() {
+                const selectedValue = this.value;
+
+                // Add visual indicator based on type
+                if (selectedValue === 'income') {
+                    this.classList.remove('border-error');
+                    this.classList.add('border-success');
+                } else if (selectedValue === 'expense') {
+                    this.classList.remove('border-success');
+                    this.classList.add('border-error');
+                } else {
+                    this.classList.remove('border-success', 'border-error');
+                }
+            });
+
+            // Trigger on page load if there's a value
+            if (transactionTypeSelect.value) {
+                transactionTypeSelect.dispatchEvent(new Event('change'));
+            }
+        }
+    });
+</script>
+{% endblock %}
