@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 # Local imports
 from .models import Transaction
@@ -301,3 +301,54 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
         )
 
         return super().form_invalid(form)
+
+
+class TransactionDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Delete view for removing existing transactions.
+
+    Features:
+    - Filters transactions by user ownership (via account__user relationship)
+    - Displays confirmation page before deletion
+    - Automatically updates account balance via signals after deletion
+    - Success message after deletion
+    - Security: Prevents users from deleting other users' transactions
+    """
+    model = Transaction
+    template_name = 'transactions/transaction_confirm_delete.html'
+    success_url = reverse_lazy('transactions:list')
+
+    def get_queryset(self):
+        """
+        Filter transactions by user ownership.
+
+        CRITICAL: This ensures users can only delete their own transactions
+        by filtering through the account relationship.
+
+        Returns:
+            QuerySet: Transactions that belong to the logged-in user
+        """
+        return Transaction.objects.select_related(
+            'account',
+            'category'
+        ).filter(
+            account__user=self.request.user
+        )
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete the transaction and display a success message.
+
+        The account balance is automatically updated via post_delete signal
+        defined in transactions/signals.py.
+
+        Args:
+            request: HTTP request object
+            *args: Additional positional arguments
+            **kwargs: Additional keyword arguments
+
+        Returns:
+            HttpResponseRedirect: Redirect to success_url
+        """
+        messages.success(self.request, 'Transação excluída com sucesso!')
+        return super().delete(request, *args, **kwargs)

@@ -881,10 +881,11 @@
 **Descrição**: Criar view para excluir transação
 
 **Subtarefas**:
-- [ ] 4.9.1: Criar TransactionDeleteView
-- [ ] 4.9.2: Configurar atributos
-- [ ] 4.9.3: Override get_queryset
-- [ ] 4.9.4: Adicionar mensagem de sucesso
+- [X] 4.9.1: Criar TransactionDeleteView
+- [X] 4.9.2: Configurar atributos
+- [X] 4.9.3: Override get_queryset
+- [X] 4.9.4: Adicionar mensagem de sucesso
+- [X] Tarefa 4.9 concluída
 
 #### Tarefa 4.10: Templates de Form e Delete
 **Descrição**: Criar templates para forms de transação
