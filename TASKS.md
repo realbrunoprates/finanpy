@@ -859,12 +859,12 @@
 **Descrição**: Criar view para registrar nova transação
 
 **Subtarefas**:
-- [ ] 4.7.1: No `transactions/views.py`, criar TransactionCreateView
-- [ ] 4.7.2: Configurar form_class = TransactionForm
-- [ ] 4.7.3: Configurar template e success_url
-- [ ] 4.7.4: Override get_form_kwargs para passar request.user ao form
-- [ ] 4.7.5: Adicionar mensagem de sucesso
-- [ ] 4.7.6: Adicionar tratamento de erro
+- [X] 4.7.1: No `transactions/views.py`, criar TransactionCreateView
+- [X] 4.7.2: Configurar form_class = TransactionForm
+- [X] 4.7.3: Configurar template e success_url
+- [X] 4.7.4: Override get_form_kwargs para passar request.user ao form
+- [X] 4.7.5: Adicionar mensagem de sucesso
+- [X] 4.7.6: Adicionar tratamento de erro
 
 #### Tarefa 4.8: View de Edição de Transação
 **Descrição**: Criar view para editar transação

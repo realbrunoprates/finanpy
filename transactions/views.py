@@ -2,12 +2,15 @@
 from datetime import datetime
 
 # Django imports
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView
 
 # Local imports
 from .models import Transaction
+from .forms import TransactionForm
 from accounts.models import Account
 from categories.models import Category
 
@@ -138,3 +141,76 @@ class TransactionListView(LoginRequiredMixin, ListView):
         context['filter_categoria'] = self.request.GET.get('categoria', '')
 
         return context
+
+
+class TransactionCreateView(LoginRequiredMixin, CreateView):
+    """
+    Create view for new transactions.
+
+    Features:
+    - Filters accounts and categories by logged-in user
+    - Validates category type matches transaction type
+    - Automatically updates account balance via signals
+    - Success message after creation
+    - Proper error handling
+    """
+    model = Transaction
+    form_class = TransactionForm
+    template_name = 'transactions/transaction_form.html'
+    success_url = reverse_lazy('transactions:list')
+
+    def get_form_kwargs(self):
+        """
+        Pass the logged-in user to the form for filtering accounts and categories.
+
+        Returns:
+            dict: Form kwargs with user added
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        """
+        Handle successful form validation.
+
+        Adds success message and saves the transaction.
+        Account balance is updated automatically via signals.
+
+        Args:
+            form: Valid TransactionForm instance
+
+        Returns:
+            HttpResponseRedirect: Redirect to success_url
+        """
+        response = super().form_valid(form)
+
+        # Get transaction type for customized message
+        transaction_type = self.object.transaction_type
+        type_label = 'receita' if transaction_type == Transaction.INCOME else 'despesa'
+
+        messages.success(
+            self.request,
+            f'Transação de {type_label} criada com sucesso! O saldo da conta foi atualizado automaticamente.'
+        )
+
+        return response
+
+    def form_invalid(self, form):
+        """
+        Handle invalid form submission.
+
+        Adds error message to inform user about validation issues.
+
+        Args:
+            form: Invalid TransactionForm instance
+
+        Returns:
+            HttpResponse: Re-render form with errors
+        """
+        messages.error(
+            self.request,
+            'Erro ao criar transação. Por favor, verifique os campos e tente novamente.'
+        )
+
+        return super().form_invalid(form)
