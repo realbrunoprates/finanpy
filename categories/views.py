@@ -45,6 +45,12 @@ class CategoryListView(LoginRequiredMixin, ListView):
             category_type=Category.EXPENSE
         ).order_by('name')
 
+        # Breadcrumbs para navegação
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Categorias', 'url': None},
+        ]
+
         return context
 
 
@@ -64,6 +70,11 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Nova Categoria'
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Categorias', 'url': 'categories:category_list'},
+            {'label': 'Nova Categoria', 'url': None},
+        ]
         return context
 
     def form_valid(self, form):
@@ -112,6 +123,11 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
         """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Categoria'
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Categorias', 'url': 'categories:category_list'},
+            {'label': 'Editar Categoria', 'url': None},
+        ]
         return context
 
     def form_valid(self, form):
@@ -170,3 +186,15 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, 'Categoria excluída com sucesso!')
 
         return super().delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona breadcrumbs ao contexto para navegação consistente.
+        """
+        context = super().get_context_data(**kwargs)
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Categorias', 'url': 'categories:category_list'},
+            {'label': 'Excluir Categoria', 'url': None},
+        ]
+        return context

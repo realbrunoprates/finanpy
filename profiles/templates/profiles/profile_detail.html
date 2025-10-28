@@ -4,10 +4,13 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    {% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+
     <!-- Header -->
     <div class="flex items-center justify-between mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-text-primary">Meu Perfil</h1>
-        <a href="{% url 'profiles:update' %}" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl">
+        <a href="{% url 'profiles:profile_update' %}" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl" title="Editar informações do perfil">
             Editar Perfil
         </a>
     </div>
@@ -132,7 +135,7 @@
 
             <!-- Action Button (Mobile) -->
             <div class="mt-8 md:hidden">
-                <a href="{% url 'profiles:update' %}" class="block w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center">
+                <a href="{% url 'profiles:profile_update' %}" class="block w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center" title="Editar informações do perfil">
                     Editar Perfil
                 </a>
             </div>

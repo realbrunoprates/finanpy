@@ -1,0 +1,58 @@
+{% comment %}
+Breadcrumbs Component for Finanpy
+Usage in templates:
+    {% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs_list %}
+
+Expected breadcrumbs format:
+    breadcrumbs = [
+        {'label': 'Home', 'url': 'home'},
+        {'label': 'Contas', 'url': 'accounts:list'},
+        {'label': 'Nova Conta', 'url': None}  # Current page (no url)
+    ]
+{% endcomment %}
+
+{% if breadcrumbs %}
+<nav class='mb-6' aria-label='Navegação estrutural'>
+    <ol class='flex flex-wrap items-center gap-2 text-sm'>
+        {% for item in breadcrumbs %}
+            <li class='flex items-center gap-2'>
+                {% if forloop.first %}
+                    <!-- Home icon for first item -->
+                    {% if item.url %}
+                        <a href='{% url item.url %}' class='flex items-center gap-1.5 text-text-secondary hover:text-primary-500 transition-colors duration-200 group'>
+                            <svg class='w-4 h-4 group-hover:scale-110 transition-transform duration-200' fill='currentColor' viewBox='0 0 20 20'>
+                                <path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'/>
+                            </svg>
+                            <span>{{ item.label }}</span>
+                        </a>
+                    {% else %}
+                        <span class='flex items-center gap-1.5 text-primary-500 font-medium'>
+                            <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                                <path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'/>
+                            </svg>
+                            <span>{{ item.label }}</span>
+                        </span>
+                    {% endif %}
+                {% else %}
+                    <!-- Separator -->
+                    <svg class='w-4 h-4 text-text-muted flex-shrink-0' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd'/>
+                    </svg>
+
+                    <!-- Breadcrumb Item -->
+                    {% if item.url %}
+                        <a href='{% url item.url %}' class='text-text-secondary hover:text-primary-500 transition-colors duration-200 hover:underline'>
+                            {{ item.label }}
+                        </a>
+                    {% else %}
+                        <!-- Current page - not clickable -->
+                        <span class='text-primary-500 font-medium'>
+                            {{ item.label }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>
+{% endif %}

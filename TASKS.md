@@ -1086,14 +1086,15 @@
 **Descrição**: Implementar melhorias de experiência do usuário
 
 **Subtarefas**:
-- [ ] 5.9.1: Adicionar breadcrumbs nas páginas internas
-- [ ] 5.9.2: Adicionar título da página no navegador (tag title)
-- [ ] 5.9.3: Adicionar confirmação JavaScript para exclusões
-- [ ] 5.9.4: Adicionar loading states em botões (opcional)
-- [ ] 5.9.5: Melhorar responsividade em mobile
-- [ ] 5.9.6: Adicionar tooltips onde necessário
-- [ ] 5.9.7: Padronizar espaçamentos
-- [ ] 5.9.8: Adicionar animações suaves (transitions)
+- [X] 5.9.1: Adicionar breadcrumbs nas páginas internas
+- [X] 5.9.2: Adicionar título da página no navegador (tag title)
+- [X] 5.9.3: Adicionar confirmação JavaScript para exclusões
+- [X] 5.9.4: Adicionar loading states em botões (opcional)
+- [X] 5.9.5: Melhorar responsividade em mobile
+- [X] 5.9.6: Adicionar tooltips onde necessário
+- [X] 5.9.7: Padronizar espaçamentos
+- [X] 5.9.8: Adicionar animações suaves (transitions)
+- [X] Tarefa 5.9 concluída
 
 #### Tarefa 5.10: Testes Manuais Completos
 **Descrição**: Testar fluxo completo da aplicação

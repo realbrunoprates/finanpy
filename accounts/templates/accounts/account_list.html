@@ -4,6 +4,9 @@
 {% block title %}Minhas Contas - Finanpy{% endblock %}
 
 {% block content %}
+<!-- Breadcrumbs -->
+{% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+
 <!-- Header Section with Title and New Account Button -->
 <div class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8'>
     <h1 class='text-3xl md:text-4xl font-bold text-text-primary'>Minhas Contas</h1>
@@ -29,7 +32,7 @@
 {% if accounts %}
     <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {% for account in accounts %}
-        <div class='bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-primary-500 transition-all duration-200'>
+        <div class='bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-primary-500 transition-all duration-200 hover:-translate-y-1'>
             <!-- Account Name -->
             <h3 class='text-xl font-bold text-text-primary mb-3 truncate' title='{{ account.name }}'>
                 {{ account.name }}
@@ -74,10 +77,10 @@
 
             <!-- Action Buttons -->
             <div class='flex gap-3'>
-                <a href='{% url "accounts:edit" account.id %}' class='flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-all duration-200 text-center text-sm'>
+                <a href='{% url "accounts:edit" account.id %}' class='flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-all duration-200 text-center text-sm' title='Editar conta {{ account.name }}'>
                     Editar
                 </a>
-                <a href='{% url "accounts:delete" account.id %}' class='flex-1 px-4 py-2 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 text-center text-sm'>
+                <a href='{% url "accounts:delete" account.id %}' class='flex-1 px-4 py-2 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 text-center text-sm' data-confirm='Tem certeza que deseja excluir a conta {{ account.name }}?' title='Excluir conta {{ account.name }}'>
                     Excluir
                 </a>
             </div>
@@ -106,17 +109,4 @@
         </a>
     </div>
 {% endif %}
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-    // Optional: Add confirmation for delete action
-    document.querySelectorAll('a[href*="delete"]').forEach(button => {
-        button.addEventListener('click', (e) => {
-            if (!confirm('Tem certeza que deseja excluir esta conta? Esta ação não pode ser desfeita.')) {
-                e.preventDefault();
-            }
-        });
-    });
-</script>
 {% endblock %}

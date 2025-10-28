@@ -4,6 +4,9 @@
 
 {% block content %}
 <div class='max-w-3xl mx-auto'>
+    <!-- Breadcrumbs -->
+    {% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+
     <div class='mb-8 text-center'>
         <h1 class='text-3xl md:text-4xl font-bold text-text-primary mb-2'>
             {{ title|default:'Conta' }}
@@ -14,7 +17,7 @@
     </div>
 
     <div class='bg-bg-secondary rounded-2xl shadow-xl border border-bg-tertiary/60 p-6 md:p-10'>
-        <form method='post' novalidate>
+        <form method='post' novalidate data-loading>
             {% csrf_token %}
 
             {% if form.non_field_errors %}
@@ -57,11 +60,16 @@
             </div>
 
             <div class='mt-8 flex flex-col sm:flex-row sm:justify-end gap-3'>
-                <a href='{% url 'accounts:list' %}' class='w-full sm:w-auto px-6 py-3 border border-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary/60 transition-all duration-200 text-center'>
+                <a href='{% url 'accounts:list' %}' class='w-full sm:w-auto px-6 py-3 border border-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary/60 transition-all duration-200 text-center' title='Cancelar e voltar para a lista de contas'>
                     Cancelar
                 </a>
-                <button type='submit' class='w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
-                    Salvar
+                <button type='submit' class='w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl' data-loading-text='Salvando...'>
+                    <span class='inline-flex items-center justify-center gap-2'>
+                        <svg class='w-4 h-4 text-white opacity-80 hidden sm:block' viewBox='0 0 24 24' fill='none' stroke='currentColor'>
+                            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6v6l3 3'/>
+                        </svg>
+                        Salvar
+                    </span>
                 </button>
             </div>
         </form>

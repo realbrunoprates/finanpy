@@ -21,6 +21,17 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         """
         return self.request.user.profile
 
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona breadcrumbs ao contexto para navegação consistente.
+        """
+        context = super().get_context_data(**kwargs)
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Perfil', 'url': None},
+        ]
+        return context
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     """
@@ -43,3 +54,15 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         """
         messages.success(self.request, 'Perfil atualizado com sucesso!')
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona breadcrumbs ao contexto para auxiliar a navegação.
+        """
+        context = super().get_context_data(**kwargs)
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Perfil', 'url': 'profiles:profile_detail'},
+            {'label': 'Editar Perfil', 'url': None},
+        ]
+        return context

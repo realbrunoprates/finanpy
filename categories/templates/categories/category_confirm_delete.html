@@ -4,6 +4,9 @@
 
 {% block content %}
 <div class='max-w-2xl mx-auto'>
+    <!-- Breadcrumbs -->
+    {% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+
     <!-- Page Header -->
     <div class='mb-8 text-center'>
         <h1 class='text-3xl md:text-4xl font-bold text-text-primary mb-2'>
@@ -85,15 +88,15 @@
         </div>
 
         <!-- Confirmation Form -->
-        <form method='post'>
+        <form method='post' data-confirm='Tem certeza que deseja excluir esta categoria? Esta ação não pode ser desfeita.' data-loading>
             {% csrf_token %}
             <div class='flex flex-col sm:flex-row gap-3'>
                 <!-- Cancel Button -->
-                <a href='{% url "categories:category_list" %}' class='flex-1 px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center'>
+                <a href='{% url "categories:category_list" %}' class='flex-1 px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center' title='Voltar para a lista de categorias sem excluir'>
                     Cancelar
                 </a>
                 <!-- Confirm Delete Button -->
-                <button type='submit' class='flex-1 px-6 py-3 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 shadow-lg hover:shadow-xl'>
+                <button type='submit' class='flex-1 px-6 py-3 bg-error text-white rounded-lg font-medium hover:bg-red-600 transition-all duration-200 shadow-lg hover:shadow-xl' data-loading-text='Excluindo...'>
                     Confirmar Exclusão
                 </button>
             </div>

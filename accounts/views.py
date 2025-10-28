@@ -30,7 +30,7 @@ class AccountListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Add total balance to context.
+        Add total balance and breadcrumbs to context.
         Calculates the sum of all account balances for the user.
         """
         context = super().get_context_data(**kwargs)
@@ -43,6 +43,12 @@ class AccountListView(LoginRequiredMixin, ListView):
         )['total'] or 0
 
         context['total_balance'] = total_balance
+
+        # Add breadcrumbs
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Contas', 'url': None}
+        ]
 
         return context
 
@@ -72,10 +78,18 @@ class AccountCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         """
-        Add page title to context.
+        Add page title and breadcrumbs to context.
         """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Nova Conta'
+
+        # Add breadcrumbs
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Contas', 'url': 'accounts:list'},
+            {'label': 'Nova Conta', 'url': None}
+        ]
+
         return context
 
 
@@ -103,10 +117,18 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         """
-        Add page title to context.
+        Add page title and breadcrumbs to context.
         """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Conta'
+
+        # Add breadcrumbs
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Contas', 'url': 'accounts:list'},
+            {'label': 'Editar', 'url': None}
+        ]
+
         return context
 
 
@@ -124,6 +146,21 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         Restrict queryset to accounts owned by the logged-in user.
         """
         return Account.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add breadcrumbs to context.
+        """
+        context = super().get_context_data(**kwargs)
+
+        # Add breadcrumbs
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Contas', 'url': 'accounts:list'},
+            {'label': 'Excluir', 'url': None}
+        ]
+
+        return context
 
     def delete(self, request, *args, **kwargs):
         """

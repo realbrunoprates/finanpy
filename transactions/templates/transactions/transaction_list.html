@@ -4,10 +4,13 @@
 {% block title %}Transações - Finanpy{% endblock %}
 
 {% block content %}
+<!-- Breadcrumbs -->
+{% include 'includes/breadcrumbs.html' with breadcrumbs=breadcrumbs %}
+
 <!-- Header Section -->
 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
     <h1 class="text-3xl md:text-4xl font-bold text-text-primary">Transações</h1>
-    <a href="{% url 'transactions:transaction_create' %}" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center">
+    <a href="{% url 'transactions:create' %}" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl text-center" title="Registrar uma nova transação">
         + Nova Transação
     </a>
 </div>
@@ -24,7 +27,7 @@
                 type="date"
                 id="data_inicio"
                 name="data_inicio"
-                value="{{ request.GET.data_inicio }}"
+                value="{{ filter_data_inicio }}"
                 class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             >
         </div>
@@ -37,23 +40,23 @@
                 type="date"
                 id="data_fim"
                 name="data_fim"
-                value="{{ request.GET.data_fim }}"
+                value="{{ filter_data_fim }}"
                 class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             >
         </div>
 
         <div>
-            <label for="account" class="block text-text-secondary text-sm font-medium mb-2">
+            <label for="conta" class="block text-text-secondary text-sm font-medium mb-2">
                 Conta
             </label>
             <select
-                id="account"
-                name="account"
+                id="conta"
+                name="conta"
                 class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             >
                 <option value="">Todas as contas</option>
                 {% for account in accounts %}
-                    <option value="{{ account.id }}" {% if request.GET.account == account.id|stringformat:'s' %}selected{% endif %}>
+                    <option value="{{ account.id }}" {% if filter_conta == account.id|stringformat:'s' %}selected{% endif %}>
                         {{ account.name }}
                     </option>
                 {% endfor %}
@@ -61,17 +64,17 @@
         </div>
 
         <div>
-            <label for="category" class="block text-text-secondary text-sm font-medium mb-2">
+            <label for="categoria" class="block text-text-secondary text-sm font-medium mb-2">
                 Categoria
             </label>
             <select
-                id="category"
-                name="category"
+                id="categoria"
+                name="categoria"
                 class="w-full px-4 py-3 bg-bg-primary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             >
                 <option value="">Todas as categorias</option>
                 {% for category in categories %}
-                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:'s' %}selected{% endif %}>
+                    <option value="{{ category.id }}" {% if filter_categoria == category.id|stringformat:'s' %}selected{% endif %}>
                         {{ category.name }}
                     </option>
                 {% endfor %}
@@ -82,7 +85,7 @@
             <button type="submit" class="flex-1 sm:flex-none px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl">
                 Filtrar
             </button>
-            <a href="{% url 'transactions:transaction_list' %}" class="flex-1 sm:flex-none px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center">
+            <a href="{% url 'transactions:list' %}" class="flex-1 sm:flex-none px-6 py-3 bg-bg-tertiary text-text-primary rounded-lg font-medium hover:bg-bg-primary transition-all duration-200 border border-bg-primary text-center" title="Limpar filtros aplicados">
                 Limpar Filtros
             </a>
         </div>
@@ -122,8 +125,8 @@
 <!-- Transactions Table -->
 {% if page_obj %}
     <!-- Desktop Table View -->
-    <div class="hidden lg:block bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary overflow-hidden mb-8">
-        <table class="w-full">
+    <div class="hidden lg:block bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary overflow-x-auto mb-8">
+        <table class="w-full min-w-[960px]">
             <thead>
                 <tr class="bg-bg-tertiary">
                     <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Data</th>
@@ -144,11 +147,11 @@
                     <td class="px-6 py-4 text-text-secondary">{{ transaction.category.name }}</td>
                     <td class="px-6 py-4">
                         {% if transaction.transaction_type == 'INCOME' %}
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20" title="Transação de entrada">
                                 Entrada
                             </span>
                         {% else %}
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20" title="Transação de saída">
                                 Saída
                             </span>
                         {% endif %}
@@ -158,13 +161,28 @@
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center justify-center space-x-2">
-                            <a href="{% url 'transactions:transaction_update' transaction.id %}" class="px-3 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                                Editar
-                            </a>
-                            <a href="{% url 'transactions:transaction_delete' transaction.id %}" class="px-3 py-2 bg-error/10 text-error rounded-lg text-sm font-medium hover:bg-error hover:text-white transition-all duration-200 border border-error/20">
-                                Excluir
-                            </a>
-                        </div>
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Primeira
+            </a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Anterior
+            </a>
+        {% endif %}
+
+        <span class="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium">
+            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Próxima
+            </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+                Última
+            </a>
+        {% endif %}
+    </div>
                     </td>
                 </tr>
                 {% empty %}
@@ -192,11 +210,11 @@
                         {{ transaction.amount|currency }}
                     </p>
                     {% if transaction.transaction_type == 'INCOME' %}
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20 mt-1">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20 mt-1" title="Transação de entrada">
                             Entrada
                         </span>
                     {% else %}
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20 mt-1">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20 mt-1" title="Transação de saída">
                             Saída
                         </span>
                     {% endif %}
@@ -215,10 +233,10 @@
             </div>
 
             <div class="flex space-x-2">
-                <a href="{% url 'transactions:transaction_update' transaction.id %}" class="flex-1 px-4 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary text-center">
+                <a href="{% url 'transactions:update' transaction.id %}" class="flex-1 px-4 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary text-center" title="Editar transação {{ transaction.description }}">
                     Editar
                 </a>
-                <a href="{% url 'transactions:transaction_delete' transaction.id %}" class="flex-1 px-4 py-2 bg-error/10 text-error rounded-lg text-sm font-medium hover:bg-error hover:text-white transition-all duration-200 border border-error/20 text-center">
+                <a href="{% url 'transactions:delete' transaction.id %}" class="flex-1 px-4 py-2 bg-error/10 text-error rounded-lg text-sm font-medium hover:bg-error hover:text-white transition-all duration-200 border border-error/20 text-center" data-confirm="Tem certeza que deseja excluir a transação {{ transaction.description|default:'sem descrição' }}?" title="Excluir transação {{ transaction.description|default:'sem descrição' }}">
                     Excluir
                 </a>
             </div>
@@ -226,7 +244,7 @@
         {% empty %}
         <div class="bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary">
             <p class="text-text-muted text-lg mb-4">Nenhuma transação encontrada.</p>
-            <a href="{% url 'transactions:transaction_create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200">
+            <a href="{% url 'transactions:create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200" title="Registrar a primeira transação">
                 Criar Primeira Transação
             </a>
         </div>
@@ -237,10 +255,10 @@
     {% if page_obj.has_other_pages %}
     <div class="flex items-center justify-center space-x-2">
         {% if page_obj.has_previous %}
-            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
                 Primeira
             </a>
-            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
                 Anterior
             </a>
         {% endif %}
@@ -250,10 +268,10 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
                 Próxima
             </a>
-            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
                 Última
             </a>
         {% endif %}
@@ -263,7 +281,7 @@
     <!-- Empty State -->
     <div class="bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary">
         <p class="text-text-muted text-lg mb-4">Nenhuma transação cadastrada.</p>
-        <a href="{% url 'transactions:transaction_create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200">
+        <a href="{% url 'transactions:create' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium hover:from-primary-600 hover:to-accent-600 transition-all duration-200">
             Criar Primeira Transação
         </a>
     </div>

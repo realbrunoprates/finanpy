@@ -124,13 +124,13 @@ class TransactionListView(LoginRequiredMixin, ListView):
 
         # Add filter options to context
         # List of user's accounts for dropdown
-        context['user_accounts'] = Account.objects.filter(
+        context['accounts'] = Account.objects.filter(
             user=self.request.user,
             is_active=True
         ).order_by('name')
 
         # List of user's categories for dropdown
-        context['user_categories'] = Category.objects.filter(
+        context['categories'] = Category.objects.filter(
             user=self.request.user
         ).order_by('name')
 
@@ -139,6 +139,12 @@ class TransactionListView(LoginRequiredMixin, ListView):
         context['filter_data_fim'] = self.request.GET.get('data_fim', '')
         context['filter_conta'] = self.request.GET.get('conta', '')
         context['filter_categoria'] = self.request.GET.get('categoria', '')
+
+        # Breadcrumbs for navigation
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Transações', 'url': None},
+        ]
 
         return context
 
@@ -214,6 +220,19 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         )
 
         return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona título e breadcrumbs ao contexto.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Nova Transação'
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Transações', 'url': 'transactions:list'},
+            {'label': 'Nova Transação', 'url': None},
+        ]
+        return context
 
 
 class TransactionUpdateView(LoginRequiredMixin, UpdateView):
@@ -302,6 +321,19 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona título e breadcrumbs ao contexto.
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Transação'
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Transações', 'url': 'transactions:list'},
+            {'label': 'Editar Transação', 'url': None},
+        ]
+        return context
+
 
 class TransactionDeleteView(LoginRequiredMixin, DeleteView):
     """
@@ -352,3 +384,15 @@ class TransactionDeleteView(LoginRequiredMixin, DeleteView):
         """
         messages.success(self.request, 'Transação excluída com sucesso!')
         return super().delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """
+        Adiciona breadcrumbs ao contexto para navegação consistente.
+        """
+        context = super().get_context_data(**kwargs)
+        context['breadcrumbs'] = [
+            {'label': 'Home', 'url': 'home'},
+            {'label': 'Transações', 'url': 'transactions:list'},
+            {'label': 'Excluir Transação', 'url': None},
+        ]
+        return context
