@@ -903,9 +903,10 @@
 **Descrição**: Configurar URLs para transações
 
 **Subtarefas**:
-- [ ] 4.11.1: Criar `transactions/urls.py`
-- [ ] 4.11.2: Adicionar paths para list, create, update, delete
-- [ ] 4.11.3: Incluir no `core/urls.py`
+- [X] 4.11.1: Criar `transactions/urls.py`
+- [X] 4.11.2: Adicionar paths para list, create, update, delete
+- [X] 4.11.3: Incluir no `core/urls.py`
+- [X] Tarefa 4.11 concluída
 
 #### Tarefa 4.12: Migration de Transaction
 **Descrição**: Criar e aplicar migrations
