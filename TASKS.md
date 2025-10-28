@@ -1032,16 +1032,17 @@
 **Descrição**: Criar formulário para editar perfil
 
 **Subtarefas**:
-- [ ] 5.5.1: Criar `profiles/forms.py`
-- [ ] 5.5.2: Criar ProfileForm
-- [ ] 5.5.3: Incluir fields: full_name, phone
-- [ ] 5.5.4: Aplicar widgets com TailwindCSS
-- [ ] 5.5.5: Adicionar labels e placeholders em português
-- [ ] 5.5.6: No `profiles/views.py`, criar ProfileUpdateView
-- [ ] 5.5.7: Configurar para editar perfil do usuário logado
-- [ ] 5.5.8: Criar `templates/profiles/profile_form.html`
-- [ ] 5.5.9: Criar formulário estilizado
-- [ ] 5.5.10: Adicionar botões Salvar e Cancelar
+- [X] 5.5.1: Criar `profiles/forms.py`
+- [X] 5.5.2: Criar ProfileForm
+- [X] 5.5.3: Incluir fields: full_name, phone
+- [X] 5.5.4: Aplicar widgets com TailwindCSS
+- [X] 5.5.5: Adicionar labels e placeholders em português
+- [X] 5.5.6: No `profiles/views.py`, criar ProfileUpdateView
+- [X] 5.5.7: Configurar para editar perfil do usuário logado
+- [X] 5.5.8: Criar `templates/profiles/profile_form.html`
+- [X] 5.5.9: Criar formulário estilizado
+- [X] 5.5.10: Adicionar botões Salvar e Cancelar
+- [X] Tarefa 5.5 concluída
 
 #### Tarefa 5.6: URLs de Dashboard e Profile
 **Descrição**: Configurar URLs para dashboard e perfil
