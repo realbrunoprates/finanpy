@@ -1,0 +1,339 @@
+<!-- Navbar Component for Finanpy -->
+<nav class='bg-bg-secondary border-b border-bg-tertiary sticky top-0 z-40 backdrop-blur-sm bg-bg-secondary/95'>
+    <div class='container mx-auto px-4 md:px-6 lg:px-8'>
+        <div class='flex items-center justify-between h-16'>
+            <!-- Logo/Brand (Left) -->
+            <div class='flex items-center'>
+                <a href='{% url "dashboard" %}' class='flex items-center space-x-2 group'>
+                    <div class='w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200'>
+                        <span class='text-white text-lg font-bold'>F</span>
+                    </div>
+                    <span class='text-xl font-bold bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent'>
+                        Finanpy
+                    </span>
+                </a>
+            </div>
+
+            <!-- Navigation Links (Center) - Desktop -->
+            <div class='hidden md:flex items-center space-x-1'>
+                <a
+                    href='{% url "dashboard" %}'
+                    class='px-4 py-2 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.url_name == "dashboard" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+                    aria-label='Ir para Dashboard'
+                >
+                    Dashboard
+                </a>
+                <a
+                    href='{% url "accounts:list" %}'
+                    class='px-4 py-2 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "accounts" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+                    aria-label='Ir para Contas'
+                >
+                    Contas
+                </a>
+                <a
+                    href='{% url "categories:category_list" %}'
+                    class='px-4 py-2 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "categories" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+                    aria-label='Ir para Categorias'
+                >
+                    Categorias
+                </a>
+                <a
+                    href='{% url "transactions:list" %}'
+                    class='px-4 py-2 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "transactions" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+                    aria-label='Ir para Transações'
+                >
+                    Transações
+                </a>
+            </div>
+
+            <!-- User Dropdown (Right) - Desktop -->
+            <div class='hidden md:block relative'>
+                <button
+                    id='user-menu-button'
+                    type='button'
+                    class='flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-bg-tertiary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500'
+                    aria-expanded='false'
+                    aria-haspopup='true'
+                    aria-label='Menu do usuário'
+                >
+                    <!-- User Avatar Circle with Initials -->
+                    <div class='w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-semibold text-sm shadow-md'>
+                        {% if user.profile.full_name %}
+                            {{ user.profile.full_name|slice:':1'|upper }}
+                        {% else %}
+                            {{ user.email|slice:':1'|upper }}
+                        {% endif %}
+                    </div>
+                    <!-- User Name/Email -->
+                    <div class='text-left'>
+                        <p class='text-sm font-medium text-text-primary'>
+                            {% if user.profile.full_name %}
+                                {{ user.profile.full_name }}
+                            {% else %}
+                                {{ user.email|truncatechars:20 }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <!-- Dropdown Arrow -->
+                    <svg class='w-4 h-4 text-text-secondary transition-transform duration-200' id='dropdown-arrow' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div
+                    id='user-menu-dropdown'
+                    class='hidden absolute right-0 mt-2 w-56 bg-bg-secondary rounded-xl shadow-xl border border-bg-tertiary overflow-hidden transform origin-top-right transition-all duration-200'
+                    role='menu'
+                    aria-orientation='vertical'
+                    aria-labelledby='user-menu-button'
+                >
+                    <!-- User Info Header -->
+                    <div class='px-4 py-3 border-b border-bg-tertiary bg-bg-tertiary/50'>
+                        <p class='text-xs text-text-muted'>Conectado como</p>
+                        <p class='text-sm font-medium text-text-primary truncate'>{{ user.email }}</p>
+                    </div>
+
+                    <!-- Menu Items -->
+                    <div class='py-1'>
+                        <a
+                            href='#'
+                            class='flex items-center space-x-3 px-4 py-3 text-sm text-text-secondary hover:bg-bg-tertiary hover:text-text-primary transition-all duration-150'
+                            role='menuitem'
+                        >
+                            <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
+                                <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'/>
+                            </svg>
+                            <span>Ver Perfil</span>
+                        </a>
+                        <a
+                            href='#'
+                            class='flex items-center space-x-3 px-4 py-3 text-sm text-text-secondary hover:bg-bg-tertiary hover:text-text-primary transition-all duration-150'
+                            role='menuitem'
+                        >
+                            <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
+                                <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'/>
+                            </svg>
+                            <span>Editar Perfil</span>
+                        </a>
+                    </div>
+
+                    <!-- Logout Section -->
+                    <div class='py-1 border-t border-bg-tertiary'>
+                        <form method='post' action='{% url "users:logout" %}'>
+                            {% csrf_token %}
+                            <button
+                                type='submit'
+                                class='flex items-center space-x-3 w-full px-4 py-3 text-sm text-error hover:bg-error/10 transition-all duration-150'
+                                role='menuitem'
+                            >
+                                <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
+                                    <path fill-rule='evenodd' d='M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z' clip-rule='evenodd'/>
+                                </svg>
+                                <span>Sair</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button (Right) -->
+            <div class='md:hidden'>
+                <button
+                    id='mobile-menu-button'
+                    type='button'
+                    class='p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500'
+                    aria-expanded='false'
+                    aria-controls='mobile-menu'
+                    aria-label='Abrir menu de navegação'
+                >
+                    <!-- Hamburger Icon -->
+                    <svg id='hamburger-icon' class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'/>
+                    </svg>
+                    <!-- Close Icon (hidden by default) -->
+                    <svg id='close-icon' class='w-6 h-6 hidden' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Panel -->
+    <div id='mobile-menu' class='hidden md:hidden border-t border-bg-tertiary'>
+        <!-- User Info Section -->
+        <div class='px-4 py-3 bg-bg-tertiary/50 border-b border-bg-tertiary'>
+            <div class='flex items-center space-x-3'>
+                <div class='w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-semibold shadow-md'>
+                    {% if user.profile.full_name %}
+                        {{ user.profile.full_name|slice:':1'|upper }}
+                    {% else %}
+                        {{ user.email|slice:':1'|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <p class='text-sm font-medium text-text-primary'>
+                        {% if user.profile.full_name %}
+                            {{ user.profile.full_name }}
+                        {% else %}
+                            Usuário
+                        {% endif %}
+                    </p>
+                    <p class='text-xs text-text-muted truncate'>{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class='px-2 py-3 space-y-1'>
+            <a
+                href='{% url "dashboard" %}'
+                class='flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.url_name == "dashboard" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'/>
+                </svg>
+                Dashboard
+            </a>
+            <a
+                href='{% url "accounts:list" %}'
+                class='flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "accounts" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z'/>
+                    <path fill-rule='evenodd' d='M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z' clip-rule='evenodd'/>
+                </svg>
+                Contas
+            </a>
+            <a
+                href='{% url "categories:category_list" %}'
+                class='flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "categories" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z'/>
+                </svg>
+                Categorias
+            </a>
+            <a
+                href='{% url "transactions:list" %}'
+                class='flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 {% if request.resolver_match.app_name == "transactions" %}bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg{% else %}text-text-secondary hover:text-text-primary hover:bg-bg-tertiary{% endif %}'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z'/>
+                </svg>
+                Transações
+            </a>
+        </div>
+
+        <!-- Profile Links -->
+        <div class='px-2 py-3 border-t border-bg-tertiary space-y-1'>
+            <a
+                href='#'
+                class='flex items-center px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-200'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'/>
+                </svg>
+                Ver Perfil
+            </a>
+            <a
+                href='#'
+                class='flex items-center px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-200'
+            >
+                <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'/>
+                </svg>
+                Editar Perfil
+            </a>
+        </div>
+
+        <!-- Logout Section -->
+        <div class='px-2 py-3 border-t border-bg-tertiary'>
+            <form method='post' action='{% url "users:logout" %}'>
+                {% csrf_token %}
+                <button
+                    type='submit'
+                    class='flex items-center w-full px-4 py-3 rounded-lg text-sm font-medium text-error hover:bg-error/10 transition-all duration-200'
+                >
+                    <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z' clip-rule='evenodd'/>
+                    </svg>
+                    Sair
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- JavaScript for Dropdown and Mobile Menu -->
+<script>
+    // Desktop User Dropdown Menu
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+    const dropdownArrow = document.getElementById('dropdown-arrow');
+
+    if (userMenuButton && userMenuDropdown) {
+        userMenuButton.addEventListener('click', () => {
+            const isHidden = userMenuDropdown.classList.contains('hidden');
+
+            if (isHidden) {
+                // Show dropdown
+                userMenuDropdown.classList.remove('hidden');
+                userMenuButton.setAttribute('aria-expanded', 'true');
+                dropdownArrow.style.transform = 'rotate(180deg)';
+            } else {
+                // Hide dropdown
+                userMenuDropdown.classList.add('hidden');
+                userMenuButton.setAttribute('aria-expanded', 'false');
+                dropdownArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) {
+                userMenuDropdown.classList.add('hidden');
+                userMenuButton.setAttribute('aria-expanded', 'false');
+                dropdownArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+    }
+
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+
+            if (isHidden) {
+                // Show mobile menu
+                mobileMenu.classList.remove('hidden');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            } else {
+                // Hide mobile menu
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // Close mobile menu when clicking on a link
+    const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
+    mobileMenuLinks?.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        });
+    });
+</script>

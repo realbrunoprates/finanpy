@@ -993,22 +993,23 @@
 **Descrição**: Criar componente de navegação consistente
 
 **Subtarefas**:
-- [ ] 5.3.1: Criar arquivo `templates/includes/navbar.html`
-- [ ] 5.3.2: Criar estrutura de navbar com TailwindCSS
-- [ ] 5.3.3: Adicionar logo/nome Finanpy à esquerda
-- [ ] 5.3.4: Adicionar links de navegação no centro
-- [ ] 5.3.5: Link para Dashboard
-- [ ] 5.3.6: Link para Contas
-- [ ] 5.3.7: Link para Categorias
-- [ ] 5.3.8: Link para Transações
-- [ ] 5.3.9: Adicionar dropdown de usuário à direita
-- [ ] 5.3.10: Exibir nome/email do usuário
-- [ ] 5.3.11: Link para Ver Perfil
-- [ ] 5.3.12: Link para Editar Perfil
-- [ ] 5.3.13: Botão de Logout
-- [ ] 5.3.14: Adicionar indicador de página ativa
-- [ ] 5.3.15: Implementar menu hambúrguer para mobile
-- [ ] 5.3.16: Incluir navbar no base.html
+- [X] 5.3.1: Criar arquivo `templates/includes/navbar.html`
+- [X] 5.3.2: Criar estrutura de navbar com TailwindCSS
+- [X] 5.3.3: Adicionar logo/nome Finanpy à esquerda
+- [X] 5.3.4: Adicionar links de navegação no centro
+- [X] 5.3.5: Link para Dashboard
+- [X] 5.3.6: Link para Contas
+- [X] 5.3.7: Link para Categorias
+- [X] 5.3.8: Link para Transações
+- [X] 5.3.9: Adicionar dropdown de usuário à direita
+- [X] 5.3.10: Exibir nome/email do usuário
+- [X] 5.3.11: Link para Ver Perfil
+- [X] 5.3.12: Link para Editar Perfil
+- [X] 5.3.13: Botão de Logout
+- [X] 5.3.14: Adicionar indicador de página ativa
+- [X] 5.3.15: Implementar menu hambúrguer para mobile
+- [X] 5.3.16: Incluir navbar no base.html
+- [X] Tarefa 5.3 concluída
 
 #### Tarefa 5.4: Visualização de Perfil
 **Descrição**: Criar página para visualizar dados do perfil

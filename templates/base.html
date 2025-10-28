@@ -26,9 +26,14 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class='bg-bg-primary min-h-screen'>
+    <!-- Navbar (apenas para usuários autenticados) -->
+    {% if user.is_authenticated %}
+        {% include 'includes/navbar.html' %}
+    {% endif %}
+
     <!-- Django Messages -->
     {% if messages %}
-    <div class='fixed top-4 right-4 z-50 space-y-3 max-w-md'>
+    <div class='fixed {% if user.is_authenticated %}top-20{% else %}top-4{% endif %} right-4 z-50 space-y-3 max-w-md'>
         {% for message in messages %}
         <div class='
             {% if message.tags == 'success' %}
