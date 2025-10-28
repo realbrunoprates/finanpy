@@ -28,6 +28,8 @@ urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     # Authentication URLs
     path('auth/', include('users.urls')),
+    # Profile URLs
+    path('profile/', include('profiles.urls')),
     # Accounts URLs
     path('accounts/', include('accounts.urls')),
     # Categories URLs

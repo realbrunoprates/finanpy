@@ -1048,11 +1048,12 @@
 **Descrição**: Configurar URLs para dashboard e perfil
 
 **Subtarefas**:
-- [ ] 5.6.1: Criar `profiles/urls.py`
-- [ ] 5.6.2: Adicionar paths para profile detail e update
-- [ ] 5.6.3: Incluir no `core/urls.py`
-- [ ] 5.6.4: Adicionar URL do dashboard no `core/urls.py`
-- [ ] 5.6.5: Configurar LOGIN_REDIRECT_URL = '/dashboard/' no settings.py
+- [X] 5.6.1: Criar `profiles/urls.py`
+- [X] 5.6.2: Adicionar paths para profile detail e update
+- [X] 5.6.3: Incluir no `core/urls.py`
+- [X] 5.6.4: Adicionar URL do dashboard no `core/urls.py`
+- [X] 5.6.5: Configurar LOGIN_REDIRECT_URL = '/dashboard/' no settings.py
+- [X] Tarefa 5.6 concluída
 
 #### Tarefa 5.7: Formatação de Valores Monetários
 **Descrição**: Criar template tags para formatar valores em reais
