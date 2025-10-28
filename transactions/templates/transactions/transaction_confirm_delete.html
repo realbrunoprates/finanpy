@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load currency_filters %}
 
 {% block title %}Confirmar Exclusão - Finanpy{% endblock %}
 
@@ -50,11 +51,11 @@
                     <p class='text-warning text-sm'>
                         {% if object.transaction_type == 'income' %}
                             Esta transação é uma <span class='font-semibold'>ENTRADA</span>.
-                            Ao excluí-la, o valor de <span class='font-semibold'>R$ {{ object.amount|floatformat:2 }}</span>
+                            Ao excluí-la, o valor de <span class='font-semibold'>{{ object.amount|currency }}</span>
                             será <span class='font-semibold'>SUBTRAÍDO</span> do saldo da conta "{{ object.account.name }}".
                         {% elif object.transaction_type == 'expense' %}
                             Esta transação é uma <span class='font-semibold'>SAÍDA</span>.
-                            Ao excluí-la, o valor de <span class='font-semibold'>R$ {{ object.amount|floatformat:2 }}</span>
+                            Ao excluí-la, o valor de <span class='font-semibold'>{{ object.amount|currency }}</span>
                             será <span class='font-semibold'>DEVOLVIDO</span> ao saldo da conta "{{ object.account.name }}".
                         {% endif %}
                     </p>
@@ -84,7 +85,7 @@
                         {% endif %}
                     </div>
                     <p class='text-text-primary text-2xl font-bold {% if object.transaction_type == "income" %}text-success{% else %}text-error{% endif %}'>
-                        R$ {{ object.amount|floatformat:2 }}
+                        {{ object.amount|currency }}
                     </p>
                 </div>
 

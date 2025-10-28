@@ -1059,13 +1059,14 @@
 **Descrição**: Criar template tags para formatar valores em reais
 
 **Subtarefas**:
-- [ ] 5.7.1: Criar diretório `users/templatetags/`
-- [ ] 5.7.2: Criar arquivo `__init__.py`
-- [ ] 5.7.3: Criar arquivo `currency_filters.py`
-- [ ] 5.7.4: Criar filtro currency para formatar em R$
-- [ ] 5.7.5: Usar locale pt_BR
-- [ ] 5.7.6: Testar formatação em templates
-- [ ] 5.7.7: Aplicar em todos os templates que exibem valores
+- [X] 5.7.1: Criar diretório `users/templatetags/`
+- [X] 5.7.2: Criar arquivo `__init__.py`
+- [X] 5.7.3: Criar arquivo `currency_filters.py`
+- [X] 5.7.4: Criar filtro currency para formatar em R$
+- [X] 5.7.5: Usar locale pt_BR
+- [X] 5.7.6: Testar formatação em templates
+- [X] 5.7.7: Aplicar em todos os templates que exibem valores
+- [X] Tarefa 5.7 concluída
 
 #### Tarefa 5.8: Mensagens de Feedback
 **Descrição**: Padronizar sistema de mensagens do Django
