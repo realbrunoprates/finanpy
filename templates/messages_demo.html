@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block title %}Demo Sistema de Mensagens - Finanpy{% endblock %}
+
+{% block content %}
+<div class='max-w-4xl mx-auto'>
+    <h1 class='text-4xl font-bold text-text-primary mb-8'>Sistema de Mensagens - Demonstração</h1>
+
+    <div class='bg-bg-secondary rounded-xl p-8 shadow-lg border border-bg-tertiary mb-8'>
+        <h2 class='text-2xl font-semibold text-text-primary mb-6'>Exemplos de Mensagens</h2>
+
+        <div class='space-y-6'>
+            <!-- Success Message Example -->
+            <div class='bg-success/10 border border-success/20 rounded-lg p-4 shadow-lg flex items-start gap-3'>
+                <div class='flex-shrink-0 mt-0.5'>
+                    <svg class='w-5 h-5 text-success' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd'/>
+                    </svg>
+                </div>
+                <div class='flex-1'>
+                    <p class='text-success font-medium'>SUCCESS</p>
+                    <p class='text-success/80 text-sm mt-1'>Operação realizada com sucesso!</p>
+                </div>
+                <div class='flex-shrink-0'>
+                    <span class='text-success/60 text-xs'>#10b981</span>
+                </div>
+            </div>
+
+            <!-- Error Message Example -->
+            <div class='bg-error/10 border border-error/20 rounded-lg p-4 shadow-lg flex items-start gap-3'>
+                <div class='flex-shrink-0 mt-0.5'>
+                    <svg class='w-5 h-5 text-error' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z' clip-rule='evenodd'/>
+                    </svg>
+                </div>
+                <div class='flex-1'>
+                    <p class='text-error font-medium'>ERROR</p>
+                    <p class='text-error/80 text-sm mt-1'>Ocorreu um erro ao processar sua solicitação.</p>
+                </div>
+                <div class='flex-shrink-0'>
+                    <span class='text-error/60 text-xs'>#ef4444</span>
+                </div>
+            </div>
+
+            <!-- Warning Message Example -->
+            <div class='bg-warning/10 border border-warning/20 rounded-lg p-4 shadow-lg flex items-start gap-3'>
+                <div class='flex-shrink-0 mt-0.5'>
+                    <svg class='w-5 h-5 text-warning' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z' clip-rule='evenodd'/>
+                    </svg>
+                </div>
+                <div class='flex-1'>
+                    <p class='text-warning font-medium'>WARNING</p>
+                    <p class='text-warning/80 text-sm mt-1'>Atenção: verifique os dados informados antes de continuar.</p>
+                </div>
+                <div class='flex-shrink-0'>
+                    <span class='text-warning/60 text-xs'>#f59e0b</span>
+                </div>
+            </div>
+
+            <!-- Info Message Example -->
+            <div class='bg-info/10 border border-info/20 rounded-lg p-4 shadow-lg flex items-start gap-3'>
+                <div class='flex-shrink-0 mt-0.5'>
+                    <svg class='w-5 h-5 text-info' fill='currentColor' viewBox='0 0 20 20'>
+                        <path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z' clip-rule='evenodd'/>
+                    </svg>
+                </div>
+                <div class='flex-1'>
+                    <p class='text-info font-medium'>INFO</p>
+                    <p class='text-info/80 text-sm mt-1'>Esta é uma informação importante sobre o sistema.</p>
+                </div>
+                <div class='flex-shrink-0'>
+                    <span class='text-info/60 text-xs'>#3b82f6</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Details -->
+    <div class='bg-bg-secondary rounded-xl p-8 shadow-lg border border-bg-tertiary mb-8'>
+        <h2 class='text-2xl font-semibold text-text-primary mb-6'>Características Técnicas</h2>
+
+        <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <!-- Positioning -->
+            <div class='bg-bg-tertiary rounded-lg p-4'>
+                <h3 class='text-lg font-semibold text-text-primary mb-2'>Posicionamento</h3>
+                <ul class='text-text-secondary text-sm space-y-2'>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Fixed no topo direito (z-50)</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>top-20 quando autenticado</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>top-4 quando não autenticado</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>max-width: 28rem (448px)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Animations -->
+            <div class='bg-bg-tertiary rounded-lg p-4'>
+                <h3 class='text-lg font-semibold text-text-primary mb-2'>Animações</h3>
+                <ul class='text-text-secondary text-sm space-y-2'>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Slide in da direita (0.3s)</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Fade out automático (5s)</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Slide out para direita (0.5s)</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Suave e consistente</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Interactivity -->
+            <div class='bg-bg-tertiary rounded-lg p-4'>
+                <h3 class='text-lg font-semibold text-text-primary mb-2'>Interatividade</h3>
+                <ul class='text-text-secondary text-sm space-y-2'>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Botão de fechar (X)</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Hover states suaves</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Fechamento manual ou automático</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Transition: opacity 0.2s</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Accessibility -->
+            <div class='bg-bg-tertiary rounded-lg p-4'>
+                <h3 class='text-lg font-semibold text-text-primary mb-2'>Acessibilidade</h3>
+                <ul class='text-text-secondary text-sm space-y-2'>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>role='alert' para leitores de tela</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Ícones SVG descritivos</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Alto contraste de cores</span>
+                    </li>
+                    <li class='flex items-start gap-2'>
+                        <span class='text-primary-500'>•</span>
+                        <span>Botões com hover/focus states</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Examples -->
+    <div class='bg-bg-secondary rounded-xl p-8 shadow-lg border border-bg-tertiary'>
+        <h2 class='text-2xl font-semibold text-text-primary mb-6'>Exemplo de Uso em Views</h2>
+
+        <div class='bg-bg-primary rounded-lg p-6 overflow-x-auto'>
+            <pre class='text-text-secondary text-sm'><code>from django.contrib import messages
+
+# Mensagem de sucesso
+messages.success(request, 'Conta criada com sucesso!')
+
+# Mensagem de erro
+messages.error(request, 'Erro ao processar solicitação.')
+
+# Mensagem de aviso
+messages.warning(request, 'Atenção: verifique os dados.')
+
+# Mensagem informativa
+messages.info(request, 'Informação importante.')</code></pre>
+        </div>
+
+        <div class='mt-6 bg-primary-500/10 border border-primary-500/20 rounded-lg p-4'>
+            <p class='text-primary-500 font-medium text-sm'>
+                <strong>Nota:</strong> As mensagens seguem rigorosamente o design system do Finanpy com cores exatas do tailwind.config.js.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

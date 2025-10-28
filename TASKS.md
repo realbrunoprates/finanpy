@@ -1072,14 +1072,15 @@
 **Descrição**: Padronizar sistema de mensagens do Django
 
 **Subtarefas**:
-- [ ] 5.8.1: No base.html, criar seção para mensagens
-- [ ] 5.8.2: Estilizar mensagens de sucesso (verde)
-- [ ] 5.8.3: Estilizar mensagens de erro (vermelho)
-- [ ] 5.8.4: Estilizar mensagens de aviso (amarelo)
-- [ ] 5.8.5: Estilizar mensagens de info (azul)
-- [ ] 5.8.6: Adicionar botão para fechar mensagens
-- [ ] 5.8.7: Adicionar auto-dismiss com JavaScript (opcional)
-- [ ] 5.8.8: Testar em todas as views
+- [X] 5.8.1: No base.html, criar seção para mensagens
+- [X] 5.8.2: Estilizar mensagens de sucesso (verde)
+- [X] 5.8.3: Estilizar mensagens de erro (vermelho)
+- [X] 5.8.4: Estilizar mensagens de aviso (amarelo)
+- [X] 5.8.5: Estilizar mensagens de info (azul)
+- [X] 5.8.6: Adicionar botão para fechar mensagens
+- [X] 5.8.7: Adicionar auto-dismiss com JavaScript (opcional)
+- [X] 5.8.8: Testar em todas as views
+- [X] Tarefa 5.8 concluída
 
 #### Tarefa 5.9: Melhorias de UX
 **Descrição**: Implementar melhorias de experiência do usuário
