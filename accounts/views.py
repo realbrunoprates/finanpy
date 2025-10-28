@@ -19,6 +19,8 @@ class AccountListView(LoginRequiredMixin, ListView):
     model = Account
     template_name = 'accounts/account_list.html'
     context_object_name = 'accounts'
+    paginate_by = 9
+    per_page_options = (6, 9, 12, 18)
 
     def get_queryset(self):
         """
@@ -44,6 +46,12 @@ class AccountListView(LoginRequiredMixin, ListView):
         )['total'] or 0
 
         context['total_balance'] = total_balance
+        context['per_page_options'] = self.per_page_options
+        context['current_per_page'] = getattr(
+            self,
+            '_current_per_page',
+            self.paginate_by
+        )
 
         # Add breadcrumbs
         context['breadcrumbs'] = [
@@ -52,6 +60,29 @@ class AccountListView(LoginRequiredMixin, ListView):
         ]
 
         return context
+
+    def get_paginate_by(self, queryset):
+        """
+        Allow dynamic page size via `per_page` GET parameter.
+        """
+        if hasattr(self, '_current_per_page'):
+            return self._current_per_page
+
+        per_page = self.request.GET.get('per_page')
+        current = self.paginate_by
+
+        if per_page:
+            try:
+                parsed = int(per_page)
+            except (TypeError, ValueError):
+                parsed = self.paginate_by
+            else:
+                if parsed not in self.per_page_options:
+                    parsed = self.paginate_by
+            current = parsed
+
+        self._current_per_page = current
+        return current
 
 
 class AccountCreateView(LoginRequiredMixin, CreateView):

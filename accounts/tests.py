@@ -53,3 +53,56 @@ class AccountDeletionValidationTests(TestCase):
             'Não é possível excluir esta conta pois ela possui transações associadas.',
             messages
         )
+
+
+class AccountListPaginationTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='account_pagination',
+            email='account_pagination@example.com',
+            password='strong-pass-123'
+        )
+        self.client.force_login(self.user)
+
+        for index in range(12):
+            Account.objects.create(
+                user=self.user,
+                name=f'Conta {index}',
+                bank_name='Banco Paginacao',
+                balance=100 + index
+            )
+
+    def test_account_list_uses_default_paginate_by(self):
+        response = self.client.get(reverse('accounts:list'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['accounts']), 9)
+        self.assertEqual(
+            response.context['page_obj'].paginator.count,
+            12
+        )
+        self.assertEqual(response.context['current_per_page'], 9)
+
+    def test_account_list_accepts_valid_per_page_parameter(self):
+        response = self.client.get(
+            reverse('accounts:list'),
+            {'per_page': 6}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['accounts']), 6)
+        self.assertEqual(response.context['current_per_page'], 6)
+        self.assertEqual(
+            response.context['page_obj'].paginator.count,
+            12
+        )
+
+    def test_account_list_ignores_invalid_per_page_parameter(self):
+        response = self.client.get(
+            reverse('accounts:list'),
+            {'per_page': 99}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['accounts']), 9)
+        self.assertEqual(response.context['current_per_page'], 9)

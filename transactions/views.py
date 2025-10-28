@@ -31,6 +31,17 @@ class TransactionListView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transaction_list.html'
     context_object_name = 'transactions'
     paginate_by = 20
+    per_page_options = (10, 20, 50, 100)
+    sortable_fields = {
+        'date': 'transaction_date',
+        'description': 'description',
+        'amount': 'amount',
+        'account': 'account__name',
+        'category': 'category__name',
+        'type': 'transaction_type',
+    }
+    default_sort = 'date'
+    default_direction = 'desc'
 
     def get_queryset(self):
         """
@@ -46,7 +57,7 @@ class TransactionListView(LoginRequiredMixin, ListView):
             'category'
         ).filter(
             account__user=self.request.user
-        ).order_by('-transaction_date', '-created_at')
+        )
 
         # Filter by date range
         data_inicio = self.request.GET.get('data_inicio')
@@ -90,7 +101,11 @@ class TransactionListView(LoginRequiredMixin, ListView):
                 # Invalid category ID, ignore filter
                 pass
 
-        return queryset
+        sort_key, direction, ordering = self.get_ordering_params()
+        self.current_sort = sort_key
+        self.current_direction = direction
+
+        return queryset.order_by(*ordering)
 
     def get_context_data(self, **kwargs):
         """
@@ -146,7 +161,115 @@ class TransactionListView(LoginRequiredMixin, ListView):
             {'label': 'Transações', 'url': None},
         ]
 
+        context['current_sort'] = getattr(
+            self,
+            'current_sort',
+            self.default_sort
+        )
+        context['current_direction'] = getattr(
+            self,
+            'current_direction',
+            self.default_direction
+        )
+        context['sorting_metadata'] = self.get_sorting_metadata()
+        context['per_page_options'] = self.per_page_options
+        context['current_per_page'] = getattr(
+            self,
+            '_current_per_page',
+            self.paginate_by
+        )
+
         return context
+
+    def get_ordering_params(self):
+        """
+        Resolve ordering based on `sort` and `direction` query params.
+        """
+        sort_param = self.request.GET.get('sort', self.default_sort)
+        direction_param = self.request.GET.get(
+            'direction',
+            self.default_direction
+        )
+
+        is_sort_valid = sort_param in self.sortable_fields
+        sort_key = (
+            sort_param
+            if is_sort_valid
+            else self.default_sort
+        )
+        direction = (
+            direction_param
+            if direction_param in {'asc', 'desc'}
+            else self.default_direction
+        )
+
+        if not is_sort_valid:
+            direction = self.default_direction
+
+        field_name = self.sortable_fields[sort_key]
+        prefix = '' if direction == 'asc' else '-'
+        ordering = [f'{prefix}{field_name}']
+
+        if field_name != 'transaction_date':
+            ordering.append(
+                'transaction_date' if direction == 'asc' else '-transaction_date'
+            )
+
+        ordering.append(
+            'created_at' if direction == 'asc' else '-created_at'
+        )
+
+        return sort_key, direction, ordering
+
+    def get_paginate_by(self, queryset):
+        """
+        Allow dynamic page size via `per_page` GET parameter.
+        """
+        if hasattr(self, '_current_per_page'):
+            return self._current_per_page
+
+        per_page = self.request.GET.get('per_page')
+        current = self.paginate_by
+
+        if per_page:
+            try:
+                parsed = int(per_page)
+            except (TypeError, ValueError):
+                parsed = self.paginate_by
+            else:
+                if parsed not in self.per_page_options:
+                    parsed = self.paginate_by
+            current = parsed
+
+        self._current_per_page = current
+        return current
+
+    def get_sorting_metadata(self):
+        """
+        Build helper metadata used to render sorting controls.
+        """
+        current_sort = getattr(self, 'current_sort', self.default_sort)
+        current_direction = getattr(
+            self,
+            'current_direction',
+            self.default_direction
+        )
+
+        metadata = {}
+
+        for key in self.sortable_fields:
+            is_active = key == current_sort
+            next_direction = (
+                'desc' if is_active and current_direction == 'asc'
+                else 'asc'
+            )
+            metadata[key] = {
+                'is_active': is_active,
+                'current_direction': current_direction if is_active else None,
+                'next_direction': next_direction,
+            }
+
+        return metadata
 
 
 class TransactionCreateView(LoginRequiredMixin, CreateView):

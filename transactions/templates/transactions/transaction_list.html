@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load currency_filters %}
+{% load currency_filters querystring %}
 
 {% block title %}Transações - Finanpy{% endblock %}
 
@@ -124,18 +124,197 @@
 
 <!-- Transactions Table -->
 {% if page_obj %}
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between mb-6">
+        <p class="text-sm text-text-secondary">
+            Exibindo {{ page_obj.object_list|length }} de {{ page_obj.paginator.count }} transações filtradas.
+        </p>
+        <form method="get" class="flex items-center gap-2 bg-bg-secondary border border-bg-tertiary rounded-lg px-3 py-2">
+            <label for="transactions-per-page" class="text-sm text-text-secondary">
+                Mostrar
+            </label>
+            <select
+                id="transactions-per-page"
+                name="per_page"
+                class="bg-transparent text-sm font-semibold text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-md px-2 py-1"
+                onchange="this.form.submit()"
+            >
+                {% for option in per_page_options %}
+                    <option value="{{ option }}" {% if option == current_per_page %}selected{% endif %}>
+                        {{ option }}
+                    </option>
+                {% endfor %}
+            </select>
+            <span class="text-sm text-text-secondary">por página</span>
+            {% for key, value in request.GET.items %}
+                {% if key != 'per_page' and key != 'page' %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
+
     <!-- Desktop Table View -->
     <div class="hidden lg:block bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary overflow-x-auto mb-8">
         <table class="w-full min-w-[960px]">
             <thead>
-                <tr class="bg-bg-tertiary">
-                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Data</th>
-                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Descrição</th>
-                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Conta</th>
-                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Categoria</th>
-                    <th class="px-6 py-4 text-left text-text-secondary text-sm font-semibold">Tipo</th>
-                    <th class="px-6 py-4 text-right text-text-secondary text-sm font-semibold">Valor</th>
-                    <th class="px-6 py-4 text-center text-text-secondary text-sm font-semibold">Ações</th>
+                <tr class="bg-bg-tertiary/60 text-left text-xs font-semibold uppercase tracking-wide text-text-secondary">
+                    {% with meta=sorting_metadata.date %}
+                    <th class="px-6 py-4"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='date' direction=meta.next_direction page=None %}" class="flex items-center gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Data
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    {% with meta=sorting_metadata.description %}
+                    <th class="px-6 py-4"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='description' direction=meta.next_direction page=None %}" class="flex items-center gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Descrição
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    {% with meta=sorting_metadata.account %}
+                    <th class="px-6 py-4"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='account' direction=meta.next_direction page=None %}" class="flex items-center gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Conta
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    {% with meta=sorting_metadata.category %}
+                    <th class="px-6 py-4"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='category' direction=meta.next_direction page=None %}" class="flex items-center gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Categoria
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    {% with meta=sorting_metadata.type %}
+                    <th class="px-6 py-4"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='type' direction=meta.next_direction page=None %}" class="flex items-center gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Tipo
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    {% with meta=sorting_metadata.amount %}
+                    <th class="px-6 py-4 text-right"{% if meta.is_active %} aria-sort="{% if meta.current_direction == 'asc' %}ascending{% else %}descending{% endif %}"{% endif %}>
+                        <a href="?{% update_query sort='amount' direction=meta.next_direction page=None %}" class="flex items-center justify-end gap-2 group">
+                            <span class="text-sm font-semibold text-text-secondary group-hover:text-primary-400 transition-colors duration-200">
+                                Valor
+                            </span>
+                            <span class="text-text-muted group-hover:text-primary-400 transition-colors duration-200">
+                                {% if meta.is_active %}
+                                    {% if meta.current_direction == 'asc' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    {% endif %}
+                                {% else %}
+                                    <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l5-5 5 5M7 17l5 5 5-5"/>
+                                    </svg>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </th>
+                    {% endwith %}
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-text-secondary">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,29 +339,14 @@
                         {{ transaction.amount|currency }}
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex items-center justify-center space-x-2">
-        {% if page_obj.has_previous %}
-            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Primeira
-            </a>
-            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Anterior
-            </a>
-        {% endif %}
-
-        <span class="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium">
-            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Próxima
-            </a>
-            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Última
-            </a>
-        {% endif %}
-    </div>
+                        <div class="flex items-center justify-center gap-2">
+                            <a href="{% url 'transactions:update' transaction.id %}" class="px-4 py-2 bg-bg-primary text-text-primary rounded-lg text-sm font-medium border border-bg-tertiary hover:border-primary-500 hover:text-primary-400 transition-all duration-200" title="Editar transação {{ transaction.description }}">
+                                Editar
+                            </a>
+                            <a href="{% url 'transactions:delete' transaction.id %}" class="px-4 py-2 bg-error/10 text-error rounded-lg text-sm font-medium border border-error/20 hover:bg-error hover:text-white transition-all duration-200" data-confirm="Tem certeza que deseja excluir a transação {{ transaction.description|default:'sem descrição' }}?" title="Excluir transação {{ transaction.description|default:'sem descrição' }}">
+                                Excluir
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 {% empty %}
@@ -251,32 +415,7 @@
         {% endfor %}
     </div>
 
-    <!-- Pagination -->
-    {% if page_obj.has_other_pages %}
-    <div class="flex items-center justify-center space-x-2">
-        {% if page_obj.has_previous %}
-            <a href="?page=1{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Primeira
-            </a>
-            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Anterior
-            </a>
-        {% endif %}
-
-        <span class="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium">
-            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Próxima
-            </a>
-            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.conta %}&conta={{ request.GET.conta }}{% endif %}{% if request.GET.categoria %}&categoria={{ request.GET.categoria }}{% endif %}" class="px-4 py-2 bg-bg-secondary text-text-primary rounded-lg font-medium hover:bg-bg-tertiary transition-all duration-200 border border-bg-tertiary">
-                Última
-            </a>
-        {% endif %}
-    </div>
-    {% endif %}
+    {% include 'includes/pagination.html' with page_obj=page_obj %}
 {% else %}
     <!-- Empty State -->
     <div class="bg-bg-secondary rounded-xl p-12 text-center border border-bg-tertiary">

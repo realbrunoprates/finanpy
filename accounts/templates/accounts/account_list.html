@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load currency_filters %}
+{% load currency_filters querystring %}
 
 {% block title %}Minhas Contas - Finanpy{% endblock %}
 
@@ -30,6 +30,31 @@
 
 <!-- Accounts Grid -->
 {% if accounts %}
+    <div class='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6'>
+        <p class='text-sm text-text-secondary'>
+            Exibindo {{ accounts|length }} de {{ page_obj.paginator.count }} contas.
+        </p>
+        <form method='get' class='flex items-center gap-2 bg-bg-secondary border border-bg-tertiary rounded-lg px-3 py-2'>
+            <label for='accounts-per-page' class='text-sm text-text-secondary'>Mostrar</label>
+            <select
+                id='accounts-per-page'
+                name='per_page'
+                class='bg-transparent text-sm font-semibold text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-md px-2 py-1'
+                onchange='this.form.submit()'
+            >
+                {% for option in per_page_options %}
+                    <option value='{{ option }}' {% if option == current_per_page %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            <span class='text-sm text-text-secondary'>por página</span>
+            {% for key, value in request.GET.items %}
+                {% if key != 'per_page' and key != 'page' %}
+                    <input type='hidden' name='{{ key }}' value='{{ value }}'>
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
+
     <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {% for account in accounts %}
         <div class='bg-bg-secondary rounded-xl p-6 shadow-lg border border-bg-tertiary hover:border-primary-500 transition-all duration-200 hover:-translate-y-1'>
@@ -87,6 +112,8 @@
         </div>
         {% endfor %}
     </div>
+
+    {% include 'includes/pagination.html' with page_obj=page_obj %}
 
 <!-- Empty State -->
 {% else %}

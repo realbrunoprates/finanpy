@@ -1,0 +1,46 @@
+{% load querystring %}
+{% if page_obj and page_obj.paginator.num_pages > 1 %}
+<nav class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-bg-secondary/60 border border-bg-tertiary rounded-xl px-4 py-3" aria-label="Paginação">
+    <div class="text-sm text-text-secondary">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        <span class="hidden sm:inline">• {{ page_obj.paginator.count }} itens</span>
+    </div>
+    <div class="flex items-center gap-2">
+        {% if page_obj.has_previous %}
+            <a href="?{% update_query page=1 %}" class="px-3 py-2 rounded-lg border border-bg-tertiary text-text-primary hover:border-primary-500 hover:text-primary-400 transition-all duration-200" title="Primeira página">
+                Primeira
+            </a>
+            <a href="?{% update_query page=page_obj.previous_page_number %}" class="px-3 py-2 rounded-lg border border-bg-tertiary text-text-primary hover:border-primary-500 hover:text-primary-400 transition-all duration-200" title="Página anterior">
+                Anterior
+            </a>
+        {% else %}
+            <span class="px-3 py-2 rounded-lg border border-bg-tertiary/60 text-text-muted cursor-not-allowed">
+                Primeira
+            </span>
+            <span class="px-3 py-2 rounded-lg border border-bg-tertiary/60 text-text-muted cursor-not-allowed">
+                Anterior
+            </span>
+        {% endif %}
+
+        <span class="px-4 py-2 rounded-lg bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold shadow-lg">
+            {{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% update_query page=page_obj.next_page_number %}" class="px-3 py-2 rounded-lg border border-bg-tertiary text-text-primary hover:border-primary-500 hover:text-primary-400 transition-all duration-200" title="Próxima página">
+                Próxima
+            </a>
+            <a href="?{% update_query page=page_obj.paginator.num_pages %}" class="px-3 py-2 rounded-lg border border-bg-tertiary text-text-primary hover:border-primary-500 hover:text-primary-400 transition-all duration-200" title="Última página">
+                Última
+            </a>
+        {% else %}
+            <span class="px-3 py-2 rounded-lg border border-bg-tertiary/60 text-text-muted cursor-not-allowed">
+                Próxima
+            </span>
+            <span class="px-3 py-2 rounded-lg border border-bg-tertiary/60 text-text-muted cursor-not-allowed">
+                Última
+            </span>
+        {% endif %}
+    </div>
+</nav>
+{% endif %}
