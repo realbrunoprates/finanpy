@@ -1,5 +1,8 @@
-from django.db import models
+from decimal import Decimal
+
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
+from django.db import models
 
 User = get_user_model()
 
@@ -42,7 +45,8 @@ class Account(models.Model):
         'Saldo',
         max_digits=12,
         decimal_places=2,
-        default=0
+        default=0,
+        validators=[MinValueValidator(Decimal('0'))]
     )
 
     # Status

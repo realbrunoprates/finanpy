@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect
 
 # Local imports
 from .models import Category
@@ -166,26 +167,22 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
         """
         return Category.objects.filter(user=self.request.user)
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
-        Valida se a categoria pode ser excluída e exibe mensagem de sucesso.
-        Previne exclusão de categorias com transações associadas.
+        Valida se a categoria pode ser excluída antes de removê-la.
         """
-        category = self.get_object()
+        category = self.object
 
-        # Verifica se a categoria possui transações associadas
-        # Quando o modelo Transaction for implementado, descomentar:
-        # if category.transactions.exists():
-        #     messages.error(
-        #         self.request,
-        #         'Não é possível excluir esta categoria pois ela possui transações associadas.'
-        #     )
-        #     return redirect('categories:category_list')
+        if category.transactions.exists():
+            messages.error(
+                self.request,
+                'Não é possível excluir esta categoria pois ela possui transações associadas.'
+            )
+            return redirect('categories:category_list')
 
-        # Mensagem de sucesso
         messages.success(self.request, 'Categoria excluída com sucesso!')
 
-        return super().delete(request, *args, **kwargs)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         """

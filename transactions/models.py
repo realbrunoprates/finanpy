@@ -1,4 +1,8 @@
+# Standard library
+from decimal import Decimal
+
 # Django imports
+from django.core.validators import MinValueValidator
 from django.db import models
 
 # Local imports
@@ -48,7 +52,8 @@ class Transaction(models.Model):
     amount = models.DecimalField(
         'Valor',
         max_digits=12,
-        decimal_places=2
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.01'))]
     )
 
     transaction_date = models.DateField('Data da Transação')

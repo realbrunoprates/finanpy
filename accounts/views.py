@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Sum
+from django.shortcuts import redirect
 
 # Local imports
 from .models import Account
@@ -162,10 +163,18 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
 
         return context
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
-        Delete the account and display a success message.
+        Validate deletion to prevent removing accounts with transactions.
         """
-        # TODO: Add validation to prevent deletion of accounts with transactions
+        account = self.object
+
+        if account.transactions.exists():
+            messages.error(
+                self.request,
+                'Não é possível excluir esta conta pois ela possui transações associadas.'
+            )
+            return redirect('accounts:list')
+
         messages.success(self.request, 'Conta excluída com sucesso!')
-        return super().delete(request, *args, **kwargs)
+        return super().form_valid(form)

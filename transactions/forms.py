@@ -1,6 +1,7 @@
 # Django imports
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 # Local imports
 from transactions.models import Transaction
@@ -39,6 +40,7 @@ class TransactionForm(forms.ModelForm):
                 'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
                 'placeholder': 'Ex: 150.00',
                 'step': '0.01',
+                'min': '0.01',
             }),
             'transaction_date': forms.DateInput(attrs={
                 'type': 'date',
@@ -85,9 +87,27 @@ class TransactionForm(forms.ModelForm):
 
         return amount
 
+    def clean_transaction_date(self):
+        """
+        Valida se a data da transação não está no futuro.
+
+        Returns:
+            date: Data validada da transação
+
+        Raises:
+            ValidationError: Se a data estiver no futuro
+        """
+        transaction_date = self.cleaned_data.get('transaction_date')
+
+        if transaction_date and transaction_date > timezone.localdate():
+            raise ValidationError('A data da transação não pode estar no futuro.')
+
+        return transaction_date
+
     def clean(self):
         """
-        Valida se o tipo de categoria corresponde ao tipo de transação.
+        Valida se o tipo de categoria corresponde ao tipo de transação
+        e verifica se há saldo suficiente para transações de despesa.
 
         Returns:
             dict: Dados limpos validados
@@ -98,6 +118,8 @@ class TransactionForm(forms.ModelForm):
         cleaned_data = super().clean()
         transaction_type = cleaned_data.get('transaction_type')
         category = cleaned_data.get('category')
+        account = cleaned_data.get('account')
+        amount = cleaned_data.get('amount')
 
         if transaction_type and category:
             # Verifica se o tipo de categoria corresponde ao tipo de transação
@@ -110,5 +132,29 @@ class TransactionForm(forms.ModelForm):
                 raise ValidationError(
                     'Para transações de saída, você deve selecionar uma categoria do tipo Despesa.'
                 )
+
+        if (
+            transaction_type == Transaction.EXPENSE
+            and account
+            and amount is not None
+        ):
+            available_balance = account.balance
+
+            if self.instance.pk:
+                try:
+                    old_transaction = Transaction.objects.get(pk=self.instance.pk)
+                except Transaction.DoesNotExist:
+                    old_transaction = None
+                else:
+                    if old_transaction.account_id == account.pk:
+                        if old_transaction.transaction_type == Transaction.EXPENSE:
+                            available_balance += old_transaction.amount
+                        elif old_transaction.transaction_type == Transaction.INCOME:
+                            available_balance -= old_transaction.amount
+
+            if amount > available_balance:
+                raise ValidationError({
+                    'amount': 'Saldo insuficiente na conta selecionada para esta despesa.'
+                })
 
         return cleaned_data
