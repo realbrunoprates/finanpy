@@ -967,26 +967,27 @@
 **Descrição**: Criar template HTML do dashboard principal
 
 **Subtarefas**:
-- [ ] 5.2.1: Criar arquivo `templates/dashboard.html`
-- [ ] 5.2.2: Extender base.html
-- [ ] 5.2.3: Adicionar título "Dashboard"
-- [ ] 5.2.4: Criar seção de boas-vindas com nome do usuário
-- [ ] 5.2.5: Criar grid com 4 cards de estatísticas principais
-- [ ] 5.2.6: Card 1: Saldo Total (gradiente primário)
-- [ ] 5.2.7: Card 2: Entradas do Mês (verde)
-- [ ] 5.2.8: Card 3: Saídas do Mês (vermelho)
-- [ ] 5.2.9: Card 4: Balanço do Mês (azul se positivo, vermelho se negativo)
-- [ ] 5.2.10: Criar seção "Ações Rápidas" com botões
-- [ ] 5.2.11: Botão para Nova Transação
-- [ ] 5.2.12: Botão para Nova Conta
-- [ ] 5.2.13: Botão para Nova Categoria
-- [ ] 5.2.14: Criar seção "Transações Recentes"
-- [ ] 5.2.15: Listar últimas transações em tabela compacta
-- [ ] 5.2.16: Link "Ver Todas" para página de transações
-- [ ] 5.2.17: Criar seção "Gastos por Categoria"
-- [ ] 5.2.18: Exibir top 5 categorias do mês com barras de progresso
-- [ ] 5.2.19: Usar cores das categorias
-- [ ] 5.2.20: Adicionar responsividade mobile-first
+- [X] 5.2.1: Criar arquivo `templates/dashboard.html`
+- [X] 5.2.2: Extender base.html
+- [X] 5.2.3: Adicionar título "Dashboard"
+- [X] 5.2.4: Criar seção de boas-vindas com nome do usuário
+- [X] 5.2.5: Criar grid com 4 cards de estatísticas principais
+- [X] 5.2.6: Card 1: Saldo Total (gradiente primário)
+- [X] 5.2.7: Card 2: Entradas do Mês (verde)
+- [X] 5.2.8: Card 3: Saídas do Mês (vermelho)
+- [X] 5.2.9: Card 4: Balanço do Mês (azul se positivo, vermelho se negativo)
+- [X] 5.2.10: Criar seção "Ações Rápidas" com botões
+- [X] 5.2.11: Botão para Nova Transação
+- [X] 5.2.12: Botão para Nova Conta
+- [X] 5.2.13: Botão para Nova Categoria
+- [X] 5.2.14: Criar seção "Transações Recentes"
+- [X] 5.2.15: Listar últimas transações em tabela compacta
+- [X] 5.2.16: Link "Ver Todas" para página de transações
+- [X] 5.2.17: Criar seção "Gastos por Categoria"
+- [X] 5.2.18: Exibir top 5 categorias do mês com barras de progresso
+- [X] 5.2.19: Usar cores das categorias
+- [X] 5.2.20: Adicionar responsividade mobile-first
+- [X] Tarefa 5.2 concluída
 
 #### Tarefa 5.3: Menu de Navegação Principal
 **Descrição**: Criar componente de navegação consistente
