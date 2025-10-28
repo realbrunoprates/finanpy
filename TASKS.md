@@ -1015,17 +1015,18 @@
 **Descrição**: Criar página para visualizar dados do perfil
 
 **Subtarefas**:
-- [ ] 5.4.1: No `profiles/views.py`, criar ProfileDetailView
-- [ ] 5.4.2: Configurar para buscar perfil do usuário logado
-- [ ] 5.4.3: Configurar template_name
-- [ ] 5.4.4: Criar `templates/profiles/profile_detail.html`
-- [ ] 5.4.5: Exibir foto placeholder (círculo com iniciais)
-- [ ] 5.4.6: Exibir nome completo
-- [ ] 5.4.7: Exibir email (não editável)
-- [ ] 5.4.8: Exibir telefone
-- [ ] 5.4.9: Exibir data de cadastro
-- [ ] 5.4.10: Adicionar botão "Editar Perfil"
-- [ ] 5.4.11: Criar design com cards estilizados
+- [X] 5.4.1: No `profiles/views.py`, criar ProfileDetailView
+- [X] 5.4.2: Configurar para buscar perfil do usuário logado
+- [X] 5.4.3: Configurar template_name
+- [X] 5.4.4: Criar `templates/profiles/profile_detail.html`
+- [X] 5.4.5: Exibir foto placeholder (círculo com iniciais)
+- [X] 5.4.6: Exibir nome completo
+- [X] 5.4.7: Exibir email (não editável)
+- [X] 5.4.8: Exibir telefone
+- [X] 5.4.9: Exibir data de cadastro
+- [X] 5.4.10: Adicionar botão "Editar Perfil"
+- [X] 5.4.11: Criar design com cards estilizados
+- [X] Tarefa 5.4 concluída
 
 #### Tarefa 5.5: Edição de Perfil
 **Descrição**: Criar formulário para editar perfil
