@@ -891,12 +891,13 @@
 **Descrição**: Criar templates para forms de transação
 
 **Subtarefas**:
-- [ ] 4.10.1: Criar `templates/transactions/transaction_form.html`
-- [ ] 4.10.2: Criar formulário estilizado
-- [ ] 4.10.3: Adicionar JavaScript para filtrar categorias baseado no tipo
-- [ ] 4.10.4: Criar `templates/transactions/transaction_confirm_delete.html`
-- [ ] 4.10.5: Adicionar informações da transação
-- [ ] 4.10.6: Adicionar aviso sobre atualização de saldo
+- [X] 4.10.1: Criar `templates/transactions/transaction_form.html`
+- [X] 4.10.2: Criar formulário estilizado
+- [X] 4.10.3: Adicionar JavaScript para filtrar categorias baseado no tipo
+- [X] 4.10.4: Criar `templates/transactions/transaction_confirm_delete.html`
+- [X] 4.10.5: Adicionar informações da transação
+- [X] 4.10.6: Adicionar aviso sobre atualização de saldo
+- [X] Tarefa 4.10 concluída
 
 #### Tarefa 4.11: URLs de Transactions
 **Descrição**: Configurar URLs para transações
