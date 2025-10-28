@@ -922,20 +922,23 @@
 **Descrição**: Testar funcionalidades de transações
 
 **Subtarefas**:
-- [ ] 4.13.1: Criar transação de entrada
-- [ ] 4.13.2: Verificar atualização de saldo da conta
-- [ ] 4.13.3: Criar transação de saída
-- [ ] 4.13.4: Verificar subtração do saldo
-- [ ] 4.13.5: Editar transação e verificar recálculo
-- [ ] 4.13.6: Excluir transação e verificar reversão do saldo
-- [ ] 4.13.7: Testar filtros por data
-- [ ] 4.13.8: Testar filtros por conta
-- [ ] 4.13.9: Testar filtros por categoria
-- [ ] 4.13.10: Testar combinação de filtros
-- [ ] 4.13.11: Verificar cálculo de estatísticas
-- [ ] 4.13.12: Testar paginação
-- [ ] 4.13.13: Testar validação de categoria vs tipo
-- [ ] 4.13.14: Verificar que usuário só vê suas transações
+- [X] 4.13.1: Criar transação de entrada
+- [X] 4.13.2: Verificar atualização de saldo da conta
+- [X] 4.13.3: Criar transação de saída
+- [X] 4.13.4: Verificar subtração do saldo
+- [X] 4.13.5: Editar transação e verificar recálculo
+- [X] 4.13.6: Excluir transação e verificar reversão do saldo
+- [X] 4.13.7: Testar filtros por data
+- [X] 4.13.8: Testar filtros por conta
+- [X] 4.13.9: Testar filtros por categoria
+- [X] 4.13.10: Testar combinação de filtros
+- [X] 4.13.11: Verificar cálculo de estatísticas
+- [X] 4.13.12: Testar paginação
+- [X] 4.13.13: Testar validação de categoria vs tipo
+- [X] 4.13.14: Verificar que usuário só vê suas transações
+- [X] Tarefa 4.13 concluída
+
+**[X] SPRINT 4 CONCLUÍDA**
 
 ---
 
