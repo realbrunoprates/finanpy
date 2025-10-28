@@ -806,16 +806,17 @@
 **Descrição**: Criar formulário para transações
 
 **Subtarefas**:
-- [ ] 4.4.1: Criar arquivo `transactions/forms.py`
-- [ ] 4.4.2: Criar TransactionForm
-- [ ] 4.4.3: Definir fields: account, category, transaction_type, amount, transaction_date, description
-- [ ] 4.4.4: Configurar widgets com TailwindCSS
-- [ ] 4.4.5: Usar DateInput com type='date'
-- [ ] 4.4.6: Adicionar labels em português
-- [ ] 4.4.7: Adicionar placeholders
-- [ ] 4.4.8: Adicionar método __init__ para filtrar accounts e categories do usuário
-- [ ] 4.4.9: Adicionar validação: category_type deve corresponder a transaction_type
-- [ ] 4.4.10: Adicionar validação: amount deve ser positivo
+- [X] 4.4.1: Criar arquivo `transactions/forms.py`
+- [X] 4.4.2: Criar TransactionForm
+- [X] 4.4.3: Definir fields: account, category, transaction_type, amount, transaction_date, description
+- [X] 4.4.4: Configurar widgets com TailwindCSS
+- [X] 4.4.5: Usar DateInput com type='date'
+- [X] 4.4.6: Adicionar labels em português
+- [X] 4.4.7: Adicionar placeholders
+- [X] 4.4.8: Adicionar método __init__ para filtrar accounts e categories do usuário
+- [X] 4.4.9: Adicionar validação: category_type deve corresponder a transaction_type
+- [X] 4.4.10: Adicionar validação: amount deve ser positivo
+- [X] Tarefa 4.4 concluída
 
 #### Tarefa 4.5: View de Listagem de Transações
 **Descrição**: Criar view para listar transações com filtros
