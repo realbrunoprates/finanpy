@@ -19,7 +19,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         """
         Retorna o perfil do usuário logado.
         """
-        return self.request.user.profile
+        return Profile.objects.select_related('user').get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         """
@@ -46,7 +46,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         """
         Retorna sempre o perfil do usuário logado.
         """
-        return self.request.user.profile
+        return Profile.objects.select_related('user').get(user=self.request.user)
 
     def form_valid(self, form):
         """

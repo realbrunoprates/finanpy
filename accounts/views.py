@@ -28,7 +28,9 @@ class AccountListView(LoginRequiredMixin, ListView):
         Orders results by name.
         Supports filtering by status (active/inactive) via GET parameter.
         """
-        queryset = Account.objects.filter(user=self.request.user)
+        queryset = Account.objects.select_related('user').filter(
+            user=self.request.user
+        )
 
         # Filter by status if provided
         status_filter = self.request.GET.get('status', '').strip().lower()
@@ -152,7 +154,9 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
         """
         Restrict queryset to accounts owned by the logged-in user.
         """
-        return Account.objects.filter(user=self.request.user)
+        return Account.objects.select_related('user').filter(
+            user=self.request.user
+        )
 
     def form_valid(self, form):
         """
@@ -191,7 +195,11 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         """
         Restrict queryset to accounts owned by the logged-in user.
         """
-        return Account.objects.filter(user=self.request.user)
+        return Account.objects.select_related('user').prefetch_related(
+            'transactions'
+        ).filter(
+            user=self.request.user
+        )
 
     def get_context_data(self, **kwargs):
         """

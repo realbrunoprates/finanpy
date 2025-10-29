@@ -27,7 +27,9 @@ class CategoryListView(LoginRequiredMixin, ListView):
         Aplica busca por nome se parâmetro 'search' ou 'q' for fornecido.
         Ordena por tipo de categoria e nome.
         """
-        queryset = Category.objects.filter(user=self.request.user)
+        queryset = Category.objects.select_related('user').filter(
+            user=self.request.user
+        )
 
         # Busca por nome (aceita 'search' ou 'q' como parâmetro)
         search_query = self.request.GET.get('search') or self.request.GET.get('q')
@@ -49,11 +51,11 @@ class CategoryListView(LoginRequiredMixin, ListView):
         search_query = self.request.GET.get('search') or self.request.GET.get('q')
 
         # Aplica busca nas categorias separadas por tipo
-        income_queryset = Category.objects.filter(
+        income_queryset = Category.objects.select_related('user').filter(
             user=self.request.user,
             category_type=Category.INCOME
         )
-        expense_queryset = Category.objects.filter(
+        expense_queryset = Category.objects.select_related('user').filter(
             user=self.request.user,
             category_type=Category.EXPENSE
         )
@@ -139,7 +141,9 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
         Retorna apenas as categorias do usuário logado.
         Garante que o usuário só possa editar suas próprias categorias.
         """
-        return Category.objects.filter(user=self.request.user)
+        return Category.objects.select_related('user').filter(
+            user=self.request.user
+        )
 
     def get_context_data(self, **kwargs):
         """
@@ -188,7 +192,11 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
         Retorna apenas as categorias do usuário logado.
         Garante que o usuário só possa excluir suas próprias categorias.
         """
-        return Category.objects.filter(user=self.request.user)
+        return Category.objects.select_related('user').prefetch_related(
+            'transactions'
+        ).filter(
+            user=self.request.user
+        )
 
     def form_valid(self, form):
         """

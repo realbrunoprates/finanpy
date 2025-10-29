@@ -163,7 +163,9 @@ class TransactionListView(LoginRequiredMixin, ListView):
         self.current_sort = sort_key
         self.current_direction = direction
 
-        return queryset.order_by(*ordering)
+        ordered_queryset = queryset.order_by(*ordering)
+        self._filtered_queryset = ordered_queryset
+        return ordered_queryset
 
     def get_context_data(self, **kwargs):
         """
@@ -175,7 +177,7 @@ class TransactionListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # Get filtered queryset (respects all applied filters)
-        filtered_queryset = self.get_queryset()
+        filtered_queryset = getattr(self, '_filtered_queryset', self.get_queryset())
 
         # Calculate statistics using aggregation
         income_aggregate = filtered_queryset.filter(

@@ -2,7 +2,9 @@ from datetime import timedelta
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
+from django.db import connection
 from django.test import TestCase
+from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from django.utils import timezone
 
@@ -241,3 +243,11 @@ class TransactionListViewTests(TestCase):
         self.assertEqual(response.context['current_sort'], 'date')
         self.assertEqual(response.context['current_direction'], 'desc')
 
+    def test_transaction_list_avoids_n_plus_one_queries(self):
+        with CaptureQueriesContext(connection) as queries:
+            response = self.client.get(reverse('transactions:list'))
+
+        self.assertEqual(response.status_code, 200)
+
+        # The query count should remain stable even with multiple related objects
+        self.assertLessEqual(len(queries.captured_queries), 12)

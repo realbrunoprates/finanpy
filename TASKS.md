@@ -1168,11 +1168,12 @@
 **Descrição**: Otimizar queries do banco de dados
 
 **Subtarefas**:
-- [ ] 6.5.1: Adicionar select_related em queries com ForeignKey
-- [ ] 6.5.2: Adicionar prefetch_related onde necessário
-- [ ] 6.5.3: Revisar N+1 queries nos templates
-- [ ] 6.5.4: Adicionar índices no banco (já configurado nos models)
-- [ ] 6.5.5: Testar performance com dados de exemplo
+- [X] 6.5.1: Adicionar select_related em queries com ForeignKey
+- [X] 6.5.2: Adicionar prefetch_related onde necessário
+- [X] 6.5.3: Revisar N+1 queries nos templates
+- [X] 6.5.4: Adicionar índices no banco (já configurado nos models)
+- [X] 6.5.5: Testar performance com dados de exemplo
+- [X] Tarefa 6.5 concluída
 
 #### Tarefa 6.6: Tratamento de Erros 404 e 500
 **Descrição**: Criar páginas de erro personalizadas

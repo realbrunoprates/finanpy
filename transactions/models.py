@@ -74,6 +74,9 @@ class Transaction(models.Model):
         indexes = [
             models.Index(fields=['-transaction_date']),
             models.Index(fields=['-created_at']),
+            models.Index(fields=['account', '-transaction_date']),
+            models.Index(fields=['account', 'transaction_type']),
+            models.Index(fields=['category', 'transaction_type']),
         ]
 
     def __str__(self):

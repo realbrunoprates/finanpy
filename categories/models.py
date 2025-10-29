@@ -42,6 +42,9 @@ class Category(models.Model):
         ordering = ['name']
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
+        indexes = [
+            models.Index(fields=['user', 'category_type']),
+        ]
         unique_together = [['user', 'name']]
 
     def __str__(self):
