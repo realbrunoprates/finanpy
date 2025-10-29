@@ -1179,13 +1179,14 @@
 **Descrição**: Criar páginas de erro personalizadas
 
 **Subtarefas**:
-- [ ] 6.6.1: Criar template `templates/404.html`
-- [ ] 6.6.2: Estilizar página 404
-- [ ] 6.6.3: Adicionar link para voltar ao dashboard
-- [ ] 6.6.4: Criar template `templates/500.html`
-- [ ] 6.6.5: Estilizar página 500
-- [ ] 6.6.6: Configurar DEBUG = False para testar
-- [ ] 6.6.7: Testar páginas de erro
+- [X] 6.6.1: Criar template `templates/404.html`
+- [X] 6.6.2: Estilizar página 404
+- [X] 6.6.3: Adicionar link para voltar ao dashboard
+- [X] 6.6.4: Criar template `templates/500.html`
+- [X] 6.6.5: Estilizar página 500
+- [X] 6.6.6: Configurar DEBUG = False para testar
+- [X] 6.6.7: Testar páginas de erro
+- [X] Tarefa 6.6 concluída
 
 #### Tarefa 6.7: Documentação do Código
 **Descrição**: Adicionar docstrings e comentários

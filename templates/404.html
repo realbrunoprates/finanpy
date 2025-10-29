@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Finanpy - Página não encontrada{% endblock %}
+
+{% block content %}
+<section class='flex items-center justify-center min-h-[60vh]'>
+    <div class='bg-bg-secondary/80 backdrop-blur rounded-2xl border border-primary-600/30 shadow-2xl max-w-3xl w-full p-10 md:p-14 text-center space-y-10'>
+        <div class='inline-flex items-center gap-4 px-5 py-2 bg-primary-600/10 border border-primary-500/30 rounded-full text-primary-500 font-medium uppercase tracking-wide text-sm mx-auto'>
+            <span class='flex items-center justify-center w-10 h-10 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-500 font-semibold'>
+                404
+            </span>
+            <span>Página não encontrada</span>
+        </div>
+
+        <div class='space-y-6'>
+            <h1 class='text-3xl md:text-4xl font-semibold text-text-primary leading-tight'>
+                Oops! Não conseguimos encontrar a página que você procurou.
+            </h1>
+
+            <p class='text-lg text-text-secondary max-w-2xl mx-auto'>
+                Talvez o endereço tenha sido digitado incorretamente ou a página foi movida.
+                Confira os links abaixo para voltar ao fluxo do Finanpy.
+            </p>
+        </div>
+
+        <div class='grid gap-4 md:grid-cols-2'>
+            <a href='{% url "dashboard" %}' class='group flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium transition-all duration-200 shadow-lg shadow-primary-900/30 hover:translate-y-[-2px]'>
+                <span>Ir para o dashboard</span>
+                <svg class='w-5 h-5 transition-transform duration-200 group-hover:translate-x-1' fill='currentColor' viewBox='0 0 20 20'>
+                    <path fill-rule='evenodd' d='M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 11-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z' clip-rule='evenodd'/>
+                </svg>
+            </a>
+
+            <a href='{% url "home" %}' class='flex items-center justify-center gap-3 px-6 py-4 rounded-xl border border-bg-tertiary text-text-primary font-medium hover:border-primary-500 hover:text-primary-300 transition-all duration-200 bg-bg-tertiary/60'>
+                <svg class='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
+                    <path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h3a1 1 0 001-1v-3h2v3a1 1 0 001 1h3a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'/>
+                </svg>
+                <span>Voltar para a página inicial</span>
+            </a>
+        </div>
+
+        <div class='bg-bg-tertiary/70 border border-bg-tertiary rounded-xl p-6 text-left space-y-3'>
+            <h2 class='text-lg font-medium text-text-primary'>Precisa de ajuda?</h2>
+            <p class='text-text-secondary'>
+                Se o problema continuar, entre em contato com o suporte ou tente novamente mais tarde.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
