@@ -1157,11 +1157,12 @@
 **Descrição**: Adicionar gráficos simples usando Chart.js
 
 **Subtarefas**:
-- [ ] 6.4.1: Adicionar Chart.js ao projeto
-- [ ] 6.4.2: Criar gráfico de pizza para categorias no dashboard
-- [ ] 6.4.3: Criar gráfico de linha para evolução mensal
-- [ ] 6.4.4: Estilizar gráficos com tema escuro
-- [ ] 6.4.5: Adicionar responsividade aos gráficos
+- [X] 6.4.1: Adicionar Chart.js ao projeto
+- [X] 6.4.2: Criar gráfico de pizza para categorias no dashboard
+- [X] 6.4.3: Criar gráfico de linha para evolução mensal
+- [X] 6.4.4: Estilizar gráficos com tema escuro
+- [X] 6.4.5: Adicionar responsividade aos gráficos
+- [X] Tarefa 6.4 concluída
 
 #### Tarefa 6.5: Otimizações de Consultas
 **Descrição**: Otimizar queries do banco de dados
