@@ -15,6 +15,8 @@ from transactions.models import Transaction
 
 
 class TransactionValidationTests(TestCase):
+    """Valida regras de negócio do formulário de transações."""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username='transaction_user',
@@ -147,6 +149,8 @@ class TransactionValidationTests(TestCase):
 
 
 class TransactionListViewTests(TestCase):
+    """Testa filtros, paginação e ordenação da listagem de transações."""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username='transaction_list',
@@ -177,6 +181,7 @@ class TransactionListViewTests(TestCase):
         base_date = timezone.localdate()
         self.transactions = []
 
+        # Intercala receitas e despesas para cobrir cenários de filtros
         for index in range(12):
             transaction_type = (
                 Transaction.INCOME

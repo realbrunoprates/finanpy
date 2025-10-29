@@ -57,6 +57,8 @@ class Account(models.Model):
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
+        """Define ordenação, textos e índices para contas."""
+
         ordering = ['name']
         verbose_name = 'Conta'
         verbose_name_plural = 'Contas'

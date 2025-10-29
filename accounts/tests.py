@@ -11,6 +11,8 @@ from transactions.models import Transaction
 
 
 class AccountDeletionValidationTests(TestCase):
+    """Valida que contas com transações não podem ser removidas."""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username='user_account',
@@ -33,6 +35,7 @@ class AccountDeletionValidationTests(TestCase):
             balance=500
         )
 
+        # Cria despesa vinculada para simular conta em uso
         Transaction.objects.create(
             account=account,
             category=self.expense_category,
@@ -56,6 +59,8 @@ class AccountDeletionValidationTests(TestCase):
 
 
 class AccountListPaginationTests(TestCase):
+    """Verifica paginação e opções de itens exibidos em contas."""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username='account_pagination',
@@ -64,6 +69,7 @@ class AccountListPaginationTests(TestCase):
         )
         self.client.force_login(self.user)
 
+        # Popula doze contas para testar diferentes tamanhos de página
         for index in range(12):
             Account.objects.create(
                 user=self.user,

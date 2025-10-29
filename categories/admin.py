@@ -4,6 +4,8 @@ from .models import Category
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    """Configura a interface administrativa de categorias financeiras."""
+
     list_display = ['name', 'user_email', 'category_type', 'color', 'created_at']
     list_filter = ['category_type', 'created_at']
     search_fields = ['name', 'user__email']

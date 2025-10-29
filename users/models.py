@@ -61,6 +61,8 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
+        """Define ordenação e rótulos administrativos dos usuários."""
+
         ordering = ['-created_at']
         verbose_name = 'Usuário'
         verbose_name_plural = 'Usuários'

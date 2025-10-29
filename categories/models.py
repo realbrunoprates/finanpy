@@ -39,6 +39,8 @@ class Category(models.Model):
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
+        """Controla ordenação, textos e restrições exclusivas das categorias."""
+
         ordering = ['name']
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'

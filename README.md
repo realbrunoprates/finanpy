@@ -77,6 +77,7 @@ cp .env.example .env
 SECRET_KEY=sua-secret-key-aqui
 DEBUG=True
 ```
+Consulte a seção [Variáveis de Ambiente](#variáveis-de-ambiente) para detalhes e recomendações.
 
 5. Execute as migrações:
 ```bash
@@ -92,6 +93,15 @@ python manage.py createsuperuser
 ```bash
 python manage.py tailwind install
 ```
+
+## Variáveis de Ambiente
+
+O projeto utiliza um arquivo `.env` para separar credenciais e configurações sensíveis. As variáveis obrigatórias são:
+
+- `SECRET_KEY`: chave criptográfica do Django. Gere um valor único para cada ambiente (use `django.core.management.utils.get_random_secret_key()` no shell).
+- `DEBUG`: controla o modo debug (`True` apenas em desenvolvimento; defina `False` para produção).
+
+Para ambientes de produção, configure também `ALLOWED_HOSTS` diretamente em `core/settings.py` ou adapte o código para lê-lo do `.env` conforme necessário.
 
 ## Executando o Projeto
 

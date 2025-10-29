@@ -1192,11 +1192,12 @@
 **Descrição**: Adicionar docstrings e comentários
 
 **Subtarefas**:
-- [ ] 6.7.1: Adicionar docstrings em todas as classes
-- [ ] 6.7.2: Adicionar docstrings em métodos complexos
-- [ ] 6.7.3: Comentar lógica não-óbvia
-- [ ] 6.7.4: Atualizar README.md com instruções de setup
-- [ ] 6.7.5: Documentar variáveis de ambiente necessárias
+- [X] 6.7.1: Adicionar docstrings em todas as classes
+- [X] 6.7.2: Adicionar docstrings em métodos complexos
+- [X] 6.7.3: Comentar lógica não-óbvia
+- [X] 6.7.4: Atualizar README.md com instruções de setup
+- [X] 6.7.5: Documentar variáveis de ambiente necessárias
+- [X] Tarefa 6.7 concluída
 
 #### Tarefa 6.8: Revisão de Código
 **Descrição**: Revisar código seguindo boas práticas

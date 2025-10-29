@@ -28,6 +28,8 @@ class Profile(models.Model):
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
+        """Configura títulos administrativos para o modelo de perfil."""
+
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfis'
 

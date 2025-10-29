@@ -8,6 +8,8 @@ class CategoryForm(forms.ModelForm):
     """
 
     class Meta:
+        """Define campos, rótulos e widgets do formulário de categorias."""
+
         model = Category
         fields = ['name', 'category_type', 'color']
         labels = {

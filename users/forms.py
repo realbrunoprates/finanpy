@@ -23,6 +23,8 @@ class SignupForm(UserCreationForm):
     )
 
     class Meta:
+        """Configura campos e widgets para o formulário de cadastro."""
+
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         widgets = {

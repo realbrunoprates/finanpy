@@ -16,6 +16,8 @@ class TransactionForm(forms.ModelForm):
     """
 
     class Meta:
+        """Define campos e widgets utilizados no formulário de transações."""
+
         model = Transaction
         fields = ['account', 'category', 'transaction_type', 'amount', 'transaction_date', 'description']
         labels = {

@@ -7,6 +7,8 @@ class ProfileForm(forms.ModelForm):
     Formulário para edição de perfil do usuário.
     """
     class Meta:
+        """Define campos e widgets usados no formulário de perfil."""
+
         model = Profile
         fields = ['full_name', 'phone']
         labels = {

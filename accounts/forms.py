@@ -24,6 +24,8 @@ class AccountForm(forms.ModelForm):
     )
 
     class Meta:
+        """Configura campos, rótulos e widgets do formulário."""
+
         model = Account
         fields = ['name', 'bank_name', 'account_type', 'balance']
         labels = {

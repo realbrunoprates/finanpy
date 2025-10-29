@@ -12,6 +12,8 @@ TEST_EMAIL = 'qa.tester@finanpy.com'
 TEST_PASSWORD = 'TestPass123!'
 
 class MessageTester:
+    """Executa cenários para validar mensagens exibidas pela aplicação."""
+
     def __init__(self):
         self.session = requests.Session()
         self.test_results = []

@@ -35,6 +35,8 @@ BASE_URL = 'http://localhost:8000'
 
 
 class TestResult:
+    """Representa o resultado individual de um caso de teste manual."""
+
     def __init__(self, test_id, description, status, details='', evidence=''):
         self.test_id = test_id
         self.description = description

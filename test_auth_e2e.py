@@ -11,6 +11,8 @@ from urllib.parse import urljoin
 BASE_URL = 'http://localhost:8000'
 
 class TestResults:
+    """Armazena estatísticas e achados durante os testes E2E."""
+
     def __init__(self):
         self.tests_passed = []
         self.tests_failed = []

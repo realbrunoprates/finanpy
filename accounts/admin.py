@@ -4,6 +4,8 @@ from .models import Account
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
+    """Configura a interface administrativa para contas do usuário."""
+
     list_display = ['name', 'user_email', 'bank_name', 'account_type', 'balance', 'is_active', 'created_at']
     list_filter = ['account_type', 'is_active', 'created_at']
     search_fields = ['name', 'bank_name', 'user__email']

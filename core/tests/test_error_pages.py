@@ -17,6 +17,8 @@ urlpatterns = [
     DEBUG=False,
 )
 class TestErrorPages(SimpleTestCase):
+    """Verifica se as páginas 404 e 500 customizadas são exibidas."""
+
     def test_404_template_is_used(self):
         response = self.client.get('/missing-url/')
         self.assertEqual(response.status_code, 404)

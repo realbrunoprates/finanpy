@@ -68,6 +68,8 @@ class Transaction(models.Model):
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
+        """Define ordenação e índices para otimizar consultas de transações."""
+
         ordering = ['-transaction_date', '-created_at']
         verbose_name = 'Transação'
         verbose_name_plural = 'Transações'

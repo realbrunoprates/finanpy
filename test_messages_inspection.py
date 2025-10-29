@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 
 class MessageSystemInspector:
+    """Realiza inspeções estáticas do sistema de mensagens do projeto."""
+
     def __init__(self):
         self.results = []
         self.base_dir = Path('.')

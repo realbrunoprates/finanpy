@@ -11,6 +11,8 @@ from transactions.models import Transaction
 
 
 class CategoryDeletionValidationTests(TestCase):
+    """Garante que categorias com transações não sejam excluídas."""
+
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username='user_category',
@@ -33,6 +35,7 @@ class CategoryDeletionValidationTests(TestCase):
             category_type=Category.EXPENSE
         )
 
+        # Transação impede a remoção da categoria utilizada
         Transaction.objects.create(
             account=self.account,
             category=category,
