@@ -14,8 +14,16 @@ urlpatterns = [
     path('new/', views.CategoryCreateView.as_view(), name='category_create'),
 
     # Update existing category
-    path('<int:pk>/edit/', views.CategoryUpdateView.as_view(), name='category_update'),
+    path(
+        '<int:pk>/edit/',
+        views.CategoryUpdateView.as_view(),
+        name='category_update',
+    ),
 
     # Delete existing category
-    path('<int:pk>/delete/', views.CategoryDeleteView.as_view(), name='category_delete'),
+    path(
+        '<int:pk>/delete/',
+        views.CategoryDeleteView.as_view(),
+        name='category_delete',
+    ),
 ]

@@ -1,13 +1,12 @@
 """
 Custom template filters for currency formatting.
 
-This module provides filters to format decimal/float values as Brazilian Real (R$).
+This module formats decimal or float values as Brazilian Real (R$).
 """
 import locale
 from decimal import Decimal, InvalidOperation
 
 from django import template
-
 
 register = template.Library()
 
@@ -48,7 +47,8 @@ def currency(value):
     Notes:
         - Handles None values by returning "R$ 0,00"
         - Handles invalid values by returning "R$ 0,00"
-        - Uses Brazilian locale for number formatting (thousands: ., decimal: ,)
+        - Uses Brazilian locale for number formatting
+          (thousands: ., decimal: ,)
     """
     # Handle None or empty values
     if value is None or value == '':
@@ -80,13 +80,16 @@ def currency(value):
         # Convert to float and format manually
         try:
             float_value = float(decimal_value)
-            # Format with Brazilian pattern: thousands separator (.) and decimal comma (,)
+            # Format with Brazilian pattern: thousands separator (.)
+            # and decimal comma (,)
             if float_value >= 0:
                 integer_part = int(float_value)
                 decimal_part = int(round((float_value - integer_part) * 100))
             else:
                 integer_part = int(float_value)
-                decimal_part = int(round((abs(float_value) - abs(integer_part)) * 100))
+                decimal_part = int(
+                    round((abs(float_value) - abs(integer_part)) * 100)
+                )
 
             # Format integer part with thousands separator
             integer_str = f'{abs(integer_part):,}'.replace(',', '.')

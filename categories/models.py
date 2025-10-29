@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -32,14 +32,20 @@ class Category(models.Model):
         max_length=10,
         choices=CATEGORY_TYPE_CHOICES
     )
-    color = models.CharField('Cor', max_length=7, default='#667eea')
+    color = models.CharField(
+        'Cor',
+        max_length=7,
+        default='#667eea',
+    )
 
     # Timestamps
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
-        """Controla ordenação, textos e restrições exclusivas das categorias."""
+        """
+        Controla ordenação, textos e restrições exclusivas.
+        """
 
         ordering = ['name']
         verbose_name = 'Categoria'

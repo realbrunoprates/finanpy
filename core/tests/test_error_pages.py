@@ -23,11 +23,19 @@ class TestErrorPages(SimpleTestCase):
         response = self.client.get('/missing-url/')
         self.assertEqual(response.status_code, 404)
         self.assertTemplateUsed(response, '404.html')
-        self.assertContains(response, 'Página não encontrada', status_code=404)
+        self.assertContains(
+            response,
+            'Página não encontrada',
+            status_code=404,
+        )
 
     def test_500_template_is_used(self):
         self.client.raise_request_exception = False
         response = self.client.get('/force-error/')
         self.assertEqual(response.status_code, 500)
         self.assertTemplateUsed(response, '500.html')
-        self.assertContains(response, 'Erro interno do servidor', status_code=500)
+        self.assertContains(
+            response,
+            'Erro interno do servidor',
+            status_code=500,
+        )

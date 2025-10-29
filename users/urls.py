@@ -2,7 +2,7 @@
 from django.urls import path
 
 # Local imports
-from .views import SignupView, LoginView, LogoutView
+from .views import LoginView, LogoutView, SignupView
 
 app_name = 'users'
 

@@ -2,10 +2,11 @@
 Script automatizado para testar o sistema de mensagens do Finanpy.
 Executa testes funcionais e valida a presença de mensagens Django.
 """
-import requests
-from bs4 import BeautifulSoup
 import time
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 
 BASE_URL = 'http://localhost:8000'
 TEST_EMAIL = 'qa.tester@finanpy.com'

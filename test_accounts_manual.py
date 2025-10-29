@@ -14,9 +14,10 @@ Este script realiza testes completos do CRUD de contas, incluindo:
 
 import os
 import sys
-import django
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
+import django
 
 # Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
@@ -24,6 +25,7 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 from django.test import Client
+
 from accounts.models import Account
 
 User = get_user_model()

@@ -1,6 +1,6 @@
 # Django imports
 from django.db import transaction
-from django.db.models.signals import post_save, post_delete, pre_save
+from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
 # Local imports
@@ -82,7 +82,7 @@ def update_balance_on_save(sender, instance, created, **kwargs):
                             operation='add'
                         )
                     else:
-                        # CENÁRIO 2B: Mesma conta, mas pode ter mudado valor ou tipo
+                        # CENÁRIO 2B: Mesma conta; valor ou tipo atualizados
                         # Reverte o valor antigo
                         _update_account_balance(
                             account=old_account,

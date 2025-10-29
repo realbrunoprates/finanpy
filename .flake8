@@ -1,0 +1,16 @@
+[flake8]
+max-line-length = 79
+exclude =
+    .git,
+    __pycache__,
+    venv,
+    theme/node_modules,
+    */migrations/*
+per-file-ignores =
+    test_accounts_browser.py: E501, E402, E722, E128, F841, F541, F401
+    test_accounts_manual.py: E501, E402, F841, F541
+    test_auth_e2e.py: E501, E402, F401, E302
+    test_messages_automated.py: E501, E302, F841
+    test_messages_inspection.py: E501, E302, F401, E128
+    test_messages_setup.py: E501, E402
+    test_signals_quick.py: E402

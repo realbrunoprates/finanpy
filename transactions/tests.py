@@ -254,5 +254,6 @@ class TransactionListViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        # The query count should remain stable even with multiple related objects
+        # The query count should remain stable even with multiple related
+        # objects loaded
         self.assertLessEqual(len(queries.captured_queries), 12)

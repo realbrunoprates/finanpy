@@ -1,14 +1,14 @@
 # Django
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LogoutView as DjangoLogoutView
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView, TemplateView
 
 # Local imports
-from .forms import SignupForm, LoginForm
+from .forms import LoginForm, SignupForm
 
 
 class SignupView(SuccessMessageMixin, CreateView):
@@ -28,7 +28,11 @@ class SignupView(SuccessMessageMixin, CreateView):
 
         # Perform automatic login after successful registration
         user = form.save()
-        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+        login(
+            self.request,
+            user,
+            backend='django.contrib.auth.backends.ModelBackend',
+        )
 
         return response
 
@@ -43,13 +47,17 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         """
-        Autentica o usuário com email e senha e faz login se credenciais válidas.
+        Autentica usuário por email e faz login se credenciais forem válidas.
         """
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
 
-        # Authenticate using the custom user model (email is the USERNAME_FIELD)
-        user = authenticate(request=self.request, email=email, password=password)
+        # Authenticate using the custom user model (email is USERNAME_FIELD)
+        user = authenticate(
+            request=self.request,
+            email=email,
+            password=password,
+        )
 
         if user is not None:
             # Successful authentication
@@ -69,7 +77,7 @@ class LogoutView(DjangoLogoutView):
     """
     def dispatch(self, request, *args, **kwargs):
         """
-        Sobrescreve dispatch para adicionar mensagem de sucesso antes do logout.
+        Adiciona mensagem de sucesso antes de concluir o logout.
         """
         if request.user.is_authenticated:
             messages.success(request, 'Você saiu com sucesso.')

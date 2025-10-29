@@ -9,7 +9,6 @@ from django.views.generic import TemplateView
 
 # Local imports
 from accounts.models import Account
-from categories.models import Category
 from transactions.models import Transaction
 
 
@@ -32,7 +31,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         # Get current month start and end dates
         now = timezone.now()
-        current_month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        current_month_start = now.replace(
+            day=1,
+            hour=0,
+            minute=0,
+            second=0,
+            microsecond=0,
+        )
 
         # Calculate total balance from all user accounts
         total_balance = Account.objects.filter(
@@ -113,30 +118,52 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         chart_categories_data = {
             'labels': [],
             'values': [],
-            'colors': []
+            'colors': [],
         }
 
         for category_data in expenses_by_category:
-            chart_categories_data['labels'].append(category_data['category__name'])
-            chart_categories_data['values'].append(float(category_data['total']))
-            chart_categories_data['colors'].append(category_data['category__color'])
+            chart_categories_data['labels'].append(
+                category_data['category__name']
+            )
+            chart_categories_data['values'].append(
+                float(category_data['total'])
+            )
+            chart_categories_data['colors'].append(
+                category_data['category__color']
+            )
 
         # 2. Line Chart: Income vs Expenses for last 6 months
         # Calculate start date for 6 months ago
         six_months_ago = now - timedelta(days=180)
-        first_day_six_months_ago = six_months_ago.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        first_day_six_months_ago = six_months_ago.replace(
+            day=1,
+            hour=0,
+            minute=0,
+            second=0,
+            microsecond=0,
+        )
 
         # Prepare data structure for monthly evolution
         chart_monthly_data = {
             'labels': [],
             'income': [],
-            'expenses': []
+            'expenses': [],
         }
 
         # Portuguese month abbreviations mapping
         month_names_pt = {
-            1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Abr', 5: 'Mai', 6: 'Jun',
-            7: 'Jul', 8: 'Ago', 9: 'Set', 10: 'Out', 11: 'Nov', 12: 'Dez'
+            1: 'Jan',
+            2: 'Fev',
+            3: 'Mar',
+            4: 'Abr',
+            5: 'Mai',
+            6: 'Jun',
+            7: 'Jul',
+            8: 'Ago',
+            9: 'Set',
+            10: 'Out',
+            11: 'Nov',
+            12: 'Dez',
         }
 
         # Iterate through last 6 months
@@ -145,9 +172,16 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             # Calculate month boundaries
             month_start = current_date.replace(day=1)
             if month_start.month == 12:
-                month_end = month_start.replace(year=month_start.year + 1, month=1, day=1)
+                month_end = month_start.replace(
+                    year=month_start.year + 1,
+                    month=1,
+                    day=1,
+                )
             else:
-                month_end = month_start.replace(month=month_start.month + 1, day=1)
+                month_end = month_start.replace(
+                    month=month_start.month + 1,
+                    day=1,
+                )
 
             # Get month name in Portuguese
             month_label = month_names_pt[month_start.month]
@@ -158,16 +192,20 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                 account__user=user,
                 transaction_type=Transaction.INCOME,
                 transaction_date__gte=month_start.date(),
-                transaction_date__lt=month_end.date()
-            ).aggregate(total=Sum('amount'))['total'] or 0
+                transaction_date__lt=month_end.date(),
+            ).aggregate(
+                total=Sum('amount')
+            )['total'] or 0
 
             # Calculate expenses for this month
             expenses_total = Transaction.objects.filter(
                 account__user=user,
                 transaction_type=Transaction.EXPENSE,
                 transaction_date__gte=month_start.date(),
-                transaction_date__lt=month_end.date()
-            ).aggregate(total=Sum('amount'))['total'] or 0
+                transaction_date__lt=month_end.date(),
+            ).aggregate(
+                total=Sum('amount')
+            )['total'] or 0
 
             chart_monthly_data['income'].append(float(income_total))
             chart_monthly_data['expenses'].append(float(expenses_total))

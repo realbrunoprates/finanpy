@@ -8,11 +8,12 @@ from django.db.models import Q, Sum
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-# Local imports
-from .models import Transaction
-from .forms import TransactionForm
 from accounts.models import Account
 from categories.models import Category
+
+from .forms import TransactionForm
+# Local imports
+from .models import Transaction
 
 
 class TransactionListView(LoginRequiredMixin, ListView):
@@ -61,7 +62,10 @@ class TransactionListView(LoginRequiredMixin, ListView):
         )
 
         # Filter by search query (description)
-        search = self.request.GET.get('search') or self.request.GET.get('q')
+        search = (
+            self.request.GET.get('search')
+            or self.request.GET.get('q')
+        )
         if search:
             # Case-insensitive search in description field
             queryset = queryset.filter(
@@ -69,7 +73,10 @@ class TransactionListView(LoginRequiredMixin, ListView):
             )
 
         # Quick date filters have priority over manual date range
-        quick_filter = self.request.GET.get('period') or self.request.GET.get('quick_filter')
+        quick_filter = (
+            self.request.GET.get('period')
+            or self.request.GET.get('quick_filter')
+        )
 
         if quick_filter:
             # Store active quick filter for context
@@ -109,9 +116,13 @@ class TransactionListView(LoginRequiredMixin, ListView):
 
             # Apply calculated date filters
             if data_inicio_parsed:
-                queryset = queryset.filter(transaction_date__gte=data_inicio_parsed)
+                queryset = queryset.filter(
+                    transaction_date__gte=data_inicio_parsed
+                )
             if data_fim_parsed:
-                queryset = queryset.filter(transaction_date__lte=data_fim_parsed)
+                queryset = queryset.filter(
+                    transaction_date__lte=data_fim_parsed
+                )
 
         else:
             # No quick filter active
@@ -124,8 +135,13 @@ class TransactionListView(LoginRequiredMixin, ListView):
             if data_inicio:
                 try:
                     # Parse date in format YYYY-MM-DD
-                    data_inicio_parsed = datetime.strptime(data_inicio, '%Y-%m-%d').date()
-                    queryset = queryset.filter(transaction_date__gte=data_inicio_parsed)
+                    data_inicio_parsed = datetime.strptime(
+                        data_inicio,
+                        '%Y-%m-%d',
+                    ).date()
+                    queryset = queryset.filter(
+                        transaction_date__gte=data_inicio_parsed
+                    )
                 except ValueError:
                     # Invalid date format, ignore filter
                     pass
@@ -133,8 +149,13 @@ class TransactionListView(LoginRequiredMixin, ListView):
             if data_fim:
                 try:
                     # Parse date in format YYYY-MM-DD
-                    data_fim_parsed = datetime.strptime(data_fim, '%Y-%m-%d').date()
-                    queryset = queryset.filter(transaction_date__lte=data_fim_parsed)
+                    data_fim_parsed = datetime.strptime(
+                        data_fim,
+                        '%Y-%m-%d',
+                    ).date()
+                    queryset = queryset.filter(
+                        transaction_date__lte=data_fim_parsed
+                    )
                 except ValueError:
                     # Invalid date format, ignore filter
                     pass
@@ -177,7 +198,11 @@ class TransactionListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # Get filtered queryset (respects all applied filters)
-        filtered_queryset = getattr(self, '_filtered_queryset', self.get_queryset())
+        filtered_queryset = getattr(
+            self,
+            '_filtered_queryset',
+            self.get_queryset(),
+        )
 
         # Calculate statistics using aggregation
         income_aggregate = filtered_queryset.filter(
@@ -210,14 +235,21 @@ class TransactionListView(LoginRequiredMixin, ListView):
         ).order_by('name')
 
         # Preserve current filter values for form population
-        context['filter_search'] = self.request.GET.get('search') or self.request.GET.get('q', '')
+        context['filter_search'] = (
+            self.request.GET.get('search')
+            or self.request.GET.get('q', '')
+        )
         context['filter_data_inicio'] = self.request.GET.get('data_inicio', '')
         context['filter_data_fim'] = self.request.GET.get('data_fim', '')
         context['filter_conta'] = self.request.GET.get('conta', '')
         context['filter_categoria'] = self.request.GET.get('categoria', '')
 
         # Add active quick filter to context
-        context['active_quick_filter'] = getattr(self, 'active_quick_filter', None)
+        context['active_quick_filter'] = getattr(
+            self,
+            'active_quick_filter',
+            None,
+        )
 
         # Breadcrumbs for navigation
         context['breadcrumbs'] = [
@@ -276,11 +308,15 @@ class TransactionListView(LoginRequiredMixin, ListView):
 
         if field_name != 'transaction_date':
             ordering.append(
-                'transaction_date' if direction == 'asc' else '-transaction_date'
+                'transaction_date'
+                if direction == 'asc'
+                else '-transaction_date'
             )
 
         ordering.append(
-            'created_at' if direction == 'asc' else '-created_at'
+            'created_at'
+            if direction == 'asc'
+            else '-created_at'
         )
 
         return sort_key, direction, ordering
@@ -354,7 +390,7 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         """
-        Pass the logged-in user to the form for filtering accounts and categories.
+        Pass logged-in user to the form for filtering options.
 
         Returns:
             dict: Form kwargs with user added
@@ -380,11 +416,17 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
 
         # Get transaction type for customized message
         transaction_type = self.object.transaction_type
-        type_label = 'receita' if transaction_type == Transaction.INCOME else 'despesa'
+        if transaction_type == Transaction.INCOME:
+            type_label = 'receita'
+        else:
+            type_label = 'despesa'
 
         messages.success(
             self.request,
-            f'Transação de {type_label} criada com sucesso! O saldo da conta foi atualizado automaticamente.'
+            (
+                f'Transação de {type_label} criada com sucesso! '
+                'O saldo da conta foi atualizado automaticamente.'
+            ),
         )
 
         return response
@@ -403,7 +445,10 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         """
         messages.error(
             self.request,
-            'Erro ao criar transação. Por favor, verifique os campos e tente novamente.'
+            (
+                'Erro ao criar transação. Por favor, verifique os campos '
+                'e tente novamente.'
+            ),
         )
 
         return super().form_invalid(form)
@@ -458,7 +503,7 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         """
-        Pass the logged-in user to the form for filtering accounts and categories.
+        Pass logged-in user to the form for filtering options.
 
         Returns:
             dict: Form kwargs with user added
@@ -503,7 +548,10 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
         """
         messages.error(
             self.request,
-            'Erro ao atualizar transação. Por favor, verifique os campos e tente novamente.'
+            (
+                'Erro ao atualizar transação. Por favor, verifique os '
+                'campos e tente novamente.'
+            ),
         )
 
         return super().form_invalid(form)
@@ -569,7 +617,10 @@ class TransactionDeleteView(LoginRequiredMixin, DeleteView):
         Returns:
             HttpResponseRedirect: Redirect to success_url
         """
-        messages.success(self.request, 'Transação excluída com sucesso!')
+        messages.success(
+            self.request,
+            'Transação excluída com sucesso!',
+        )
         return super().delete(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

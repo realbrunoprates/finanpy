@@ -1203,13 +1203,14 @@
 **Descrição**: Revisar código seguindo boas práticas
 
 **Subtarefas**:
-- [ ] 6.8.1: Verificar conformidade com PEP 8
-- [ ] 6.8.2: Executar linter (flake8 ou pylint)
-- [ ] 6.8.3: Corrigir warnings
-- [ ] 6.8.4: Verificar uso consistente de aspas simples
-- [ ] 6.8.5: Remover código comentado não utilizado
-- [ ] 6.8.6: Verificar imports não utilizados
-- [ ] 6.8.7: Organizar imports (isort)
+- [X] 6.8.1: Verificar conformidade com PEP 8
+- [X] 6.8.2: Executar linter (flake8 ou pylint)
+- [X] 6.8.3: Corrigir warnings
+- [X] 6.8.4: Verificar uso consistente de aspas simples
+- [X] 6.8.5: Remover código comentado não utilizado
+- [X] 6.8.6: Verificar imports não utilizados
+- [X] 6.8.7: Organizar imports (isort)
+- [X] Tarefa 6.8 concluída
 
 #### Tarefa 6.9: Segurança
 **Descrição**: Implementar melhorias de segurança

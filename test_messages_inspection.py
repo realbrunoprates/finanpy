@@ -6,6 +6,7 @@ Este script verifica se todos os elementos necessários estão presentes.
 import re
 from pathlib import Path
 
+
 class MessageSystemInspector:
     """Realiza inspeções estáticas do sistema de mensagens do projeto."""
 

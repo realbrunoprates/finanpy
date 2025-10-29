@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import Account
 
 
@@ -6,7 +7,15 @@ from .models import Account
 class AccountAdmin(admin.ModelAdmin):
     """Configura a interface administrativa para contas do usuário."""
 
-    list_display = ['name', 'user_email', 'bank_name', 'account_type', 'balance', 'is_active', 'created_at']
+    list_display = [
+        'name',
+        'user_email',
+        'bank_name',
+        'account_type',
+        'balance',
+        'is_active',
+        'created_at',
+    ]
     list_filter = ['account_type', 'is_active', 'created_at']
     search_fields = ['name', 'bank_name', 'user__email']
     readonly_fields = ['created_at', 'updated_at']

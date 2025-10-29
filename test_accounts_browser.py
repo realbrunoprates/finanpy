@@ -8,10 +8,11 @@ Tarefa 2.13 do TASKS.md
 
 import os
 import sys
+from datetime import datetime
+from decimal import Decimal
+
 import django
 import requests
-from decimal import Decimal
-from datetime import datetime
 from bs4 import BeautifulSoup
 
 # Setup Django environment
@@ -19,6 +20,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
+
 from accounts.models import Account
 
 User = get_user_model()

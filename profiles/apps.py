@@ -9,4 +9,4 @@ class ProfilesConfig(AppConfig):
 
     def ready(self):
         """Importa os signals de perfil durante a inicialização."""
-        import profiles.signals
+        import profiles.signals  # noqa: F401

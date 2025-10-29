@@ -3,13 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.db.models import Q
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
+from .forms import CategoryForm
 # Local imports
 from .models import Category
-from .forms import CategoryForm
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -32,7 +32,10 @@ class CategoryListView(LoginRequiredMixin, ListView):
         )
 
         # Busca por nome (aceita 'search' ou 'q' como parâmetro)
-        search_query = self.request.GET.get('search') or self.request.GET.get('q')
+        search_query = (
+            self.request.GET.get('search')
+            or self.request.GET.get('q')
+        )
         if search_query:
             queryset = queryset.filter(
                 Q(name__icontains=search_query)
@@ -48,7 +51,10 @@ class CategoryListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # Captura o termo de busca
-        search_query = self.request.GET.get('search') or self.request.GET.get('q')
+        search_query = (
+            self.request.GET.get('search')
+            or self.request.GET.get('q')
+        )
 
         # Aplica busca nas categorias separadas por tipo
         income_queryset = Category.objects.select_related('user').filter(
@@ -62,8 +68,12 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
         # Se houver busca, aplica o filtro
         if search_query:
-            income_queryset = income_queryset.filter(Q(name__icontains=search_query))
-            expense_queryset = expense_queryset.filter(Q(name__icontains=search_query))
+            income_queryset = income_queryset.filter(
+                Q(name__icontains=search_query)
+            )
+            expense_queryset = expense_queryset.filter(
+                Q(name__icontains=search_query)
+            )
 
         context['income_categories'] = income_queryset.order_by('name')
         context['expense_categories'] = expense_queryset.order_by('name')
@@ -116,13 +126,19 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
             response = super().form_valid(form)
 
             # Mensagem de sucesso
-            messages.success(self.request, 'Categoria criada com sucesso!')
+            messages.success(
+                self.request,
+                'Categoria criada com sucesso!',
+            )
 
             return response
 
         except IntegrityError:
             # Erro de nome duplicado para o mesmo usuário
-            form.add_error('name', 'Você já possui uma categoria com este nome.')
+            form.add_error(
+                'name',
+                'Você já possui uma categoria com este nome.',
+            )
             return self.form_invalid(form)
 
 
@@ -167,13 +183,19 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
             response = super().form_valid(form)
 
             # Mensagem de sucesso
-            messages.success(self.request, 'Categoria atualizada com sucesso!')
+            messages.success(
+                self.request,
+                'Categoria atualizada com sucesso!',
+            )
 
             return response
 
         except IntegrityError:
             # Erro de nome duplicado para o mesmo usuário
-            form.add_error('name', 'Você já possui uma categoria com este nome.')
+            form.add_error(
+                'name',
+                'Você já possui uma categoria com este nome.',
+            )
             return self.form_invalid(form)
 
 
@@ -207,11 +229,17 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
         if category.transactions.exists():
             messages.error(
                 self.request,
-                'Não é possível excluir esta categoria pois ela possui transações associadas.'
+                (
+                    'Não é possível excluir esta categoria pois ela possui '
+                    'transações associadas.'
+                ),
             )
             return redirect('categories:category_list')
 
-        messages.success(self.request, 'Categoria excluída com sucesso!')
+        messages.success(
+            self.request,
+            'Categoria excluída com sucesso!',
+        )
 
         return super().form_valid(form)
 

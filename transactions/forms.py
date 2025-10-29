@@ -3,23 +3,36 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-# Local imports
-from transactions.models import Transaction
 from accounts.models import Account
 from categories.models import Category
+# Local imports
+from transactions.models import Transaction
+
+INPUT_STYLE_CLASSES = (
+    'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg '
+    'text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 '
+    'focus:border-transparent transition-all duration-200'
+)
 
 
 class TransactionForm(forms.ModelForm):
     """
     Formulário para criar e editar transações financeiras.
-    Filtra contas e categorias do usuário logado e valida correspondência de tipos.
+    Filtra contas/categorias do usuário e valida tipos compatíveis.
     """
 
     class Meta:
         """Define campos e widgets utilizados no formulário de transações."""
 
         model = Transaction
-        fields = ['account', 'category', 'transaction_type', 'amount', 'transaction_date', 'description']
+        fields = [
+            'account',
+            'category',
+            'transaction_type',
+            'amount',
+            'transaction_date',
+            'description',
+        ]
         labels = {
             'account': 'Conta',
             'category': 'Categoria',
@@ -29,30 +42,45 @@ class TransactionForm(forms.ModelForm):
             'description': 'Descrição',
         }
         widgets = {
-            'account': forms.Select(attrs={
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-            }),
-            'category': forms.Select(attrs={
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-            }),
-            'transaction_type': forms.Select(attrs={
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-            }),
-            'amount': forms.NumberInput(attrs={
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-                'placeholder': 'Ex: 150.00',
-                'step': '0.01',
-                'min': '0.01',
-            }),
-            'transaction_date': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-            }),
-            'description': forms.Textarea(attrs={
-                'class': 'w-full px-4 py-3 bg-bg-secondary border border-bg-tertiary rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200',
-                'placeholder': 'Adicione uma descrição para esta transação (opcional)',
-                'rows': 4,
-            }),
+            'account': forms.Select(
+                attrs={
+                    'class': INPUT_STYLE_CLASSES,
+                }
+            ),
+            'category': forms.Select(
+                attrs={
+                    'class': INPUT_STYLE_CLASSES,
+                }
+            ),
+            'transaction_type': forms.Select(
+                attrs={
+                    'class': INPUT_STYLE_CLASSES,
+                }
+            ),
+            'amount': forms.NumberInput(
+                attrs={
+                    'class': INPUT_STYLE_CLASSES,
+                    'placeholder': 'Ex: 150.00',
+                    'step': '0.01',
+                    'min': '0.01',
+                }
+            ),
+            'transaction_date': forms.DateInput(
+                attrs={
+                    'type': 'date',
+                    'class': INPUT_STYLE_CLASSES,
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': INPUT_STYLE_CLASSES,
+                    'placeholder': (
+                        'Adicione uma descrição para esta transação '
+                        '(opcional)'
+                    ),
+                    'rows': 4,
+                }
+            ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -67,10 +95,15 @@ class TransactionForm(forms.ModelForm):
 
         if user:
             # Filtra apenas contas do usuário logado
-            self.fields['account'].queryset = Account.objects.filter(user=user, is_active=True)
+            self.fields['account'].queryset = Account.objects.filter(
+                user=user,
+                is_active=True,
+            )
 
             # Filtra apenas categorias do usuário logado
-            self.fields['category'].queryset = Category.objects.filter(user=user)
+            self.fields['category'].queryset = Category.objects.filter(
+                user=user,
+            )
 
     def clean_amount(self):
         """
@@ -85,7 +118,9 @@ class TransactionForm(forms.ModelForm):
         amount = self.cleaned_data.get('amount')
 
         if amount is not None and amount <= 0:
-            raise ValidationError('O valor da transação deve ser maior que zero.')
+            raise ValidationError(
+                'O valor da transação deve ser maior que zero.'
+            )
 
         return amount
 
@@ -102,7 +137,9 @@ class TransactionForm(forms.ModelForm):
         transaction_date = self.cleaned_data.get('transaction_date')
 
         if transaction_date and transaction_date > timezone.localdate():
-            raise ValidationError('A data da transação não pode estar no futuro.')
+            raise ValidationError(
+                'A data da transação não pode estar no futuro.'
+            )
 
         return transaction_date
 
@@ -115,7 +152,7 @@ class TransactionForm(forms.ModelForm):
             dict: Dados limpos validados
 
         Raises:
-            ValidationError: Se o tipo de categoria não corresponder ao tipo de transação
+            ValidationError: Categoria não compatível com o tipo
         """
         cleaned_data = super().clean()
         transaction_type = cleaned_data.get('transaction_type')
@@ -125,14 +162,26 @@ class TransactionForm(forms.ModelForm):
 
         if transaction_type and category:
             # Verifica se o tipo de categoria corresponde ao tipo de transação
-            if transaction_type == Transaction.INCOME and category.category_type != Category.INCOME:
+            if (
+                transaction_type == Transaction.INCOME
+                and category.category_type != Category.INCOME
+            ):
                 raise ValidationError(
-                    'Para transações de entrada, você deve selecionar uma categoria do tipo Receita.'
+                    (
+                        'Para transações de entrada, você deve selecionar '
+                        'uma categoria do tipo Receita.'
+                    )
                 )
 
-            if transaction_type == Transaction.EXPENSE and category.category_type != Category.EXPENSE:
+            if (
+                transaction_type == Transaction.EXPENSE
+                and category.category_type != Category.EXPENSE
+            ):
                 raise ValidationError(
-                    'Para transações de saída, você deve selecionar uma categoria do tipo Despesa.'
+                    (
+                        'Para transações de saída, você deve selecionar '
+                        'uma categoria do tipo Despesa.'
+                    )
                 )
 
         if (
@@ -144,19 +193,32 @@ class TransactionForm(forms.ModelForm):
 
             if self.instance.pk:
                 try:
-                    old_transaction = Transaction.objects.get(pk=self.instance.pk)
+                    old_transaction = Transaction.objects.get(
+                        pk=self.instance.pk
+                    )
                 except Transaction.DoesNotExist:
                     old_transaction = None
                 else:
                     if old_transaction.account_id == account.pk:
-                        if old_transaction.transaction_type == Transaction.EXPENSE:
+                        if (
+                            old_transaction.transaction_type
+                            == Transaction.EXPENSE
+                        ):
                             available_balance += old_transaction.amount
-                        elif old_transaction.transaction_type == Transaction.INCOME:
+                        elif (
+                            old_transaction.transaction_type
+                            == Transaction.INCOME
+                        ):
                             available_balance -= old_transaction.amount
 
             if amount > available_balance:
-                raise ValidationError({
-                    'amount': 'Saldo insuficiente na conta selecionada para esta despesa.'
-                })
+                raise ValidationError(
+                    {
+                        'amount': (
+                            'Saldo insuficiente na conta selecionada '
+                            'para esta despesa.'
+                        )
+                    }
+                )
 
         return cleaned_data

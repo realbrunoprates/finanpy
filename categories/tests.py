@@ -51,8 +51,14 @@ class CategoryDeletionValidationTests(TestCase):
 
         self.assertTrue(Category.objects.filter(pk=category.pk).exists())
 
-        messages = [message.message for message in get_messages(response.wsgi_request)]
+        messages = [
+            message.message
+            for message in get_messages(response.wsgi_request)
+        ]
         self.assertIn(
-            'Não é possível excluir esta categoria pois ela possui transações associadas.',
-            messages
+            (
+                'Não é possível excluir esta categoria pois ela possui '
+                'transações associadas.'
+            ),
+            messages,
         )

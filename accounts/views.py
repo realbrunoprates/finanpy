@@ -1,14 +1,14 @@
 # Django imports
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 from django.db.models import Sum
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
+from .forms import AccountForm
 # Local imports
 from .models import Account
-from .forms import AccountForm
 
 
 class AccountListView(LoginRequiredMixin, ListView):
@@ -67,7 +67,11 @@ class AccountListView(LoginRequiredMixin, ListView):
         )
 
         # Add current status filter to context
-        context['current_status'] = self.request.GET.get('status', '').strip().lower()
+        context['current_status'] = (
+            self.request.GET.get('status', '')
+            .strip()
+            .lower()
+        )
 
         # Add breadcrumbs
         context['breadcrumbs'] = [
@@ -160,9 +164,12 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         """
-        Persist changes and display a success message after updating the account.
+        Persist changes and display a success message.
         """
-        messages.success(self.request, 'Conta atualizada com sucesso!')
+        messages.success(
+            self.request,
+            'Conta atualizada com sucesso!',
+        )
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -225,9 +232,15 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         if account.transactions.exists():
             messages.error(
                 self.request,
-                'Não é possível excluir esta conta pois ela possui transações associadas.'
+                (
+                    'Não é possível excluir esta conta pois ela possui '
+                    'transações associadas.'
+                ),
             )
             return redirect('accounts:list')
 
-        messages.success(self.request, 'Conta excluída com sucesso!')
+        messages.success(
+            self.request,
+            'Conta excluída com sucesso!',
+        )
         return super().form_valid(form)

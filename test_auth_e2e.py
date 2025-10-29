@@ -4,9 +4,10 @@ Tests all authentication flows and validates design system compliance
 """
 
 import re
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
 
 BASE_URL = 'http://localhost:8000'
 

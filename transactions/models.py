@@ -82,4 +82,7 @@ class Transaction(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.transaction_type} - {self.amount} - {self.transaction_date}'
+        return (
+            f'{self.transaction_type} - {self.amount} - '
+            f'{self.transaction_date}'
+        )

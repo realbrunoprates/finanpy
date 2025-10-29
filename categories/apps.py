@@ -11,4 +11,4 @@ class CategoriesConfig(AppConfig):
         """
         Import signals when Django starts.
         """
-        import categories.signals
+        import categories.signals  # noqa: F401

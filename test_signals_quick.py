@@ -6,15 +6,17 @@ Execute com: python test_signals_quick.py
 """
 
 import os
-import django
-from decimal import Decimal
 from datetime import date
+from decimal import Decimal
+
+import django
 
 # Setup Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
+
 from accounts.models import Account
 from categories.models import Category
 from transactions.models import Transaction
