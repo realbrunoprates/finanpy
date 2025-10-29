@@ -76,6 +76,13 @@ cp .env.example .env
 # Edite o .env com suas configurações
 SECRET_KEY=sua-secret-key-aqui
 DEBUG=True
+ENVIRONMENT=development
+
+# Flags de segurança (habilite em produção)
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+SECURE_HSTS_SECONDS=0
 ```
 Consulte a seção [Variáveis de Ambiente](#variáveis-de-ambiente) para detalhes e recomendações.
 
@@ -100,6 +107,11 @@ O projeto utiliza um arquivo `.env` para separar credenciais e configurações s
 
 - `SECRET_KEY`: chave criptográfica do Django. Gere um valor único para cada ambiente (use `django.core.management.utils.get_random_secret_key()` no shell).
 - `DEBUG`: controla o modo debug (`True` apenas em desenvolvimento; defina `False` para produção).
+- `ENVIRONMENT`: define o ambiente atual (`development` ou `production`) e altera os padrões de segurança automaticamente.
+- `SECURE_SSL_REDIRECT`: força redirecionamento para HTTPS quando `True`.
+- `SESSION_COOKIE_SECURE`: marca o cookie de sessão como seguro (HTTPS apenas).
+- `CSRF_COOKIE_SECURE`: marca o cookie CSRF como seguro.
+- `SECURE_HSTS_SECONDS`: quantidade de segundos para a política HSTS (ex.: `31536000` para 1 ano, `0` para desativar).
 
 Para ambientes de produção, configure também `ALLOWED_HOSTS` diretamente em `core/settings.py` ou adapte o código para lê-lo do `.env` conforme necessário.
 

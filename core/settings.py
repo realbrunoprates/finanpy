@@ -27,6 +27,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+ENVIRONMENT = config('ENVIRONMENT', default='development').lower()
+IS_PRODUCTION = ENVIRONMENT == 'production'
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
@@ -154,3 +157,28 @@ LOGOUT_REDIRECT_URL = '/'
 
 # TailwindCSS configuration
 TAILWIND_APP_NAME = 'theme'
+
+# Security settings
+SECURE_SSL_REDIRECT = config(
+    'SECURE_SSL_REDIRECT',
+    default=IS_PRODUCTION,
+    cast=bool,
+)
+
+SESSION_COOKIE_SECURE = config(
+    'SESSION_COOKIE_SECURE',
+    default=IS_PRODUCTION,
+    cast=bool,
+)
+
+CSRF_COOKIE_SECURE = config(
+    'CSRF_COOKIE_SECURE',
+    default=IS_PRODUCTION,
+    cast=bool,
+)
+
+SECURE_HSTS_SECONDS = config(
+    'SECURE_HSTS_SECONDS',
+    default=31536000 if IS_PRODUCTION else 0,
+    cast=int,
+)

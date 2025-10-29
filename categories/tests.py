@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from accounts.models import Account
+from categories.forms import CategoryForm
 from categories.models import Category
 from transactions.models import Transaction
 
@@ -62,3 +63,31 @@ class CategoryDeletionValidationTests(TestCase):
             ),
             messages,
         )
+
+
+class CategoryColorValidationTests(TestCase):
+    """Valida o formato hexadecimal do campo color."""
+
+    def test_invalid_color_is_rejected(self):
+        form = CategoryForm(
+            data={
+                'name': 'Emergência',
+                'category_type': Category.EXPENSE,
+                'color': '#gg1234',
+            }
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('Selecione uma cor válida.', form.errors['color'])
+
+    def test_valid_color_is_normalized(self):
+        form = CategoryForm(
+            data={
+                'name': 'Investimentos',
+                'category_type': Category.INCOME,
+                'color': '#AABBCC',
+            }
+        )
+
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['color'], '#aabbcc')

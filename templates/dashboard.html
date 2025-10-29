@@ -325,6 +325,8 @@
 {% endblock %}
 
 {% block extra_scripts %}
+{{ chart_categories_data|json_script:"chart-categories-data" }}
+{{ chart_monthly_data|json_script:"chart-monthly-data" }}
 <script>
     // Configuração de cores do tema escuro para os gráficos
     const chartColors = {
@@ -340,15 +342,18 @@
     Chart.defaults.borderColor = chartColors.gridLines;
     Chart.defaults.plugins.legend.labels.color = chartColors.textSecondary;
 
-    // Pie Chart - Gastos por Categoria
-    {% if chart_categories_data.labels %}
-    (function() {
-        const categoriesData = {
-            labels: {{ chart_categories_data.labels|safe }},
-            values: {{ chart_categories_data.values|safe }},
-            colors: {{ chart_categories_data.colors|safe }}
-        };
+    const categoriesDataElement = document.getElementById('chart-categories-data');
+    const categoriesData = categoriesDataElement
+        ? JSON.parse(categoriesDataElement.textContent)
+        : null;
 
+    const monthlyDataElement = document.getElementById('chart-monthly-data');
+    const monthlyData = monthlyDataElement
+        ? JSON.parse(monthlyDataElement.textContent)
+        : null;
+
+    // Pie Chart - Gastos por Categoria
+    if (categoriesData && categoriesData.labels.length) {
         const ctx = document.getElementById('categoryPieChart');
         if (ctx) {
             new Chart(ctx, {
@@ -401,18 +406,10 @@
                 }
             });
         }
-    })();
-    {% endif %}
+    }
 
     // Line Chart - Evolução Mensal
-    {% if chart_monthly_data.labels %}
-    (function() {
-        const monthlyData = {
-            labels: {{ chart_monthly_data.labels|safe }},
-            income: {{ chart_monthly_data.income|safe }},
-            expenses: {{ chart_monthly_data.expenses|safe }}
-        };
-
+    if (monthlyData && monthlyData.labels.length) {
         const ctx = document.getElementById('monthlyLineChart');
         if (ctx) {
             new Chart(ctx, {
@@ -523,7 +520,6 @@
                 }
             });
         }
-    })();
-    {% endif %}
+    }
 </script>
 {% endblock %}

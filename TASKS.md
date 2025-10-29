@@ -1216,13 +1216,14 @@
 **Descrição**: Implementar melhorias de segurança
 
 **Subtarefas**:
-- [ ] 6.9.1: Configurar SECURE_SSL_REDIRECT para produção
-- [ ] 6.9.2: Configurar SESSION_COOKIE_SECURE
-- [ ] 6.9.3: Configurar CSRF_COOKIE_SECURE
-- [ ] 6.9.4: Adicionar SECURE_HSTS_SECONDS
-- [ ] 6.9.5: Revisar permissões de acesso em todas as views
-- [ ] 6.9.6: Testar injeção SQL (Django já protege)
-- [ ] 6.9.7: Testar XSS (Django já protege)
+- [X] 6.9.1: Configurar SECURE_SSL_REDIRECT para produção
+- [X] 6.9.2: Configurar SESSION_COOKIE_SECURE
+- [X] 6.9.3: Configurar CSRF_COOKIE_SECURE
+- [X] 6.9.4: Adicionar SECURE_HSTS_SECONDS
+- [X] 6.9.5: Revisar permissões de acesso em todas as views
+- [X] 6.9.6: Testar injeção SQL (Django já protege)
+- [X] 6.9.7: Testar XSS (Django já protege)
+- [X] Tarefa 6.9 concluída
 
 #### Tarefa 6.10: Testes Finais
 **Descrição**: Realizar bateria final de testes

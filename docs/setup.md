@@ -45,9 +45,22 @@ pip install -r requirements.txt
 
 ### 1. Variáveis de Ambiente
 
-O projeto usa as configurações padrão do Django para desenvolvimento. A `SECRET_KEY` está definida no `settings.py` e `DEBUG=True` está ativado.
+Copie o arquivo `.env.example` para `.env` e ajuste os valores conforme o ambiente:
 
-**Importante**: Antes de ir para produção, crie um arquivo `.env` com variáveis de ambiente adequadas.
+```bash
+cp .env.example .env
+```
+
+Variáveis principais:
+
+- `SECRET_KEY`: chave secreta obrigatória do Django.
+- `DEBUG`: mantenha `True` apenas em desenvolvimento.
+- `ENVIRONMENT`: use `development` ou `production`. Quando definido como `production`, os padrões de segurança ficam mais rígidos.
+- `SECURE_SSL_REDIRECT`: habilite (`True`) para forçar HTTPS.
+- `SESSION_COOKIE_SECURE` e `CSRF_COOKIE_SECURE`: marcam os cookies como seguros (HTTPS apenas).
+- `SECURE_HSTS_SECONDS`: define a duração da política HSTS (ex.: `31536000` para 1 ano, `0` para desativar).
+
+> Para produção, defina `ENVIRONMENT=production`, `DEBUG=False` e ative todas as flags de segurança.
 
 ### 2. Banco de Dados
 

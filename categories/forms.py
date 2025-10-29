@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 
 from .models import Category
@@ -68,3 +70,14 @@ class CategoryForm(forms.ModelForm):
                 'O nome deve ter pelo menos 3 caracteres.'
             )
         return name
+
+    def clean_color(self):
+        """Valida se a cor está no formato hexadecimal esperado."""
+        color = self.cleaned_data.get('color')
+        if not color:
+            return color
+
+        if not re.fullmatch(r'^#[0-9A-Fa-f]{6}$', color):
+            raise forms.ValidationError('Selecione uma cor válida.')
+
+        return color.lower()
