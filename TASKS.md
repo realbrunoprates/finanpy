@@ -1262,10 +1262,11 @@
 **Descrição**: Configurar coleta de arquivos estáticos
 
 **Subtarefas**:
-- [ ] 7.2.1: Configurar STATIC_ROOT
-- [ ] 7.2.2: Executar collectstatic
-- [ ] 7.2.3: Testar servindo arquivos estáticos
-- [ ] 7.2.4: Configurar whitenoise (opcional)
+- [X] 7.2.1: Configurar STATIC_ROOT
+- [X] 7.2.2: Executar collectstatic
+- [X] 7.2.3: Testar servindo arquivos estáticos
+- [X] 7.2.4: Configurar whitenoise (opcional)
+- [X] Tarefa 7.2 concluída
 
 #### Tarefa 7.3: Requirements de Produção
 **Descrição**: Criar arquivo de dependências para produção
