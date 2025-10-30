@@ -1310,13 +1310,14 @@
 **Descrição**: Criar testes para models
 
 **Subtarefas**:
-- [ ] 8.2.1: Testes de CustomUser
-- [ ] 8.2.2: Testes de Profile
-- [ ] 8.2.3: Testes de Account
-- [ ] 8.2.4: Testes de Category
-- [ ] 8.2.5: Testes de Transaction
-- [ ] 8.2.6: Testar métodos __str__
-- [ ] 8.2.7: Testar validações
+- [X] 8.2.1: Testes de CustomUser
+- [X] 8.2.2: Testes de Profile
+- [X] 8.2.3: Testes de Account
+- [X] 8.2.4: Testes de Category
+- [X] 8.2.5: Testes de Transaction
+- [X] 8.2.6: Testar métodos __str__
+- [X] 8.2.7: Testar validações
+- [X] Tarefa 8.2 concluída
 
 #### Tarefa 8.3: Testes de Views
 **Descrição**: Criar testes para views
