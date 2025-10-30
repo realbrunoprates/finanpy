@@ -11,6 +11,12 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+environment = os.getenv('ENVIRONMENT', 'production').lower()
+settings_map = {
+    'production': 'core.settings.production',
+    'development': 'core.settings.development',
+}
+default_settings = settings_map.get(environment, 'core.settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', default_settings)
 
 application = get_wsgi_application()

@@ -1251,11 +1251,12 @@
 **Descrição**: Separar configurações de desenvolvimento e produção
 
 **Subtarefas**:
-- [ ] 7.1.1: Criar settings/base.py
-- [ ] 7.1.2: Criar settings/development.py
-- [ ] 7.1.3: Criar settings/production.py
-- [ ] 7.1.4: Configurar variáveis de ambiente
-- [ ] 7.1.5: Atualizar manage.py
+- [X] 7.1.1: Criar settings/base.py
+- [X] 7.1.2: Criar settings/development.py
+- [X] 7.1.3: Criar settings/production.py
+- [X] 7.1.4: Configurar variáveis de ambiente
+- [X] 7.1.5: Atualizar manage.py
+- [X] Tarefa 7.1 concluída
 
 #### Tarefa 7.2: Configuração de Arquivos Estáticos
 **Descrição**: Configurar coleta de arquivos estáticos
