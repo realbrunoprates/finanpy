@@ -1,0 +1,22 @@
+[run]
+branch = True
+source =
+    accounts
+    categories
+    core
+    profiles
+    transactions
+    users
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    venv/*
+
+[report]
+show_missing = True
+skip_covered = True
+precision = 2
+
+[html]
+directory = htmlcov

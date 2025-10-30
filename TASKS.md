@@ -1300,10 +1300,11 @@
 **Descrição**: Configurar ambiente de testes
 
 **Subtarefas**:
-- [ ] 8.1.1: Criar diretório tests em cada app
-- [ ] 8.1.2: Configurar pytest-django (opcional)
-- [ ] 8.1.3: Criar factories com factory_boy (opcional)
-- [ ] 8.1.4: Configurar coverage
+- [X] 8.1.1: Criar diretório tests em cada app
+- [X] 8.1.2: Configurar pytest-django (opcional)
+- [X] 8.1.3: Criar factories com factory_boy (opcional)
+- [X] 8.1.4: Configurar coverage
+- [X] Tarefa 8.1 concluída
 
 #### Tarefa 8.2: Testes de Models
 **Descrição**: Criar testes para models
