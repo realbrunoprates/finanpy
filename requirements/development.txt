@@ -1,0 +1,2 @@
+-r base.txt
+django-tailwind==3.8.0

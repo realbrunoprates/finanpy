@@ -1272,11 +1272,12 @@
 **Descrição**: Criar arquivo de dependências para produção
 
 **Subtarefas**:
-- [ ] 7.3.1: Criar requirements/base.txt
-- [ ] 7.3.2: Criar requirements/development.txt
-- [ ] 7.3.3: Criar requirements/production.txt
-- [ ] 7.3.4: Adicionar gunicorn ao production.txt
-- [ ] 7.3.5: Adicionar psycopg2 para PostgreSQL (se migrar)
+- [X] 7.3.1: Criar requirements/base.txt
+- [X] 7.3.2: Criar requirements/development.txt
+- [X] 7.3.3: Criar requirements/production.txt
+- [X] 7.3.4: Adicionar gunicorn ao production.txt
+- [X] 7.3.5: Adicionar psycopg2 para PostgreSQL (se migrar)
+- [X] Tarefa 7.3 concluída
 
 #### Tarefa 7.4: Preparação de Deploy
 **Descrição**: Preparar aplicação para deploy
