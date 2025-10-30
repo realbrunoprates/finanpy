@@ -97,7 +97,7 @@
                     <!-- Menu Items -->
                     <div class='py-1'>
                         <a
-                            href='#'
+                            href='{% url "profiles:profile_detail" %}'
                             class='flex items-center space-x-3 px-4 py-3 text-sm text-text-secondary hover:bg-bg-tertiary hover:text-text-primary transition-all duration-150'
                             role='menuitem'
                         >
@@ -107,7 +107,7 @@
                             <span>Ver Perfil</span>
                         </a>
                         <a
-                            href='#'
+                            href='{% url "profiles:profile_update" %}'
                             class='flex items-center space-x-3 px-4 py-3 text-sm text-text-secondary hover:bg-bg-tertiary hover:text-text-primary transition-all duration-150'
                             role='menuitem'
                         >
@@ -229,7 +229,7 @@
         <!-- Profile Links -->
         <div class='px-2 py-3 border-t border-bg-tertiary space-y-1'>
             <a
-                href='#'
+                href='{% url "profiles:profile_detail" %}'
                 class='flex items-center px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-200'
             >
                 <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>
@@ -238,7 +238,7 @@
                 Ver Perfil
             </a>
             <a
-                href='#'
+                href='{% url "profiles:profile_update" %}'
                 class='flex items-center px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-all duration-200'
             >
                 <svg class='w-5 h-5 mr-3' fill='currentColor' viewBox='0 0 20 20'>

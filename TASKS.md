@@ -1229,16 +1229,19 @@
 **Descrição**: Realizar bateria final de testes
 
 **Subtarefas**:
-- [ ] 6.10.1: Testar em Chrome
-- [ ] 6.10.2: Testar em Firefox
-- [ ] 6.10.3: Testar em Safari
-- [ ] 6.10.4: Testar em Edge
-- [ ] 6.10.5: Testar em mobile (Chrome mobile)
-- [ ] 6.10.6: Testar em mobile (Safari iOS)
-- [ ] 6.10.7: Testar com múltiplos usuários simultâneos
-- [ ] 6.10.8: Testar com grande volume de dados
-- [ ] 6.10.9: Verificar todos os fluxos críticos
-- [ ] 6.10.10: Listar bugs encontrados
+- [X] 6.10.1: Testar em Chrome
+- [X] 6.10.2: Testar em Firefox
+- [X] 6.10.3: Testar em Safari
+- [X] 6.10.4: Testar em Edge
+- [X] 6.10.5: Testar em mobile (Chrome mobile)
+- [X] 6.10.6: Testar em mobile (Safari iOS)
+- [X] 6.10.7: Testar com múltiplos usuários simultâneos
+- [X] 6.10.8: Testar com grande volume de dados
+- [X] 6.10.9: Verificar todos os fluxos críticos
+- [X] 6.10.10: Listar bugs encontrados
+- [X] Tarefa 6.10 concluída
+
+**[X] SPRINT 6 CONCLUÍDA**
 
 ---
 
