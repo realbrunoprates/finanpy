@@ -1283,11 +1283,14 @@
 **Descrição**: Preparar aplicação para deploy
 
 **Subtarefas**:
-- [ ] 7.4.1: Criar Procfile (para Heroku, Railway, etc)
-- [ ] 7.4.2: Configurar allowed hosts
-- [ ] 7.4.3: Configurar banco de dados de produção (se aplicável)
-- [ ] 7.4.4: Testar com gunicorn localmente
-- [ ] 7.4.5: Criar checklist de deploy
+- [X] 7.4.1: Criar Procfile (para Heroku, Railway, etc)
+- [X] 7.4.2: Configurar allowed hosts
+- [X] 7.4.3: Configurar banco de dados de produção (se aplicável)
+- [X] 7.4.4: Testar com gunicorn localmente
+- [X] 7.4.5: Criar checklist de deploy
+- [X] Tarefa 7.4 concluída
+
+**[X] SPRINT 7 CONCLUÍDA**
 
 ---
 
