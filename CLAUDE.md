@@ -30,8 +30,8 @@ Each app has a single, well-defined responsibility:
 | profiles | Profile | User profile information | models.py, views.py |
 | accounts | Account | Bank account management | models.py, views.py, forms.py |
 | categories | Category | Transaction categorization | models.py, views.py, forms.py |
-| transactions | Transaction | Financial transactions | models.py, views.py, forms.py |
-| core | - | Settings, main URLs | settings.py, urls.py |
+| transactions | Transaction | Financial transactions | models.py, views.py, forms.py, signals.py |
+| core | - | Settings, main URLs | settings/, urls.py |
 
 ### Key Architectural Principles
 
@@ -43,7 +43,7 @@ Each app has a single, well-defined responsibility:
    - Account (1:N) → Transaction
    - Category (1:N) → Transaction
 
-3. **Balance Calculation**: Transaction create/update/delete must update the related Account balance. This is critical for data consistency.
+3. **Balance Calculation**: Transaction create/update/delete automatically updates the related Account balance via Django signals in `transactions/signals.py`. This is critical for data consistency. **NEVER manually update account balances in views** - always let the signals handle it.
 
 4. **All models must have**: `created_at` and `updated_at` fields (auto_now_add and auto_now).
 
@@ -107,6 +107,29 @@ python manage.py migrate
 python manage.py makemigrations app_name
 ```
 
+### Testing
+
+The project uses pytest with django-pytest plugin:
+
+```bash
+# Run all tests
+pytest
+
+# Run tests for a specific app
+pytest users/tests/
+pytest accounts/tests/
+
+# Run a specific test file
+pytest accounts/tests/test_models.py
+
+# Run with coverage report
+pytest --cov --cov-report=term-missing
+
+# Run specific test class or method
+pytest accounts/tests/test_views.py::TestAccountListView
+pytest accounts/tests/test_views.py::TestAccountListView::test_list_only_user_accounts
+```
+
 ### Django Shell
 
 ```bash
@@ -119,6 +142,9 @@ python manage.py shell
 ```bash
 # Check for issues (always run before committing)
 python manage.py check
+
+# Run flake8 linter
+flake8
 ```
 
 ## Coding Standards
@@ -209,10 +235,11 @@ from datetime import datetime
 
 # 2. Django
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 
-# 3. Third-party (when added)
+# 3. Third-party
+# (when added)
 
 # 4. Local imports
 from accounts.models import Account
@@ -248,12 +275,38 @@ Use utility classes consistently:
 
 ## Environment Configuration
 
-The project uses `python-decouple` for environment variable management.
+The project uses `python-decouple` for environment variable management with a split settings structure:
 
-**Required environment variables** (`.env` file):
+### Settings Structure
+
+The project uses separate settings files for different environments:
+
+```
+core/
+├── settings/
+│   ├── __init__.py      # Auto-imports development or production based on ENVIRONMENT var
+│   ├── base.py          # Shared settings for all environments
+│   ├── development.py   # Development-specific settings (DEBUG=True, SQLite)
+│   └── production.py    # Production settings (DEBUG=False, security headers)
+```
+
+The `ENVIRONMENT` variable in `.env` determines which settings file is loaded.
+
+### Required Environment Variables
+
+Create a `.env` file in the project root (never commit this file):
+
 ```bash
+# Required
 SECRET_KEY=your-secret-key-here
 DEBUG=True  # Set to False in production
+ENVIRONMENT=development  # or 'production'
+
+# Security flags (set in production)
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+SECURE_HSTS_SECONDS=0
 ```
 
 **IMPORTANT**: Never commit the `.env` file. Use `.env.example` as template.
@@ -290,17 +343,42 @@ User = get_user_model()
 
 ## Project Dependencies
 
+### Requirements Structure
+
+The project uses a split requirements structure:
+
+```
+requirements/
+├── base.txt          # Core dependencies for all environments
+├── development.txt   # Development tools (includes base.txt)
+└── production.txt    # Production dependencies (includes base.txt)
+```
+
+**Main dependencies:**
 ```
 Django==5.2.7
 django-tailwind==3.8.0
 python-decouple==3.8
 ```
 
+**Development dependencies:**
+```
+pytest==8.4.2
+pytest-django==4.11.1
+pytest-cov==7.0.0
+factory-boy==3.3.3
+```
+
 **NOTE**: The project uses `django-tailwind` package which integrates TailwindCSS with Django. This requires Node.js to be installed.
 
 ## Critical Development Notes
 
-1. **Balance Consistency**: When creating/updating/deleting transactions, ALWAYS update the related account balance. The project uses Django signals (`post_save`, `post_delete`) in `transactions/signals.py` to automatically update account balances when transactions are modified. Never update balances manually in views.
+1. **Balance Consistency**: Transaction create/update/delete automatically updates the related Account balance via Django signals in `transactions/signals.py`. The signals handle:
+   - **CREATE**: Adds (INCOME) or subtracts (EXPENSE) from account balance
+   - **UPDATE**: Reverts old balance impact and applies new one (handles account changes)
+   - **DELETE**: Reverts the transaction's balance impact
+
+   **NEVER manually update account balances in views.** Always trust the signals. The logic uses `transaction.atomic()` for consistency and handles edge cases like account changes.
 
 2. **Data Isolation**: Every query for user-owned data MUST filter by the logged-in user. Never trust URL parameters for user identification.
    ```python
@@ -321,7 +399,12 @@ python-decouple==3.8
 
 5. **Git Commits**: Use Portuguese, infinitive verbs (e.g., "Adicionar modelo Account", "Corrigir cálculo de saldo")
 
-6. **Custom User Model**: Always use `get_user_model()` - the project uses `users.CustomUser`, not Django's default User model. The AUTH_USER_MODEL setting is configured in `core/settings.py`.
+6. **Custom User Model**: Always use `get_user_model()` - the project uses `users.CustomUser`, not Django's default User model. The AUTH_USER_MODEL setting is configured in `core/settings/base.py`.
+
+7. **Signals**: The project uses Django signals for:
+   - Auto-creating Profile when User is created (`profiles/signals.py`)
+   - Auto-creating default Categories for new users (`categories/signals.py`)
+   - Auto-updating Account balances when Transactions change (`transactions/signals.py`)
 
 ## Specialized Agent Prompts
 
@@ -349,3 +432,39 @@ Comprehensive documentation is available in the `docs/` directory:
 - `docs/design-system.md` - Complete UI component library with examples
 
 Refer to `PRD.md` for complete product requirements and user stories.
+
+## Common Development Workflows
+
+### Adding a New Model
+
+1. Define the model in `app_name/models.py` with required fields (`created_at`, `updated_at`, `__str__`, Meta)
+2. Create and run migrations: `python manage.py makemigrations app_name && python manage.py migrate`
+3. Register in admin: Update `app_name/admin.py`
+4. Create forms if needed: `app_name/forms.py`
+5. Add tests: `app_name/tests/test_models.py`
+
+### Adding a New View
+
+1. Create the view in `app_name/views.py` (use CBVs when possible)
+2. Add URL pattern in `app_name/urls.py`
+3. Create template in `app_name/templates/app_name/`
+4. Add `@login_required` or `LoginRequiredMixin` for protected views
+5. Validate user ownership for user-specific resources
+6. Add tests: `app_name/tests/test_views.py`
+
+### Modifying Transaction Logic
+
+**CRITICAL**: If you need to change how transactions affect account balances:
+
+1. **ONLY modify** `transactions/signals.py` - never add balance logic in views
+2. The signals use `transaction.atomic()` for consistency
+3. Always test balance updates with: create, update (same account), update (different account), delete
+4. Run the test suite: `pytest transactions/tests/test_models.py -v`
+
+### Before Committing
+
+1. Run tests: `pytest`
+2. Check code quality: `python manage.py check`
+3. Run linter: `flake8` (if configured)
+4. Ensure TailwindCSS is built: `python manage.py tailwind build` (for production)
+5. Write commit message in Portuguese using infinitive verbs
